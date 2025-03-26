@@ -10,17 +10,22 @@ const patience = {
 		deck.new()
 		deck.shuffle()
 
-		// Build each pile up
+		// Build each pile up.
 		for ( let p = 0; p < 7; p++ ) {
 			patience.piles[p] = deck.draw( p+1 )
 		}
 
-		str = ''
+		elem = document.getElementById('banner')
+		elem.classList.add( 'hidden' )
+	},
+
+	debug: () => {
+		let str = ''
+
 		for ( let p = 0; p < 7; p++ ) {
 			for ( let i = 0; i < patience.piles[p].length; i++ ) {
 				str = str + patience.piles[p][i].name + '\n'
 			}
-			str = str + '\n'
 		}
 
 		for ( let card of deck.cards ) {
@@ -29,8 +34,5 @@ const patience = {
 
 		let elem = document.getElementById('debug')
 		elem.innerHTML = str
-
-		elem = document.getElementById('banner')
-		elem.classList.add( 'hidden' )
 	},
 };
