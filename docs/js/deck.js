@@ -1,92 +1,50 @@
-const cohort = {
-	init: () => {
-		// Listen for selection changes ...
-		despatch.addListener( selection.listenerEvents.selectionChanged, cohort.selectionChanged )
-		despatch.addListener( people.listenerEvents.populationChanged, cohort.updateBars )
-	},
+const deck = {
+	// The cards are a simple array that we'll stuff with objects
+	cards: [],
+	suits: ['spades','hearts','clubs','diamonds'],
+	values: ['ace','2','3','4','5','6','7','8','9','10','jack','queen','king'],
 
-    /**
-     * Listener method for when the user changes their selection.
-     */
-	selectionChanged: ( sel ) => {
-		if ( selection.isActivePerson() && sel.loc === selection.loc ) {
-			cohort.updateNavbar()
+	/**
+	 * Prepares the deck by creating all the cards therein. Newly init'd decks are
+	 * unshuffled.
+	 */
+	new: () => {
+		// Empty any previous state.
+		deck.cards = []
+
+		// Rebuild the deck.
+		for ( let suit = 0; suit < 4; suit++ ) {
+			for ( let value = 0; value < 13; value++ ) {
+				let card = {}
+				card.suit = suit;
+				card.value = value;
+				card.isRed = suit % 2 === 1
+				card.name = deck.values[value] + '_of_' + deck.suits[suit]
+
+				deck.cards.push( card )
+			}	
 		}
 	},
 
 	/**
-	 * Update the navbar
+	 * Shuffles the deck. Better shuffles may be available.
 	 */
-	updateNavbar: () => {
-		let div = document.getElementById( 'person-inventory' )
-		div.innerHTML = ''
-
-		// Abort if there's no person selection.
-		if ( !selection.person ) {
-			return
-		}
-
-		// Label the inventory
-		let elem = document.createElement( 'div' )
-		div.appendChild( elem )
-		elem.setAttribute( 'class', 'label ')
-		elem.innerHTML = language.get( 'label_inventory' )
-
-		// Now iterate the inventory held by the selected person, adding an icon for each item held
-		let c = 0
-		Object.entries( selection.person.inventory ).forEach(
-			([k,v]) => {
-				let icon = document.createElement( 'div' )
-				div.appendChild( icon )
-				icon.setAttribute( 'class', 'panel ' + k )
-				
-				let counter = document.createElement( 'div' )
-				icon.appendChild( counter )
-				counter.setAttribute( 'class', 'counter' )
-				counter.innerHTML = v
-
-				c++
-			}
-		)
-
-		// Make up any empty slots up to three to keep the UI a consistent size.
-		while ( c < 3 ) {
-			let icon = document.createElement( 'div' )
-			div.appendChild( icon )
-			icon.setAttribute( 'class', 'panel' )
-			c++
-		}
-
-		cohort.updateBars()
-
-		// Put in a 'go home' button
-		elem = document.getElementById( 'person-commands' )
-		elem.innerHTML = ''
-		let btn = document.createElement( 'a' )
-		elem.appendChild( btn )
-		btn.setAttribute( 'href', '#' )
-		btn.setAttribute( 'onclick', 'cohort.goHomeAtSelection() ')
-		btn.innerHTML = language.get( 'go_home' )
+	shuffle: () => {
+		let shuffled = deck.cards
+			.map(value => ({ value, sort: Math.random() }))
+			.sort((a, b) => a.sort - b.sort)
+    		.map(({ value }) => value)
+		deck.cards = shuffled
 	},
 
 	/**
-	 * Update the nav UI for the population of a cohort
+	 * Draws _n_ cards from the top of the deck
 	 */
-	updateBars: () => {		
-		// Update the praise and population bars, globally ...
-		elem = document.getElementById( 'person-gpopl-bar' )
-		elem.style.width = 1+(world.getGlobalPopulation()) + 'px'
-
-		// ... and for the current person
-		if ( selection.person ) {
-			elem = document.getElementById( 'person-popl-bar' )
-			elem.style.width = 1+(selection.person.population) + 'px'
+	draw: ( n ) => {
+		let ret = []
+		for ( let i = 0; i < n; i++ ) {
+			ret.push( deck.cards.pop() )
 		}
-	},
-
-	goHomeAtSelection: () => {
-		people.personReturnToOrigin( selection.person )
+		return ret
 	}
 };
-
-cohort.init();

@@ -1,0 +1,33 @@
+const patience = {
+	// There are seven piles which we draw from.
+	piles: [],
+
+	/**
+	 * Let's play patience!
+	 */
+	play: () => {
+		// Get the deck ready.
+		deck.new()
+		deck.shuffle()
+
+		// Build each pile up
+		for ( let p = 0; p < 7; p++ ) {
+			patience.piles[p] = deck.draw( p+1 )
+		}
+
+		str = ''
+		for ( let p = 0; p < 7; p++ ) {
+			for ( let i = 0; i < patience.piles[p].length; i++ ) {
+				str = str + patience.piles[p][i].name + '\n'
+			}
+			str = str + '\n'
+		}
+
+		for ( let card of deck.cards ) {
+			str = str + card.name + '\n'
+		}
+
+		let elem = document.getElementById('debug')
+		elem.innerHTML = str
+	},
+};
