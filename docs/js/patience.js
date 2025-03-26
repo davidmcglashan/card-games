@@ -29,5 +29,8 @@ const patience = {
 
 		let elem = document.getElementById('debug')
 		elem.innerHTML = str
+
+		elem = document.getElementById('banner')
+		elem.classList.add( 'hidden' )
 	},
 };

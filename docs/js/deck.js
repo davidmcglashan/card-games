@@ -20,6 +20,7 @@ const deck = {
 				card.value = value;
 				card.isRed = suit % 2 === 1
 				card.name = deck.values[value] + '_of_' + deck.suits[suit]
+				card.faceUp = false
 
 				deck.cards.push( card )
 			}	

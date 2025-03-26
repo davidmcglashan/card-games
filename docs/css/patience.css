@@ -1,0 +1,11 @@
+#piles {
+	display: flex;
+	width: 100%;
+	gap: 2%;
+}
+	.pile {
+		width: 12.5%;
+		border: 1px solid #040;
+		border-radius: 8%;
+		aspect-ratio: 0.7142857143;
+	}
