@@ -8,4 +8,37 @@
 		border: 1px solid #040;
 		border-radius: 8%;
 		aspect-ratio: 0.7142857143;
+		position: relative;
+	}
+
+	.card {
+		border: 1px solid #040;
+		border-radius: 8%;
+		aspect-ratio: 0.7142857143;
+		background-color: white;
+		position: absolute;
+		width: 100%;
+	}
+
+	.hearts, .diamonds {
+		color: red;
+	}
+
+	.clubs, .spades {
+		color: black;
+	}
+	.label {
+		position: absolute;
+		top: 0.25em;
+		left: 0.5em;
+	}
+	.bottomlabel {
+		position: absolute;
+		bottom: 0.25em;
+		right: 0.5em;
+		transform: rotate(180deg);
+	}
+
+	.card.faceDown {
+		background-color: blue;
 	}
