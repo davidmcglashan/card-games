@@ -1,3 +1,5 @@
+- reveal function. Keep newly-exposed cards face down and add a click handler to turn them over.
+
 - drag from the drawn pile onto another pile
 - drag between piles
 - dealing thru the deck reverses the order of each triplet

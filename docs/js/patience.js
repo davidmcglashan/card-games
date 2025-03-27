@@ -20,14 +20,14 @@ const patience = {
 			for ( let i = 0; i < patience.piles[p].length; i++ ) {
 				let card = patience.piles[p][i]
 				let elem = document.createElement( 'div' )
+				elem.setAttribute( 'id', card.name )
+				elem.setAttribute( 'data-drag', p )
 
 				if ( i === patience.piles[p].length-1 ) {
 					card.isFaceUp = true
 					elem.setAttribute( 'draggable', 'true' )
 					elem.setAttribute( 'ondragstart','patience.drag(event)' )
 					elem.setAttribute( 'ondrop','patience.dropOnPile(event)' )
-					elem.setAttribute( 'data-drag', p )
-					elem.setAttribute( 'id', 'drag'+p )
 				}
 
 				deck.decorateFace( elem, card )
@@ -143,6 +143,17 @@ const patience = {
 		patience.dragData.source.pop()
 		elem = document.getElementById( patience.dragData.sourceElem )
 		elem.remove()
+
+		// The next card along, if there is one, can now be revealed
+		let next = patience.dragData.source[ patience.dragData.source.length-1 ]
+		if ( next ) {
+			next.isFaceUp = true
+			elem = document.getElementById( next.name )
+			deck.decorateFace( elem, next )
+			elem.setAttribute( 'draggable', 'true' )
+			elem.setAttribute( 'ondragstart','patience.drag(event)' )
+			elem.setAttribute( 'ondrop','patience.dropOnPile(event)' )
+		}
 	},
 
 	/**
