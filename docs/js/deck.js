@@ -2,6 +2,7 @@ const deck = {
 	// The cards are a simple array that we'll stuff with objects
 	cards: [],
 	suits: ['spades','hearts','clubs','diamonds'],
+	symbols: [ '&spadesuit;','&heartsuit;','&clubsuit;','&diamondsuit;'],
 	values: ['ace','2','3','4','5','6','7','8','9','10','jack','queen','king'],
 	labels: ['A','2','3','4','5','6','7','8','9','10','J','Q','K'],
 
@@ -21,7 +22,7 @@ const deck = {
 				card.value = value;
 				card.isRed = suit % 2 === 1
 				card.name = deck.values[value] + '_of_' + deck.suits[suit]
-				card.label = deck.labels[value] + deck.suits[suit][0]
+				card.label = deck.labels[value] + deck.symbols[suit]
 				card.isFaceUp = false
 
 				deck.cards.push( card )
