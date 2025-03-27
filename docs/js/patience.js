@@ -34,7 +34,25 @@ const patience = {
 			}
 		}
 
-		let elem = document.getElementById('banner')
+		// Put the deck on the table
+		let pile = document.getElementById('deck')
+		let elem = document.createElement('div')
+
+		let stack = 'stack'
+		if ( deck.cards.length > 14 ) {
+			stack = stack + '4'
+		} else if ( deck.cards.length > 10 ) {
+			stack = stack + '3'
+		} else if ( deck.cards.length > 6 ) {
+			stack = stack + '2'
+		} else if ( deck.cards.length > 2 ) {
+			stack = stack + '1'
+		}
+		elem.setAttribute( 'class', 'card faceDown ' + stack )
+		pile.appendChild( elem )
+
+		// Start the game by removing the banner.
+		elem = document.getElementById('banner')
 		elem.classList.add( 'hidden' )
 	},
 
