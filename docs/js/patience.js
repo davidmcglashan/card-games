@@ -1,6 +1,7 @@
 const patience = {
 	// There are seven piles which we draw from.
 	piles: [],
+	drawn: [],
 
 	/**
 	 * Let's play patience!
@@ -22,38 +23,49 @@ const patience = {
 				if ( i === patience.piles[p].length-1 ) {
 					card.isFaceUp = true
 				}
-
-				if ( card.isFaceUp ) {
-					elem.setAttribute( 'class', 'card ' + card.suit )
-					elem.innerHTML = '<div class="label">'+card.label+'</div><div class="bottomlabel">'+card.label+'</div>'
-				} else {
-					elem.setAttribute( 'class', 'card faceDown' )
-				}
+				deck.decorateFace( elem, card )
 				elem.setAttribute( 'style', 'z-index:'+i+';top:'+i+'em;')
 				pile.appendChild( elem )
 			}
 		}
 
-		// Put the deck on the table
-		let pile = document.getElementById('deck')
-		let elem = document.createElement('div')
-
-		let stack = 'stack'
-		if ( deck.cards.length > 14 ) {
-			stack = stack + '4'
-		} else if ( deck.cards.length > 10 ) {
-			stack = stack + '3'
-		} else if ( deck.cards.length > 6 ) {
-			stack = stack + '2'
-		} else if ( deck.cards.length > 2 ) {
-			stack = stack + '1'
-		}
-		elem.setAttribute( 'class', 'card faceDown ' + stack )
-		pile.appendChild( elem )
+		// Put the deck on the table.
+		let elem = document.getElementById('deck')
+		deck.decoratePile( elem, deck.cards )
+		elem.setAttribute( 'onclick', 'patience.deal()' )
 
 		// Start the game by removing the banner.
 		elem = document.getElementById('banner')
 		elem.classList.add( 'hidden' )
+	},
+
+	/**
+	 * Turns upto three cards over at the top of the deck
+	 */
+	deal: () => {
+		// No cards, left to draw, so redeal!
+		if ( deck.cards.length === 0 ) {
+			for ( card of patience.drawn ) {
+				card.isFaceUp = false
+				deck.cards.push( card )
+			}
+			patience.drawn = []
+		} else {
+			// Otherwise, draw up to 3 cards and put them face up on the drawn pile	
+			let cards = deck.draw( 3 )
+			for ( let card of cards ) {
+				card.isFaceUp = true
+				patience.drawn.push( card )
+			}
+		}
+
+		let elem = document.getElementById( 'drawn' )
+		deck.decoratePile( elem, patience.drawn )
+
+		elem = document.getElementById( 'deck' )
+		deck.decoratePile( elem, deck.cards )
+
+		patience.debug()
 	},
 
 	debug: () => {
@@ -63,9 +75,15 @@ const patience = {
 			for ( let i = 0; i < patience.piles[p].length; i++ ) {
 				str = str + patience.piles[p][i].name + '\n'
 			}
+			str = str +'\n'
 		}
 
 		for ( let card of deck.cards ) {
+			str = str + card.name + '\n'
+		}
+		str = str +'\n'
+
+		for ( let card of patience.drawn ) {
 			str = str + card.name + '\n'
 		}
 

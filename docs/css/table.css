@@ -37,6 +37,7 @@ body {
 
 #debug {
 	position:absolute;
+	right: 0;
 }
 
 a.btn {
@@ -54,5 +55,5 @@ a.btn:hover {
 }
 
 .hidden {
-	display: none;
+	opacity: 0;
 }

@@ -42,13 +42,51 @@ const deck = {
 	},
 
 	/**
-	 * Draws _n_ cards from the top of the deck
+	 * Draws upto _n_ cards from the top of the deck
 	 */
 	draw: ( n ) => {
 		let ret = []
-		for ( let i = 0; i < n; i++ ) {
+		let nn = Math.min(n,deck.cards.length)
+		for ( let i = 0; i < nn; i++ ) {
 			ret.push( deck.cards.pop() )
 		}
 		return ret
+	},
+
+	/**
+	 * Decorate the DOM element based on the supplied card's face.
+	 */
+	decorateFace: ( elem, card ) => {
+		if ( card.isFaceUp ) {
+			elem.setAttribute( 'class', 'card ' + card.suit )
+			elem.innerHTML = '<div class="label">'+card.label+'</div><div class="bottomlabel">'+card.label+'</div>'
+		} else {
+			elem.setAttribute( 'class', 'card faceDown' )
+		}
+	},
+
+	/**
+	 * Decorate the DOM element as if it were a pile of cards
+	 */
+	decoratePile: ( elem, pile ) => {
+		// An empty pile is hidden
+		if ( pile.length === 0 ) {
+			elem.classList.add( 'hidden' )
+			return
+		}
+
+		// Otherwise, decorate the top card and add a shadow based on its length
+		deck.decorateFace( elem, pile[pile.length-1] )
+		let stack = 'stack'
+		if ( pile.length > 14 ) {
+			stack = stack + '4'
+		} else if ( pile.length > 10 ) {
+			stack = stack + '3'
+		} else if ( pile.length > 6 ) {
+			stack = stack + '2'
+		} else if ( pile.length > 2 ) {
+			stack = stack + '1'
+		}
+		elem.classList.add( stack )
 	}
 };
