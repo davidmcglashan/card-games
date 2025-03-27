@@ -57,3 +57,6 @@ a.btn:hover {
 .hidden {
 	opacity: 0;
 }
+#banner.hidden {
+	display: none;
+}

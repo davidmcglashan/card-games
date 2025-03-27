@@ -1,1 +1,13 @@
-- onclick on deck to turn deck over and put cards in next pile
+- drag from the drawn pile onto another pile
+- drag between piles
+- dealing thru the deck reverses the order of each triplet
+- disable drag selection?
+- reveal top face-down card on a pile
+- double click to go on a suit pile
+
+- Start Over button
+- work out which functions belong in deck.js for other games
+- work out which CSS belongs in a common place
+
+- decorate the card backs
+- decorate the card fronts

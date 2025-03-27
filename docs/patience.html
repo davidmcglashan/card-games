@@ -18,13 +18,21 @@
 					<div id="deck" class="card faceDown hidden"></div>
 				</div>
 				<div class="pile">
-					<div id="drawn" class="card faceDown hidden"></div>
+					<div id="drawn" class="card faceDown hidden" draggable="true" ondragstart="patience.drag(event)" data-drag="drawn"></div>
 				</div>
 				<div class="pile nopile"></div>
-				<div id="suit0" class="pile"></div>
-				<div id="suit1" class="pile"></div>
-				<div id="suit2" class="pile"></div>
-				<div id="suit3" class="pile"></div>
+				<div class="pile">
+					<div id="suit0" class="card hidden" ondrop="patience.dropOnSuit(event)" ondragover="patience.dragOver(event)" ondragenter="patience.dragEnterSuit(event)"></div>
+				</div>
+				<div class="pile">
+					<div id="suit1" class="card hidden" ondrop="patience.dropOnSuit(event)" ondragover="patience.dragOver(event)" ondragenter="patience.dragEnterSuit(event)"></div>
+				</div>
+				<div class="pile">
+					<div id="suit2" class="card hidden" ondrop="patience.dropOnSuit(event)" ondragover="patience.dragOver(event)" ondragenter="patience.dragEnterSuit(event)"></div>
+				</div>
+				<div class="pile">
+					<div id="suit3" class="card hidden" ondrop="patience.dropOnSuit(event)" ondragover="patience.dragOver(event)" ondragenter="patience.dragEnterSuit(event)"></div>
+				</div>
 			</div>
 			<div class="piles">
 				<div id="pile6" class="pile"></div>
