@@ -3,17 +3,23 @@
 	max-width: 1000px;
 }
 
-#piles {
+.piles {
 	display: flex;
 	width: 100%;
 	gap: 2%;
+	margin-bottom: 2em;
 }
+
 	.pile {
 		width: 12.5%;
-		border: 1px solid #040;
 		border-radius: 8%;
 		aspect-ratio: 0.7142857143;
 		position: relative;
+		border: 1px solid #040;
+	}
+
+	.nopile {
+		border: unset;
 	}
 
 	.card {
