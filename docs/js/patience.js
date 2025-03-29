@@ -1,77 +1,89 @@
 const patience = {
-	piles: [],		// There are seven piles which we draw from.
-	drawn: [],		// This is the pile we draw from the deck onto, three cards at a time.
+	deck: null,		// The pack of cards we are using
+	drawn: null,		// This is the pile we draw from the deck onto, three cards at a time.
 	suits: {},		// These are the piles for each suit which end the game when they're complete.
-	dragData: {},	// Used to record data for drag-n-drop operations.
+	towers: [],		// There are seven towers which are dealt out at the start of the game..
+
+	dragData: null,	// Used to record data for drag-n-drop operations.
 
 	/**
 	 * Let's play patience!
 	 */
 	play: () => {
-		// Get the deck ready.
-		deck.new()
-		deck.shuffle()
-
-		// Build each pile up.
-		for ( let p = 0; p < 7; p++ ) {
-			patience.piles[p] = deck.draw( p+1 )
-
-			let pile = document.getElementById( 'pile'+p )
-			for ( let i = 0; i < patience.piles[p].length; i++ ) {
-				let card = patience.piles[p][i]
-				let elem = document.createElement( 'div' )
-				elem.setAttribute( 'id', card.name )
-				elem.setAttribute( 'data-drag', p )
-
-				if ( i === patience.piles[p].length-1 ) {
-					card.isFaceUp = true
-					elem.setAttribute( 'draggable', 'true' )
-					elem.setAttribute( 'ondragstart','patience.drag(event)' )
-					elem.setAttribute( 'ondrop','patience.dropOnPile(event)' )
-				}
-
-				deck.decorateFace( elem, card )
-				elem.setAttribute( 'style', 'z-index:'+i+';top:'+i+'em;')
-				pile.appendChild( elem )
-			}
-		}
-
-		// Put the deck on the table.
-		let elem = document.getElementById('deck')
-		deck.decoratePile( elem, deck.cards )
-		elem.setAttribute( 'onclick', 'patience.deal()' )
-
 		// Start the game by removing the banner.
-		elem = document.getElementById('banner')
+		let elem = document.getElementById('banner')
 		elem.classList.add( 'hidden' )
+
+		// Tell the pile UI code to invoke this object's functions when things happen
+		pileUI.setListener( patience )
+
+		// Get the deck ready.
+		patience.deck = pileOfCards.newFaceDownPile( 'deck', deckOfCards.newShuffled() )
+		patience.drawn = pileOfCards.emptyPile( 'drawn' )
+
+		// Build each tower up.
+		for ( let t = 0; t < 7; t++ ) {
+			patience.towers[t] = pileOfCards.newTopFacePile('tower'+t, pileOfCards.draw( patience.deck, t+1 )  )
+		}
 	},
 
 	/**
-	 * Turns upto three cards over at the top of the deck
+	 * Called when a pile gets rebuilt.
 	 */
-	deal: () => {
-		// No cards, left to draw, so redeal!
-		if ( deck.cards.length === 0 ) {
-			for ( card of patience.drawn ) {
-				card.isFaceUp = false
-				deck.cards.push( card )
+	pileRebuilt: ( pile ) => {
+		if ( pile.name === 'deck' ) {
+			// Let the top card listen to a mouse click
+			let card = pileOfCards.top( pile )
+			if ( card ) {
+				let cardElem = document.getElementById( card.name )
+				cardElem.setAttribute( 'onclick', 'patience.deal(event)' )	
+				cardElem.classList.add( 'interactive' )	
 			}
-			patience.drawn = []
-		} else {
-			// Otherwise, draw up to 3 cards and put them face up on the drawn pile	
-			let cards = deck.draw( 3 )
-			for ( let card of cards ) {
-				card.isFaceUp = true
-				patience.drawn.push( card )
-			}
+
+			let pileElem = document.getElementById( pile.name )
+			pileElem.removeAttribute( 'onclick' )	
+			pileElem.classList.remove( 'interactive' )	
+		}
+	},
+
+	/**
+	 * Called when a pile has all of its cards removed.
+	 */
+	pileEmptied: ( pile ) => {
+		if ( pile.name === 'deck' ) {
+			let pileElem = document.getElementById( pile.name )
+			pileElem.setAttribute( 'onclick', 'patience.redeal(event)' )	
+			pileElem.classList.add( 'interactive' )	
+		}
+	},
+
+	/**
+	 * Turns upto three cards over at the top of the deck.
+	 */
+	deal: ( event ) => {
+		// Otherwise, draw up to 3 cards and put them face up on the drawn pile	
+		let cards = pileOfCards.draw( patience.deck, 3 )
+		for ( let card of cards ) {
+			card.isFaceUp = true
+			pileOfCards.placeOnTop( patience.drawn, card )
 		}
 
-		let elem = document.getElementById( 'drawn' )
-		deck.decoratePile( elem, patience.drawn )
+		event.stopPropagation()
+		patience.debug()
+	},
 
-		elem = document.getElementById( 'deck' )
-		deck.decoratePile( elem, deck.cards )
+	/**
+	 * Returns the dealt cards to the deck and we start over.
+	 */
+	redeal: ( event ) => {
+		// Take everything from the drawn pile and empty it
+		let cards = pileOfCards.drawAll( patience.drawn )
 
+		// Push everything back onto the deck, face down.
+		for ( let card of cards ) {
+			card.isFaceUp = false
+		}
+		pileOfCards.placeAllOnTop( patience.deck, cards )
 		patience.debug()
 	},
 
@@ -89,9 +101,9 @@ const patience = {
 			patience.dragData.card = patience.drawn[patience.drawn.length-1]
 			patience.dragData.source = patience.drawn
 		} else {
-			let pile = patience.piles[parseInt(src)]
-			patience.dragData.card = pile[pile.length-1]
-			patience.dragData.source = pile
+			let tower = patience.towers[parseInt(src)]
+			patience.dragData.card = tower[tower.length-1]
+			patience.dragData.source = tower
 		}
 	},
 
@@ -163,19 +175,19 @@ const patience = {
 		let str = ''
 
 		for ( let p = 0; p < 7; p++ ) {
-			for ( let i = 0; i < patience.piles[p].length; i++ ) {
-				str = str + patience.piles[p][i].name + '\n'
+			for ( let i = 0; i < patience.towers[p].cards.length; i++ ) {
+				str = str + patience.towers[p].cards[i].name + ' ' + patience.towers[p].cards[i].isFaceUp + '\n'
 			}
 			str = str +'\n'
 		}
 
-		for ( let card of deck.cards ) {
-			str = str + card.name + '\n'
+		for ( let card of patience.deck.cards ) {
+			str = str + card.name + ' ' + card.isFaceUp + '\n'
 		}
 		str = str +'\n'
 
-		for ( let card of patience.drawn ) {
-			str = str + card.name + '\n'
+		for ( let card of patience.drawn.cards ) {
+			str = str + card.name + ' ' + card.isFaceUp + '\n'
 		}
 
 		let elem = document.getElementById('debug')

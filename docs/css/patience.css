@@ -66,3 +66,10 @@
 	.card.faceDown {
 		background-color: blue;
 	}
+
+	.interactive {
+		cursor: pointer;
+	}
+	.interactive:hover {
+		border: 2px solid white;
+	}

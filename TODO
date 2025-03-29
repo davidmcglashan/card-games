@@ -1,3 +1,5 @@
+- write a pile.js to encapsulate an array of cards
+
 - reveal function. Keep newly-exposed cards face down and add a click handler to turn them over.
 
 - drag from the drawn pile onto another pile

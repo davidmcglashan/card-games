@@ -8,18 +8,17 @@
 		<link rel="stylesheet" href="css/deck.css">
 		<link rel="stylesheet" href="css/table.css">
 		<link rel="stylesheet" href="css/patience.css">
-		<script type="text/javascript" src="js/deck.js"></script>
+		<script type="text/javascript" src="js/deckOfCards.js"></script>
+		<script type="text/javascript" src="js/pileOfCards.js"></script>
+		<script type="text/javascript" src="js/pileUI.js"></script>
 		<script type="text/javascript" src="js/patience.js"></script>
 	</head>
 	<body>
 		<div id="table">
 			<div class="piles">
-				<div class="pile">
-					<div id="deck" class="card faceDown hidden"></div>
-				</div>
-				<div class="pile">
-					<div id="drawn" class="card faceDown hidden" draggable="true" ondragstart="patience.drag(event)" data-drag="drawn"></div>
-				</div>
+				<div id="deck" class="pile"></div>
+				<div id="drawn" class="pile"></div> 
+
 				<div class="pile nopile"></div>
 				<div class="pile">
 					<div id="suit0" class="card hidden" ondrop="patience.dropOnSuit(event)" ondragover="patience.dragOver(event)" ondragenter="patience.dragEnterSuit(event)"></div>
@@ -35,13 +34,13 @@
 				</div>
 			</div>
 			<div class="piles">
-				<div id="pile6" class="pile"></div>
-				<div id="pile5" class="pile"></div>
-				<div id="pile4" class="pile"></div>
-				<div id="pile3" class="pile"></div>
-				<div id="pile2" class="pile"></div>
-				<div id="pile1" class="pile"></div>
-				<div id="pile0" class="pile"></div>
+				<div id="tower6" class="pile"></div>
+				<div id="tower5" class="pile"></div>
+				<div id="tower4" class="pile"></div>
+				<div id="tower3" class="pile"></div>
+				<div id="tower2" class="pile"></div>
+				<div id="tower1" class="pile"></div>
+				<div id="tower0" class="pile"></div>
 			</div>
 		</div>
 		<div id="foot">
