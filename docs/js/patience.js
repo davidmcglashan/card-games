@@ -83,7 +83,7 @@ const patience = {
 		if ( card ) {
 			let cardElem = document.getElementById( card.name )
 			cardElem.setAttribute( 'draggable', 'true' )	
-			cardElem.setAttribute( 'ondragstart', 'patience.drag(event,\'' + pile.name + '\')' )	
+			cardElem.setAttribute( 'ondragstart', 'patience.drag(event,\'' + pile.name + '\',\'' + card.name + '\')' )		
 			cardElem.classList.add( 'interactive' )	
 		}
 	},
