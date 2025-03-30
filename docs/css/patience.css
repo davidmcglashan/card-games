@@ -67,6 +67,10 @@
 		background-color: blue;
 	}
 
+	.dragged {
+		transition: 0.01s;
+		transform: translateX(-9999px);
+	}
 	.interactive {
 		cursor: pointer;
 	}

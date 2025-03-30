@@ -12,6 +12,10 @@ const pileUI = {
 		}
 	},
 
+	readyPile: ( pile ) => {
+		pileUI.despatch( 'pileReadied', pile )
+	},
+
 	/**
 	 * Builds a pile of card <div>s in the elemID element
 	 */

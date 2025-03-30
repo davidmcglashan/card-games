@@ -20,18 +20,10 @@
 				<div id="drawn" class="pile"></div> 
 
 				<div class="pile nopile"></div>
-				<div class="pile">
-					<div id="suit0" class="card hidden" ondrop="patience.dropOnSuit(event)" ondragover="patience.dragOver(event)" ondragenter="patience.dragEnterSuit(event)"></div>
-				</div>
-				<div class="pile">
-					<div id="suit1" class="card hidden" ondrop="patience.dropOnSuit(event)" ondragover="patience.dragOver(event)" ondragenter="patience.dragEnterSuit(event)"></div>
-				</div>
-				<div class="pile">
-					<div id="suit2" class="card hidden" ondrop="patience.dropOnSuit(event)" ondragover="patience.dragOver(event)" ondragenter="patience.dragEnterSuit(event)"></div>
-				</div>
-				<div class="pile">
-					<div id="suit3" class="card hidden" ondrop="patience.dropOnSuit(event)" ondragover="patience.dragOver(event)" ondragenter="patience.dragEnterSuit(event)"></div>
-				</div>
+				<div id="suit0" class="pile"></div>
+				<div id="suit1" class="pile"></div>
+				<div id="suit2" class="pile"></div>
+				<div id="suit3" class="pile"></div>
 			</div>
 			<div class="piles">
 				<div id="tower6" class="pile"></div>
@@ -45,6 +37,7 @@
 		</div>
 		<div id="foot">
 			<strong>v1.0</strong> &copy; 2025 David McGlashan
+			<a href="#" alt="Play Patience" onclick="patience.restart()">Restart</a>
 		</div>
 		<div id="banner">
 			<h1>Patience</h1>

@@ -7,6 +7,7 @@ const pileOfCards = {
 		pile.offset = { x:0, y:1 }
 		pile.cards = []
 
+		pileUI.readyPile( pile )
 		return pile
 	},
 
@@ -42,6 +43,18 @@ const pileOfCards = {
 	shuffle: ( pile ) => {
 		pile.cards = deckOfCards.shuffle( pile.cards )
 		pileUI.rebuildPile( pile )
+	},
+
+	/**
+	 * Takes the top card from the top of the pile.
+	 */
+	take: ( pile ) => {
+		if ( pile.cards.length === 0 ) {
+			return null
+		}
+		let card = pile.cards.pop()
+		pileUI.rebuildPile( pile )
+		return card
 	},
 
 	/**
@@ -83,6 +96,17 @@ const pileOfCards = {
 	placeAllOnTop: ( pile, cards ) => {
 		pile.cards = cards
 		pileUI.rebuildPile( pile )
+	},
+
+	/**
+	 * Places a card on the top of a pile
+	 */
+	reveal: ( pile ) => {
+		let card = pileOfCards.top( pile )
+		if ( card ) {
+			card.isFaceUp = true
+			pileUI.rebuildPile( pile )
+		}
 	},
 
 	/**

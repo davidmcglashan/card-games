@@ -1,10 +1,11 @@
 const patience = {
-	deck: null,		// The pack of cards we are using
-	drawn: null,		// This is the pile we draw from the deck onto, three cards at a time.
-	suits: {},		// These are the piles for each suit which end the game when they're complete.
-	towers: [],		// There are seven towers which are dealt out at the start of the game..
-
-	dragData: null,	// Used to record data for drag-n-drop operations.
+	restart: () => {
+		let elems = document.getElementsByClassName( 'card' )
+		for ( elem of elems ) {
+			elem.remove()
+		}
+		patience.play()
+	},
 
 	/**
 	 * Let's play patience!
@@ -21,9 +22,26 @@ const patience = {
 		patience.deck = pileOfCards.newFaceDownPile( 'deck', deckOfCards.newShuffled() )
 		patience.drawn = pileOfCards.emptyPile( 'drawn' )
 
+		// And the suits 
+		for ( let i=0; i<4; i++ ) {
+			patience['suit'+i] = pileOfCards.emptyPile( 'suit'+i )
+		}
+
 		// Build each tower up.
 		for ( let t = 0; t < 7; t++ ) {
-			patience.towers[t] = pileOfCards.newTopFacePile('tower'+t, pileOfCards.draw( patience.deck, t+1 )  )
+			patience['tower'+t] = pileOfCards.newTopFacePile('tower'+t, pileOfCards.draw( patience.deck, t+1 )  )
+		}
+
+		patience.debug()
+	},
+
+	pileReadied: ( pile ) => {
+		if ( pile.name.startsWith( 'suit' ) ) {
+			let pileElem = document.getElementById( pile.name )
+
+			pileElem.setAttribute( 'ondrop',' patience.dropOnSuit(event)' )
+			pileElem.setAttribute( 'ondragover', 'patience.dragOver(event)' )
+			pileElem.setAttribute( 'ondragenter', 'patience.dragEnterSuit(event)' )
 		}
 	},
 
@@ -31,19 +49,63 @@ const patience = {
 	 * Called when a pile gets rebuilt.
 	 */
 	pileRebuilt: ( pile ) => {
-		if ( pile.name === 'deck' ) {
-			// Let the top card listen to a mouse click
-			let card = pileOfCards.top( pile )
-			if ( card ) {
-				let cardElem = document.getElementById( card.name )
-				cardElem.setAttribute( 'onclick', 'patience.deal(event)' )	
-				cardElem.classList.add( 'interactive' )	
+		// Can we find a patience function that's the pile name with Rebuilt on the end?
+		let fn = patience[pile.name+'Rebuilt']
+		if ( fn ) {
+			fn( pile )
+		} else {
+			// Try removing the last char - it might be a number e.g. tower3 for which we can call towerRebuilt 
+			let len = pile.name.length-1
+			fn = patience[pile.name.substr(0,len) +'Rebuilt']
+			if ( fn ) {
+				fn( pile )
 			}
-
-			let pileElem = document.getElementById( pile.name )
-			pileElem.removeAttribute( 'onclick' )	
-			pileElem.classList.remove( 'interactive' )	
 		}
+	},
+
+	deckRebuilt: ( pile ) => {
+		// Let the top card listen to a mouse click
+		let card = pileOfCards.top( pile )
+		if ( card ) {
+			let cardElem = document.getElementById( card.name )
+			cardElem.setAttribute( 'onclick', 'patience.deal(event)' )	
+			cardElem.classList.add( 'interactive' )	
+		}
+
+		let pileElem = document.getElementById( pile.name )
+		pileElem.removeAttribute( 'onclick' )	
+		pileElem.classList.remove( 'interactive' )	
+	},
+
+	drawnRebuilt: ( pile ) => {
+		// Let the top card listen to a mouse click
+		let card = pileOfCards.top( pile )
+		if ( card ) {
+			let cardElem = document.getElementById( card.name )
+			cardElem.setAttribute( 'draggable', 'true' )	
+			cardElem.setAttribute( 'ondragstart', 'patience.drag(event,\'' + pile.name + '\')' )	
+			cardElem.classList.add( 'interactive' )	
+		}
+	},
+
+	towerRebuilt: ( pile ) => {
+		// Let the top card listen to a mouse click
+		let card = pileOfCards.top( pile )
+		if ( card ) {
+			let cardElem = document.getElementById( card.name )
+			cardElem.classList.add( 'interactive' )
+			if ( card.isFaceUp ) {
+				cardElem.setAttribute( 'draggable', 'true' )	
+				cardElem.setAttribute( 'ondragstart', 'patience.drag(event,\'' + pile.name + '\',\'' + card.name + '\')' )		
+				cardElem.setAttribute( 'ondragend', 'patience.restoreAfterDrag(event)' )		
+			} else {
+				cardElem.setAttribute( 'onclick', 'patience.reveal(event,\'' + pile.name + '\')' )		
+			}
+		}
+	},
+
+	suitRebuilt: ( pile ) => {
+		console.log( 'suit rebuilt ' + pile.name )
 	},
 
 	/**
@@ -55,6 +117,12 @@ const patience = {
 			pileElem.setAttribute( 'onclick', 'patience.redeal(event)' )	
 			pileElem.classList.add( 'interactive' )	
 		}
+	},
+
+	reveal: ( event, pileName ) => {
+		pileOfCards.reveal( patience[pileName] )
+		event.stopPropagation()
+		patience.debug()
 	},
 
 	/**
@@ -90,21 +158,25 @@ const patience = {
 	/**
 	 * Starts a drag from a face up card.
 	 */
-	drag: ( evnt ) => {
-		let src = evnt.target.getAttribute('data-drag')
-
+	drag: ( evnt, pileName, cardName ) => {
 		patience.dragData = {}		
 		patience.dragData.permitted = false
-		patience.dragData.sourceElem = evnt.target.id
-
-		if ( patience.dragData.source === 'drawn' ) {
-			patience.dragData.card = patience.drawn[patience.drawn.length-1]
-			patience.dragData.source = patience.drawn
-		} else {
-			let tower = patience.towers[parseInt(src)]
-			patience.dragData.card = tower[tower.length-1]
-			patience.dragData.source = tower
+		
+		// Find the card object in the pile
+		let pile = patience[pileName]
+		let card = null
+		for ( let c of pile.cards ) {
+			if ( c.name === cardName ) {
+				card = c
+				break
+			}
 		}
+
+		// Store pile and card in the drag data. This will make it easier to perform the drag.
+		patience.dragData.card = card
+		patience.dragData.pile = pile
+
+		evnt.target.classList.add( 'dragged' )
 	},
 
 	/**
@@ -112,10 +184,10 @@ const patience = {
 	 */
 	dragEnterSuit: (evnt ) => {
 		// What is the current state of the dropped-on suit?
-		let suit = patience.suits[evnt.target.id]
+		let suit = patience[evnt.target.id]
 
 		// If the suit is empty or null then the dropped card needs to be an ace!
-		if ( suit === undefined && patience.dragData.card.value !== 0 ) {
+		if ( suit.cards.length === 0 && patience.dragData.card.value !== 0 ) {
 			return
 		}		
 
@@ -133,6 +205,10 @@ const patience = {
 		}
 	},
 
+	restoreAfterDrag: ( evnt ) => {
+		evnt.target.classList.remove( 'dragged' )
+	},
+
 	/**
 	 * Drop a dragged card onto one of the suit piles. This is only called if dragOverSuit evaluated that
 	 * it would succeed.
@@ -141,31 +217,11 @@ const patience = {
 		evnt.preventDefault();
 
 		// The travelling card now belongs to this suit pile
-		let suit = patience.suits[evnt.target.id]
-		if ( suit === undefined ) {
-			suit = []
-			patience.suits[evnt.target.id] = suit
-		}
-		suit.push( patience.dragData.card )
-		
-		let elem = document.getElementById( evnt.target.id )
-		deck.decoratePile( elem, suit )
+		let card = pileOfCards.take( patience.dragData.pile )
+		card.isFaceUp = true
+		pileOfCards.placeOnTop( patience[evnt.target.id], card )
 
-		// Remove it from the place it came from
-		patience.dragData.source.pop()
-		elem = document.getElementById( patience.dragData.sourceElem )
-		elem.remove()
-
-		// The next card along, if there is one, can now be revealed
-		let next = patience.dragData.source[ patience.dragData.source.length-1 ]
-		if ( next ) {
-			next.isFaceUp = true
-			elem = document.getElementById( next.name )
-			deck.decorateFace( elem, next )
-			elem.setAttribute( 'draggable', 'true' )
-			elem.setAttribute( 'ondragstart','patience.drag(event)' )
-			elem.setAttribute( 'ondrop','patience.dropOnPile(event)' )
-		}
+		patience.debug()
 	},
 
 	/**
@@ -174,13 +230,6 @@ const patience = {
 	debug: () => {
 		let str = ''
 
-		for ( let p = 0; p < 7; p++ ) {
-			for ( let i = 0; i < patience.towers[p].cards.length; i++ ) {
-				str = str + patience.towers[p].cards[i].name + ' ' + patience.towers[p].cards[i].isFaceUp + '\n'
-			}
-			str = str +'\n'
-		}
-
 		for ( let card of patience.deck.cards ) {
 			str = str + card.name + ' ' + card.isFaceUp + '\n'
 		}
@@ -188,6 +237,20 @@ const patience = {
 
 		for ( let card of patience.drawn.cards ) {
 			str = str + card.name + ' ' + card.isFaceUp + '\n'
+		}
+
+		for ( let p = 0; p < 4; p++ ) {
+			for ( let i = 0; i < patience['suit'+p].cards.length; i++ ) {
+				str = str + patience['suit'+p].cards[i].name + ' ' + patience['suit'+p].cards[i].isFaceUp + '\n'
+			}
+			str = str +'\n'
+		}
+
+		for ( let p = 0; p < 7; p++ ) {
+			for ( let i = 0; i < patience['tower'+p].cards.length; i++ ) {
+				str = str + patience['tower'+p].cards[i].name + ' ' + patience['tower'+p].cards[i].isFaceUp + '\n'
+			}
+			str = str +'\n'
 		}
 
 		let elem = document.getElementById('debug')
