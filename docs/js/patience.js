@@ -1,8 +1,8 @@
 const patience = {
 	restart: () => {
-		let elems = document.getElementsByClassName( 'card' )
+		let elems = document.getElementsByClassName( 'pile' )
 		for ( elem of elems ) {
-			elem.remove()
+			elem.innerHTML = ''
 		}
 		patience.play()
 	},
