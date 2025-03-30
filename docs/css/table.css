@@ -54,6 +54,13 @@ a.btn:hover {
 	background-color: #139;
 }
 
+a {
+	color: yellow;
+}
+a:hover {
+	text-decoration: none;
+}
+
 .hidden {
 	opacity: 0;
 }
