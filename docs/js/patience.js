@@ -105,7 +105,11 @@ const patience = {
 	},
 
 	suitRebuilt: ( pile ) => {
-		console.log( 'suit rebuilt ' + pile.name )
+		let card = pileOfCards.top( pile )
+		if ( card ) {
+			let cardElem = document.getElementById( card.name )
+			cardElem.setAttribute( 'data-suit', pile.name )	
+		}
 	},
 
 	/**
@@ -183,17 +187,34 @@ const patience = {
 	 * A drag has entered a suit pile. Evaluate if a drop is permitted.
 	 */
 	dragEnterSuit: (evnt ) => {
+		let suit = null
+
 		// What is the current state of the dropped-on suit?
-		let suit = patience[evnt.target.id]
+		let id = evnt.target.getAttribute( 'data-suit' )
+		if ( id ) {
+			suit = patience[id]
+		} else {
+			suit = patience[evnt.target.id]
+		}
 
 		// If the suit is empty or null then the dropped card needs to be an ace!
-		if ( suit.cards.length === 0 && patience.dragData.card.value !== 0 ) {
+		if ( suit.cards.length === 0 && patience.dragData.card.value === 0 ) {
+			patience.dragData.suit = suit
+			patience.dragData.permitted = true
+			evnt.preventDefault();
 			return
-		}		
+		}
 
-		// We can accept this drop so stop the browser handling the drag/drop event.
-		patience.dragData.permitted = true
-		evnt.preventDefault();
+		// If there are cards in the suit already, then the next card has to match, and has to be the next one
+		if ( suit.cards.length > 0 ) {
+			let suitCard = pileOfCards.top( suit )
+			if ( suitCard.suit === patience.dragData.card.suit && suitCard.value === patience.dragData.card.value-1 ) {
+				patience.dragData.suit = suit
+				patience.dragData.permitted = true
+				evnt.preventDefault();
+				return					
+			}	
+		}
 	},
 
 	/**
@@ -219,7 +240,7 @@ const patience = {
 		// The travelling card now belongs to this suit pile
 		let card = pileOfCards.take( patience.dragData.pile )
 		card.isFaceUp = true
-		pileOfCards.placeOnTop( patience[evnt.target.id], card )
+		pileOfCards.placeOnTop( patience.dragData.suit, card )
 
 		patience.debug()
 	},
