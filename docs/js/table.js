@@ -1,41 +1,41 @@
 const table = {
-	clickOnGlass: (event ) => {
+	clickOnGlass: ( event ) => {
+		// Was the click on a card?
 		let elem = cardUI.getCardAtXY( event.clientX, event.clientY )
 		if ( elem ) {
-			let clickId = elem.getAttribute('id')
-
-			// Was the clicked card the one at the top of the deck pile?
-			let topCard = dealer.peekTopOfPile( 'pile-deck' )
-			if ( !topCard.isFaceUp && topCard.name === clickId ) {
-				topCard.isFaceUp = true
-				cardUI.decorate( topCard )
-			}
-		}
-	},
-	
-	pressOnDeck: ( event ) => {
-		let elem = cardUI.getCardAtXY( event.clientX, event.clientY )
-		if ( elem ) {
-			let clickId = elem.getAttribute('id')
-			let topCard = dealer.peekTopOfPile( 'pile-deck' )
-
-			if ( !topCard.isFaceUp ) {
+			if ( game.clickOnCard( elem.getAttribute('id'), elem.getAttribute('data-pile') ) ) {
 				return
 			}
+		}
 
-			table.drag = {}
-			table.drag.elem = elem
-			table.drag.sourcePile = 'pile-deck'
-			table.drag.origin = {left:elem.style.left, top:elem.style.top}
-
-			let xdiff = event.x - event.offsetX
-			let ydiff = event.y - event.offsetY
-			table.drag.offsetX = event.x - elem.getBoundingClientRect().x + xdiff
-			table.drag.offsetY = event.y - elem.getBoundingClientRect().y + ydiff
+		// Was the click on a pile?
+		elem = cardUI.getPileAtXY( event.clientX, event.clientY )
+		if ( elem ) {
+			if ( game.clickOnPile( elem.getAttribute('id') ) ) {
+				return
+			}
 		}
 	},
 	
-	releaseDeck: ( event ) => {
+	pressOnGlass: ( event ) => {
+		let elem = cardUI.getCardAtXY( event.clientX, event.clientY )
+		if ( elem ) {
+			if ( game.pressOnCard( elem.getAttribute( 'id' ), elem.getAttribute( 'data-pile' ) ) ) {
+				table.drag = {}
+				table.drag.elem = elem
+				table.drag.sourcePile = elem.getAttribute( 'data-pile' )
+				table.drag.origin = {left:elem.style.left, top:elem.style.top}
+				table.drag.card = dealer.peekTopOfPile(table.drag.sourcePile)
+				
+				let xdiff = event.x - event.offsetX
+				let ydiff = event.y - event.offsetY
+				table.drag.offsetX = event.x - elem.getBoundingClientRect().x + xdiff
+				table.drag.offsetY = event.y - elem.getBoundingClientRect().y + ydiff
+			}
+		}
+	},
+	
+	releaseGlass: ( event ) => {
 		// Abort quickly if we're not dragging anything.
 		if ( table.drag === undefined ) {
 			return
@@ -63,6 +63,7 @@ const table = {
 				// Update the models.
 				let card = dealer.takeFromPile( table.drag.sourcePile )
 				dealer.placeOnPile( name, card )
+				table.drag.elem.setAttribute( 'data-pile', name )
 
 				// Tidy up.
 				pile.elem.classList.remove( 'hover' )
@@ -78,7 +79,7 @@ const table = {
 		table.drag = undefined
 	},
 	
-	moveOverDeck: ( event ) => {
+	moveOverGlass: ( event ) => {
 		// Abort quickly if we're not dragging anything.
 		if ( table.drag === undefined ) {
 			return
@@ -87,7 +88,10 @@ const table = {
 		// Are we dragging over a pile? Provide a drop affordance.
 		for (const [name, pile] of Object.entries(dealer.piles)) {
 			let rect = pile.elem.getBoundingClientRect()
-			if ( event.x > rect.x && event.x < rect.x + rect.width && event.y > rect.y && event.y < rect.y + rect.height ) {
+			if ( 
+				event.x > rect.x && event.x < rect.x + rect.width && event.y > rect.y && event.y < rect.y + rect.height 
+				&& game.canDrop( table.drag.card, pile ) 
+			) {
 				pile.elem.classList.add( 'hover' )
 			} else {
 				pile.elem.classList.remove( 'hover' )
@@ -110,17 +114,13 @@ const table = {
 		// Have the glass listen to mouse events
 		let glass = document.getElementById( 'glass' )
 		glass.addEventListener( 'click', table.clickOnGlass )
-		glass.addEventListener( 'mouseup', table.releaseDeck )
-		glass.addEventListener( 'mousemove', table.moveOverDeck )
-		glass.addEventListener( 'mousedown', table.pressOnDeck )
+		glass.addEventListener( 'mouseup', table.releaseGlass )
+		glass.addEventListener( 'mousemove', table.moveOverGlass )
+		glass.addEventListener( 'mousedown', table.pressOnGlass )
 
-		// Have the dealer shuffle a new deck of cards, and place them face down in a pile.
-		dealer.newFaceDownPile( 'pile-deck', dealer.newShuffledCardArray() )
-		cardUI.snapPile( dealer.piles['pile-deck'] )
-
-		// Also there's an empty pile.
-		dealer.newEmptyPile( 'pile-one' )
-		dealer.newEmptyPile( 'pile-two' )
-		dealer.newEmptyPile( 'pile-three' )
+		let piles = document.getElementsByClassName( 'pile' )
+		for ( let pile of piles ) {
+			game.newPile( pile.getAttribute( 'id' ) )
+		}
 	}
 }

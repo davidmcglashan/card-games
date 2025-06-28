@@ -1,7 +1,3 @@
-- declare game file somewhere in the DOM
-  - put a demo.js and demo.html in the mix
-  - drag and drop operations defered to demo.js
-
 - dragged cards move into #glass and drop back to #cards
 
 - animate the snaps 

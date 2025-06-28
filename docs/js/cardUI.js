@@ -9,6 +9,8 @@ const cardUI = {
 			if ( !elem ) {
 				elem = document.createElement( "div" )
 				elem.setAttribute( 'id', card.name )
+				elem.setAttribute( 'data-pile', pile.name )
+				
 				elem.style.left = i/2 + pileElem.offsetLeft + 'px'
 				elem.style.top = i/2 + pileElem.offsetTop + 'px'
 				elem.style.width = bounds.width + 'px'
@@ -34,7 +36,15 @@ const cardUI = {
 		return null
 	},
 
-
+	getPileAtXY: ( x, y ) => {
+		let elems = document.elementsFromPoint( x, y )
+		for ( let elem of elems ) {
+			if ( elem.classList.contains( 'pile' ) ) {
+				return elem
+			}
+		}
+		return null
+	},
 
 	/**
 	 * Decorate the DOM element based on the supplied card's face.

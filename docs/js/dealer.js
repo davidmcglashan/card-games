@@ -75,6 +75,7 @@ const dealer = {
 
 		for ( let card of cards ) {
 			card.isFaceUp = false
+			card.pile = pile
 		}
 		return pile
 	},
@@ -99,6 +100,7 @@ const dealer = {
 				return null
 			}
 			let card = pile.cards.pop()
+			card.pile = null
 			return card
 		}
 		return null
@@ -133,6 +135,7 @@ const dealer = {
 		let pile = dealer.piles[name]
 		if ( pile ) {
 			pile.cards.push( card )
+			card.pile = name
 		}
 	},
 
