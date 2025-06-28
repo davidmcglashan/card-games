@@ -1,5 +1,15 @@
 - dragged cards move into #glass and drop back to #cards
+- drop affordances for piles with cards on them
 
 - animate the snaps 
 - decorate the card backs
 - decorate the card fronts
+- handle the window resizing 'cos the cards don't
+- Make restart work again
+- pile stacking offsets (tight, diagonal, loose)
+- end game state detection
+
+- patience
+- clock patience
+- that instagram game (accordion) - https://www.instagram.com/p/DENFxlMxzf6/
+  - might need some dynamic pile animations :D

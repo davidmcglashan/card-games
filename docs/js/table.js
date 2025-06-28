@@ -1,4 +1,8 @@
 const table = {
+	/**
+	 * A mouse click happened on the glass. This function detects which element
+	 * (card,pile) was under the click and asks the game object to handle the click
+	 */
 	clickOnGlass: ( event ) => {
 		// Was the click on a card?
 		let elem = cardUI.getCardAtXY( event.clientX, event.clientY )
@@ -17,10 +21,15 @@ const table = {
 		}
 	},
 	
+	/**
+	 * A mouse press happened on the glass, usually the prelude to a drag/drop operation. 
+	 * This function detects which element (card,pile) was under the press and asks the
+	 * game object if a drag is appropriate. If true, it begins ...
+	 */
 	pressOnGlass: ( event ) => {
 		let elem = cardUI.getCardAtXY( event.clientX, event.clientY )
 		if ( elem ) {
-			if ( game.pressOnCard( elem.getAttribute( 'id' ), elem.getAttribute( 'data-pile' ) ) ) {
+			if ( game.canStartDrag( elem.getAttribute( 'id' ), elem.getAttribute( 'data-pile' ) ) ) {
 				table.drag = {}
 				table.drag.elem = elem
 				table.drag.sourcePile = elem.getAttribute( 'data-pile' )
@@ -35,6 +44,10 @@ const table = {
 		}
 	},
 	
+	/**
+	 * The mouse was released. This function provides the default behaviour of placing the
+	 * dragged card on top of the destination drop pile
+	 */
 	releaseGlass: ( event ) => {
 		// Abort quickly if we're not dragging anything.
 		if ( table.drag === undefined ) {
@@ -64,6 +77,7 @@ const table = {
 				let card = dealer.takeFromPile( table.drag.sourcePile )
 				dealer.placeOnPile( name, card )
 				table.drag.elem.setAttribute( 'data-pile', name )
+				game.dropHappened( card, table.drag.sourcePile, name )
 
 				// Tidy up.
 				pile.elem.classList.remove( 'hover' )
@@ -79,6 +93,10 @@ const table = {
 		table.drag = undefined
 	},
 	
+	/**
+	 * Called as a mouse is dragged over the game. If a drag/drop operation is active the game
+	 * is called to assess if a drop can be performed when the cursor is over a pile.
+	 */
 	moveOverGlass: ( event ) => {
 		// Abort quickly if we're not dragging anything.
 		if ( table.drag === undefined ) {

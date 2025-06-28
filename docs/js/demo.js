@@ -1,4 +1,7 @@
 const game = {
+	/**
+	 * Sets up the new piles. One is a deck, the others are all empty.
+	 */
 	newPile: ( name ) => {
 		if ( name === 'pile-deck' ) {
 			// Have the dealer shuffle a new deck of cards, and place them face down in a pile.
@@ -9,6 +12,9 @@ const game = {
 		}
 	},
 
+	/**
+	 * Respond to clicks on the deck to turn the top card if it's face down.
+	 */
 	clickOnCard: ( card, pile ) => {
 		// Was the clicked card the one at the top of the deck pile?
 		let topCard = dealer.peekTopOfPile( pile )
@@ -21,6 +27,12 @@ const game = {
 		return false
 	},
 
+	/**
+	 * Return true if card can be dropped on pile. There are simple rules ...
+	 *  - no to the deck
+	 *  - yes to an empty pile
+	 *  - yes to a pile if its suit matches the card
+	 */
 	canDrop: ( card, pile ) => {
 		// Can't drop on the deck ...
 		if ( pile.name === 'pile-deck' ) {
@@ -37,11 +49,24 @@ const game = {
 		return card.suit === topCard.suit
 	},
 
+	/**
+	 * Called in response to a card drop. This game is fine with the default behaviour.
+	 */
+	dropHappened: ( card, startPileName, endPileName ) => {
+		//
+	},
+
+	/**
+	 * Not used.
+	 */
 	clickOnPile: ( pile ) => {
 		return false
 	},
 
-	pressOnCard: ( card, pile ) => {
+	/**
+	 * Can a drag be started from the pile in question using card?
+	 */
+	canStartDrag: ( card, pile ) => {
 		let topCard = dealer.peekTopOfPile( pile )
 		if ( !topCard.isFaceUp && topCard.name === card ) {
 			return false;
