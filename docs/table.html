@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Card table</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="css/deck.css">
+		<link rel="stylesheet" href="css/table.css">
+		<script type="text/javascript" src="js/dealer.js"></script>
+		<script type="text/javascript" src="js/cardUI.js"></script>
+		<script type="text/javascript" src="js/table.js"></script>
+	</head>
+	<body>
+		<div id="table">
+			<div class="pile" id="pile-deck"></div>
+			<div class="pile" id="pile-one"></div>
+			<div class="pile" id="pile-two"></div>
+			<div class="pile" id="pile-three"></div>
+			<div id="cards"></div>
+			<div id="glass"></div>
+		</div>
+		<div id="foot">
+			<strong>v1.0</strong> &copy; 2025 David McGlashan
+			<a href="#" alt="Play Patience" onclick="table.restart()">Restart</a>
+		</div>
+		<div id="banner">
+			<h1>Card table</h1>
+			<a class="btn" href="#" alt="Play Patience" onclick="table.restart()">Play!</a>
+		</div>
+		<pre id="debug"></div>
+	</body>
+</html>

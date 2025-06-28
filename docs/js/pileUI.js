@@ -50,19 +50,5 @@ const pileUI = {
 		} else {
 			pileUI.despatch( 'pileRebuilt', pile )
 		}
-	},
-
-	/**
-	 * Decorate the DOM element based on the supplied card's face.
-	 */
-	decorateFace: ( card ) => {
-		let elem = document.getElementById( card.name )
-
-		if ( card.isFaceUp ) {
-			elem.setAttribute( 'class', 'card ' + card.suit )
-			elem.innerHTML = '<div class="label">'+card.label+'</div><div class="bottomlabel">'+card.label+'</div>'
-		} else {
-			elem.setAttribute( 'class', 'card faceDown' )
-		}
-	},
+	}
 };

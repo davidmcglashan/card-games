@@ -39,10 +39,17 @@ const patience = {
 		if ( pile.name.startsWith( 'suit' ) ) {
 			let pileElem = document.getElementById( pile.name )
 
-			pileElem.setAttribute( 'ondrop',' patience.dropOnSuit(event)' )
+			pileElem.setAttribute( 'ondrop', 'patience.dropOnSuit(event)' )
 			pileElem.setAttribute( 'ondragover', 'patience.dragOver(event)' )
 			pileElem.setAttribute( 'ondragenter', 'patience.dragEnterSuit(event)' )
-		}
+		} 
+		if ( pile.name.startsWith( 'tower' ) ) {
+			let pileElem = document.getElementById( pile.name )
+
+			pileElem.setAttribute( 'ondrop', 'patience.dropOnTower(event)' )
+			pileElem.setAttribute( 'ondragover', 'patience.dragOver(event)' )
+			pileElem.setAttribute( 'ondragenter', 'patience.dragEnterTower(event)' )
+		} 
 	},
 
 	/**
@@ -95,6 +102,7 @@ const patience = {
 			let cardElem = document.getElementById( card.name )
 			cardElem.classList.add( 'interactive' )
 			if ( card.isFaceUp ) {
+				cardElem.setAttribute( 'data-tower', pile.name )	
 				cardElem.setAttribute( 'draggable', 'true' )	
 				cardElem.setAttribute( 'ondragstart', 'patience.drag(event,\'' + pile.name + '\',\'' + card.name + '\')' )		
 				cardElem.setAttribute( 'ondragend', 'patience.restoreAfterDrag(event)' )		
@@ -121,6 +129,13 @@ const patience = {
 			pileElem.setAttribute( 'onclick', 'patience.redeal(event)' )	
 			pileElem.classList.add( 'interactive' )	
 		}
+		if ( pile.name.startsWith( 'tower' ) ) {
+			let pileElem = document.getElementById( pile.name )
+
+			pileElem.setAttribute( 'ondrop', 'patience.dropOnTower(event)' )
+			pileElem.setAttribute( 'ondragover', 'patience.dragOver(event)' )
+			pileElem.setAttribute( 'ondragenter', 'patience.dragEnterTower(event)' )
+		} 
 	},
 
 	reveal: ( event, pileName ) => {
@@ -218,6 +233,41 @@ const patience = {
 	},
 
 	/**
+	 * A drag has entered a suit pile. Evaluate if a drop is permitted.
+	 */
+	dragEnterTower: (evnt ) => {
+		console.log( 'drag enter tower' )
+		// We need a data-tower attribute or it's a no-go!
+		let id = evnt.target.getAttribute( 'data-tower' )
+		if ( !id ) {
+			return
+		}
+
+		let tower = patience[id]
+
+		// If the tower is empty then the dropped card needs to be an king!
+		console.log ( 'hi ' + id + ' ::: ' + tower.cards.length + ' - ' + patience.dragData.card.value )
+			if ( tower.cards.length === 0 && patience.dragData.card.value === 12 ) {
+			patience.dragData.tower = tower
+			patience.dragData.permitted = true
+			evnt.preventDefault();
+			return
+		}
+
+		// If there are cards on the tower already, then the next card has to be a different colour and a one-lower value
+		if ( tower.cards.length > 0 ) {
+			let towerCard = pileOfCards.top( tower )
+			if ( towerCard.isRed !== patience.dragData.card.isRed && towerCard.value === patience.dragData.card.value+1 ) {
+				patience.dragData.tower = tower
+				patience.dragData.permitted = true
+				evnt.preventDefault();
+				return					
+			}	
+		}
+	},
+
+
+	/**
 	 * User is dragging over something. Checks the precalculated permitted flag to allow a drop or not.
 	 */
 	dragOver: ( evnt ) => {
@@ -246,30 +296,45 @@ const patience = {
 	},
 
 	/**
+	 * Drop a dragged card onto one of the suit piles. This is only called if dragOverSuit evaluated that
+	 * it would succeed.
+	 */
+	dropOnTower: ( evnt ) => {
+		evnt.preventDefault();
+
+		// The travelling card now belongs to this suit pile
+		let card = pileOfCards.take( patience.dragData.pile )
+		card.isFaceUp = true
+		pileOfCards.placeOnTop( patience.dragData.tower, card )
+
+		patience.debug()
+	},
+
+	/**
 	 * Noddy debug method. Dumps the cards in the various piles.
 	 */
 	debug: () => {
 		let str = ''
 
 		for ( let card of patience.deck.cards ) {
-			str = str + card.name + ' ' + card.isFaceUp + '\n'
+			str = str + card.name + ' ' + card.isFaceUp + ' ' + card.value + '\n'
 		}
 		str = str +'\n'
 
 		for ( let card of patience.drawn.cards ) {
-			str = str + card.name + ' ' + card.isFaceUp + '\n'
+			str = str + card.name + ' ' + card.isFaceUp + ' ' + card.value + '\n'
 		}
 
 		for ( let p = 0; p < 4; p++ ) {
 			for ( let i = 0; i < patience['suit'+p].cards.length; i++ ) {
-				str = str + patience['suit'+p].cards[i].name + ' ' + patience['suit'+p].cards[i].isFaceUp + '\n'
+				str = str + patience['suit'+p].cards[i].name + ' ' + patience['suit'+p].cards[i].isFaceUp + ' ' + patience['suit'+p].cards[i].value + '\n'
 			}
 			str = str +'\n'
 		}
 
 		for ( let p = 0; p < 7; p++ ) {
 			for ( let i = 0; i < patience['tower'+p].cards.length; i++ ) {
-				str = str + patience['tower'+p].cards[i].name + ' ' + patience['tower'+p].cards[i].isFaceUp + '\n'
+				str = str + patience['tower'+p].cards[i].name + ' ' + patience['tower'+p].cards[i].isFaceUp + ' ' + patience['tower'+p].cards[i].value + '\n'
 			}
 			str = str +'\n'
 		}
