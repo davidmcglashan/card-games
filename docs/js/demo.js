@@ -1,4 +1,7 @@
 const game = {
+	// This game doesn't need a start method.
+	start: () => {},
+
 	/**
 	 * Sets up the new piles. One is a deck, the others are all empty.
 	 */

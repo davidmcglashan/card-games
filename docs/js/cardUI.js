@@ -10,9 +10,9 @@ const cardUI = {
 				elem = document.createElement( "div" )
 				elem.setAttribute( 'id', card.name )
 				elem.setAttribute( 'data-pile', pile.name )
-				
-				elem.style.left = i/2 + pileElem.offsetLeft + 'px'
-				elem.style.top = i/2 + pileElem.offsetTop + 'px'
+
+				elem.style.left = i/2 + bounds.x + 'px'
+				elem.style.top = i/2 + bounds.y + 'px'
 				elem.style.width = bounds.width + 'px'
 				elem.style.height = bounds.height + 'px'
 

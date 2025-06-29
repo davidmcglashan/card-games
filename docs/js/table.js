@@ -70,8 +70,8 @@ const table = {
 
 				// Snap the card neatly onto the pile.
 				let rect = pile.elem.getBoundingClientRect()
-				table.drag.elem.style.top = pile.elem.offsetTop + 'px'
-				table.drag.elem.style.left = pile.elem.offsetLeft + 'px'
+				table.drag.elem.style.top = rect.top + 'px'
+				table.drag.elem.style.left = rect.left + 'px'
 
 				// Update the models.
 				let card = dealer.takeFromPile( table.drag.sourcePile )
@@ -136,6 +136,10 @@ const table = {
 		glass.addEventListener( 'mousemove', table.moveOverGlass )
 		glass.addEventListener( 'mousedown', table.pressOnGlass )
 
+		// Tell the game we're about to start.
+		game.start()
+
+		// Tell the game about the piles we find in the DOM.
 		let piles = document.getElementsByClassName( 'pile' )
 		for ( let pile of piles ) {
 			game.newPile( pile.getAttribute( 'id' ) )
