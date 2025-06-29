@@ -84,12 +84,10 @@ const table = {
 					destination.after( table.drag.elem )
 				}
 
-				// Snap the card neatly onto the pile.
-				let rect = pile.elem.getBoundingClientRect()
-				//table.drag.elem.style.top = rect.top + 'px'
-				//table.drag.elem.style.left = rect.left + 'px'
-
+				// Snap the card neatly onto the pile. First we place the card on the pile, but apply a transform to
+				// translate it back to where it was dropped.
 				const snappingCard = table.drag.elem
+				let rect = pile.elem.getBoundingClientRect()
 				let x = snappingCard.getBoundingClientRect().left - rect.left
 				let y = snappingCard.getBoundingClientRect().top - rect.top
 				snappingCard.style.top = rect.top + 'px'
