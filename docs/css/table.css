@@ -104,6 +104,7 @@ a:hover {
 	position: relative;
 	border: 1px solid #040;
 }
+.pile.interactive, 
 .pile.hover {
 	border: 1px solid #fff;
 	box-shadow: 0px 0px 24px #fff;

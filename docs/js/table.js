@@ -10,6 +10,11 @@ const table = {
 	 * (card,pile) was under the click and asks the game object to handle the click
 	 */
 	clickOnGlass: ( event ) => {
+		// Abort quickly if we're dragging something.
+		if ( table.drag !== undefined ) {
+			return
+		}
+		
 		// Was the click on a card?
 		let elem = cardUI.getCardAtXY( event.clientX, event.clientY )
 		if ( elem ) {
@@ -61,7 +66,7 @@ const table = {
 	releaseGlass: ( event ) => {
 		// Abort quickly if we're not dragging anything.
 		if ( table.drag === undefined ) {
-			return
+			table.clickOnGlass( event )
 		}
 
 		// Did we drop over a pile?
@@ -99,6 +104,8 @@ const table = {
 		// Snap the card back to where it came from.
 		table.drag.elem.style.top = table.drag.origin.top
 		table.drag.elem.style.left = table.drag.origin.left
+		let cards = document.getElementById( 'cards' )
+		cards.appendChild( table.drag.elem )
 
 		table.drag = undefined
 	},
@@ -139,9 +146,9 @@ const table = {
 				event.x > rect.x && event.x < rect.x + rect.width && event.y > rect.y && event.y < rect.y + rect.height 
 				&& game.canClickOrDragFromPile( pile ) 
 			) {
-				pile.elem.classList.add( 'hover' )
+				pile.elem.classList.add( 'interactive' )
 			} else {
-				pile.elem.classList.remove( 'hover' )
+				pile.elem.classList.remove( 'interactive' )
 			}
 		}
 	},
@@ -156,7 +163,7 @@ const table = {
 
 		// Have the glass listen to mouse events
 		let glass = document.getElementById( 'glass' )
-		glass.addEventListener( 'click', table.clickOnGlass )
+		//glass.addEventListener( 'click', table.clickOnGlass )
 		glass.addEventListener( 'mouseup', table.releaseGlass )
 		glass.addEventListener( 'mousemove', table.moveOverGlass )
 		glass.addEventListener( 'mousedown', table.pressOnGlass )
