@@ -66,22 +66,12 @@ const game = {
 	dropHappened: ( card, startPileName, endPileName ) => {
 		let num = card.name.split('_')
 		game.nextPile = 'clock-' + num[0]
-		console.log( game.nextPile )
 	},
 
 	/**
-	 * Not used.
+	 * Not used
 	 */
 	clickOnPile: ( pile ) => {
-		if ( pile === game.nextPile ) {
-			// Was the clicked card the one at the top of the deck pile?
-			let topCard = dealer.peekTopOfPile( pile )
-			if ( !topCard.isFaceUp && topCard.name === card ) {
-				topCard.isFaceUp = true
-				cardUI.decorate( topCard )
-				return true
-			}
-		}
 		return false
 	},
 
