@@ -1,4 +1,5 @@
-- end game state detection
+- dragged-from pile remains hovering/interactive
+- some other fragility around drag/drops and timings
 
 - decorate the card backs
 - decorate the card fronts
@@ -9,6 +10,5 @@
 - instructions
 
 - patience
-- clock patience
 - that instagram game (accordion) - https://www.instagram.com/p/DENFxlMxzf6/
   - might need some dynamic pile animations :D

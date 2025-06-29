@@ -87,5 +87,24 @@ const game = {
 			}
 		}
 		return false
+	},
+
+	/**
+	 * Returns 0 if the game isn't finished, 1 if the player loses, 2 if the player wins!
+	 */
+	hasFinished: () => {
+		// We're finished when the drop-king pile has four cards.
+		let pile = dealer.piles['drop-king']
+		if ( pile.cards.length === 4 ) {
+			// If all the drop piles have four cards then this is a win!
+			for ( const [name,pile] of Object.entries( dealer.piles ) ) {
+				if ( pile.cards.length !== 4 ) {
+					return 1
+				}
+			}
+			return 2
+		}
+
+		return 0
 	}
 }

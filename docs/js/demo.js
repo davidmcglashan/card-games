@@ -84,5 +84,16 @@ const game = {
 		}
 
 		return true
+	},
+
+	/**
+	 * Returns 0 if the game isn't finished, 1 if the player loses, 2 if the player wins!
+	 */
+	hasFinished: () => {
+		// If all the drop piles have four cards then this is a win!
+		if ( dealer.piles['pile-deck'].cards.length === 0 ) {
+			return 2
+		}
+		return 0
 	}
 }

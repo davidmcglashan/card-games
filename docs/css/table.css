@@ -62,10 +62,16 @@ body {
 	right: 0;
 	top: 25%;
 	bottom: 40%;
-	background-color: rgba(0,0,0,0.5);
-	padding: 6em;
-	box-shadow: 0px 8px 50px rgba(0,0,0,0.5);
+	background-color: rgba(0,0,0,0.75);
+	padding: 3em 6em;
+	box-shadow: 0px 8px 50px rgba(0,0,0,1);
 }
+	#banner h1 {
+		margin-bottom: 0;
+	}
+	#banner p {
+		margin: 1em 0 2em;
+	}
 
 #debug {
 	position:absolute;

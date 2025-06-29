@@ -1,8 +1,8 @@
 const table = {
 	games: [ 
-		{ name: 'Clock', url: 'clock-patience.html' },
-		{ name: 'Patience', url: 'patience.html' },
-		{ name: 'Test', url: 'table.html' },
+		{ name: 'Clock', description: 'Tick tock!', url: 'clock-patience.html' },
+		{ name: 'Patience', description: 'a.k.a. Solitaire', url: 'patience.html' },
+		{ name: 'Test', description: 'Nothing here matters', url: 'table.html' },
 	],
 
 	/**
@@ -111,6 +111,12 @@ const table = {
 				// Tidy up.
 				pile.elem.classList.remove( 'hover' )
 				table.drag = undefined
+
+				// Check the game hasn't finished
+				let result = game.hasFinished()
+				if ( result > 0 ) {
+					table.finishGame( result )
+				}
 				return
 			}
 		}
@@ -185,16 +191,12 @@ const table = {
 	 * Let's begin!
 	 */
 	restart: () => {
+		let cards = document.getElementById( 'cards' )
+		cards.innerHTML = ''
+		
 		// Start the game by removing the banner.
 		let elem = document.getElementById('banner')
 		elem.classList.add( 'hidden' )
-
-		// Have the glass listen to mouse events
-		let glass = document.getElementById( 'glass' )
-		//glass.addEventListener( 'click', table.clickOnGlass )
-		glass.addEventListener( 'mouseup', table.releaseGlass )
-		glass.addEventListener( 'mousemove', table.moveOverGlass )
-		glass.addEventListener( 'mousedown', table.pressOnGlass )
 
 		// Tell the game we're about to start.
 		game.start()
@@ -206,11 +208,33 @@ const table = {
 		}
 	},
 
+	finishGame: ( result ) => {
+		// Start the game by removing the banner.
+		let elem = document.getElementById('banner')
+		elem.classList.remove( 'hidden' )
+
+		let banner = document.getElementById( 'headline' )
+		let message = document.getElementById( 'message' )
+
+		if ( result === 1 ) {
+			banner.innerHTML = 'Game over!'
+			message.innerHTML = 'Better luck next time ...'
+		} else {
+			banner.innerHTML = 'Congratulations!'
+			message.innerHTML = 'Why not try and do that again?'
+		}
+	},
+
+	/**
+	 * Updates the links and the banner for game being played.
+	 */
 	links: () => {
+		// Put a <ul> in the foot.
 		let foot = document.getElementById( 'foot' )
 		let ul = document.createElement( 'ul' )
 		foot.append( ul )
 
+		// Put an <li> for each available game.
 		for ( let gg of table.games ) {
 			let li = document.createElement( 'li' )
 			ul.appendChild( li )
@@ -218,12 +242,25 @@ const table = {
 			let a = document.createElement( 'a' )
 			a.setAttribute( 'href', gg.url )
 			a.innerHTML = gg.name
+			li.appendChild( a )
+
+			// If this is the current game then select the <li> and update the banner.
 			if ( document.URL.indexOf( '/' + gg.url ) !== -1 ) {
 				a.setAttribute( 'class', 'selected' )
+
+				let banner = document.getElementById( 'headline' )
+				banner.innerHTML = gg.name
+				let message = document.getElementById( 'message' )
+				message.innerHTML = gg.description
 			}
-			li.appendChild( a )
 		}
 
 		foot.insertAdjacentHTML( 'beforeend', '<strong>v1.0</strong> &copy; 2025 David McGlashan' )
+
+		// Have the glass listen to mouse events
+		let glass = document.getElementById( 'glass' )
+		glass.addEventListener( 'mouseup', table.releaseGlass )
+		glass.addEventListener( 'mousemove', table.moveOverGlass )
+		glass.addEventListener( 'mousedown', table.pressOnGlass )
 	}
 }
