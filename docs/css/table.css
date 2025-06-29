@@ -31,7 +31,30 @@ body {
 	position: absolute;
 	bottom: 0;
 	padding: 0.5em;
+	display: flex;
+	left: 0;
+	right: 1rem;
 }
+	#foot ul {
+		flex: 10;
+		display: inline-flex;
+		gap: 1rem;
+		margin: 0;
+		padding-inline-start: 1rem;
+	}
+	#foot ul li {
+		list-style-type: none;
+	}
+	#foot a.selected {
+		color: white;
+		border-top: 1px solid #fff;
+	}
+	#foot a {
+		text-decoration: none;
+	}
+	#foot a:hover {
+		color: #fff;
+	}
 
 #banner {
 	position: absolute;

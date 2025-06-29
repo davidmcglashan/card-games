@@ -1,4 +1,10 @@
 const table = {
+	games: [ 
+		{ name: 'Clock', url: 'clock-patience.html' },
+		{ name: 'Patience', url: 'patience.html' },
+		{ name: 'Test', url: 'table.html' },
+	],
+
 	/**
 	 * A mouse click happened on the glass. This function detects which element
 	 * (card,pile) was under the click and asks the game object to handle the click
@@ -163,5 +169,26 @@ const table = {
 		for ( let pile of piles ) {
 			game.newPile( pile.getAttribute( 'id' ) )
 		}
+	},
+
+	links: () => {
+		let foot = document.getElementById( 'foot' )
+		let ul = document.createElement( 'ul' )
+		foot.append( ul )
+
+		for ( let gg of table.games ) {
+			let li = document.createElement( 'li' )
+			ul.appendChild( li )
+
+			let a = document.createElement( 'a' )
+			a.setAttribute( 'href', gg.url )
+			a.innerHTML = gg.name
+			if ( document.URL.indexOf( '/' + gg.url ) !== -1 ) {
+				a.setAttribute( 'class', 'selected' )
+			}
+			li.appendChild( a )
+		}
+
+		foot.insertAdjacentHTML( 'beforeend', '<strong>v1.0</strong> &copy; 2025 David McGlashan' )
 	}
 }
