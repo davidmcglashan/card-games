@@ -100,6 +100,7 @@ const table = {
 	moveOverGlass: ( event ) => {
 		// Abort quickly if we're not dragging anything.
 		if ( table.drag === undefined ) {
+			table.checkForClicks( event )
 			return
 		}
 
@@ -119,6 +120,20 @@ const table = {
 		// Move the card to where the mouse is.
 		table.drag.elem.style.left = Math.max( 0, (event.clientX-table.drag.offsetX) ) + 'px' 
 		table.drag.elem.style.top = Math.max( 0, (event.clientY-table.drag.offsetY) ) + 'px'
+	},
+
+	checkForClicks: ( event ) => {
+		for (const [name, pile] of Object.entries(dealer.piles)) {
+			let rect = pile.elem.getBoundingClientRect()
+			if ( 
+				event.x > rect.x && event.x < rect.x + rect.width && event.y > rect.y && event.y < rect.y + rect.height 
+				&& game.canClickOrDragFromPile( pile ) 
+			) {
+				pile.elem.classList.add( 'hover' )
+			} else {
+				pile.elem.classList.remove( 'hover' )
+			}
+		}
 	},
 
 	/**

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Clock Patience</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="css/table.css">
+		<link rel="stylesheet" href="css/clock.css">
+		<script type="text/javascript" src="js/dealer.js"></script>
+		<script type="text/javascript" src="js/cardUI.js"></script>
+		<script type="text/javascript" src="js/table.js"></script>
+		<script type="text/javascript" src="js/clock.js"></script>
+	</head>
+	<body>
+		<div id="table">
+			<div class="row">
+				<div class="pile" id="clock-ace"></div>
+				<div class="pile" id="clock-2"></div>
+				<div class="pile" id="clock-3"></div>
+				<div class="pile" id="clock-4"></div>
+				<div class="pile" id="clock-5"></div>
+				<div class="pile" id="clock-6"></div>
+			</div>
+			<div class="row">
+				<div class="pile" id="drop-ace"></div>
+				<div class="pile" id="drop-2"></div>
+				<div class="pile" id="drop-3"></div>
+				<div class="pile" id="drop-4"></div>
+				<div class="pile" id="drop-5"></div>
+				<div class="pile" id="drop-6"></div>
+			</div>
+			<div class="row">
+				<div class="pile" id="drop-7"></div>
+				<div class="pile" id="drop-8"></div>
+				<div class="pile" id="drop-9"></div>
+				<div class="pile" id="drop-10"></div>
+				<div class="pile" id="drop-jack"></div>
+				<div class="pile" id="drop-queen"></div>
+				<div class="pile" id="drop-king"></div>
+			</div>
+			<div class="row">
+				<div class="pile" id="clock-7"></div>
+				<div class="pile" id="clock-8"></div>
+				<div class="pile" id="clock-9"></div>
+				<div class="pile" id="clock-10"></div>
+				<div class="pile" id="clock-jack"></div>
+				<div class="pile" id="clock-queen"></div>
+				<div class="pile" id="clock-king"></div>
+			</div>
+		</div>
+
+			<div id="cards"></div>
+			<div id="glass"></div>
+		<div id="foot">
+			<strong>v1.0</strong> &copy; 2025 David McGlashan
+			<a href="#" alt="Play Patience" onclick="table.restart()">Restart</a>
+		</div>
+		<div id="banner">
+			<h1>Clock patience</h1>
+			<a class="btn" href="#" alt="Play Patience" onclick="table.restart()">Play!</a>
+		</div>
+		<pre id="debug" class="hidden"></div>
+	</body>
+</html>

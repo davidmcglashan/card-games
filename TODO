@@ -1,13 +1,17 @@
 - dragged cards move into #glass and drop back to #cards
-- drop affordances for piles with cards on them
+- animate the snaps
 
-- animate the snaps 
+- end game state detection
+- Make restart work again
+- link games together
+
 - decorate the card backs
 - decorate the card fronts
-- handle the window resizing 'cos the cards don't
-- Make restart work again
+- decorate the piles e.g. numbers in clock patience, aces in regular patience
 - pile stacking offsets (tight, diagonal, loose)
-- end game state detection
+
+- handle the window resizing 'cos the cards don't
+- instructions
 
 - patience
 - clock patience

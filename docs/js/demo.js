@@ -15,6 +15,14 @@ const game = {
 		}
 	},
 
+	canClickOrDragFromPile: ( pile ) => {
+		if ( pile.cards.length > 0 ) {
+			return true
+		}
+
+		return false
+	},
+
 	/**
 	 * Respond to clicks on the deck to turn the top card if it's face down.
 	 */
