@@ -40,6 +40,10 @@ const table = {
 				let ydiff = event.y - event.offsetY
 				table.drag.offsetX = event.x - elem.getBoundingClientRect().x + xdiff
 				table.drag.offsetY = event.y - elem.getBoundingClientRect().y + ydiff
+
+				// Move the dragged card to the #glass element so that it's above everything else
+				let glass = document.getElementById( 'glass' )
+				glass.appendChild( elem )
 			}
 		}
 	},

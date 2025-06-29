@@ -1,4 +1,4 @@
-- dragged cards move into #glass and drop back to #cards
+- click with no drag behaves funnily
 - animate the snaps
 
 - end game state detection
