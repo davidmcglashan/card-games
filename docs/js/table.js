@@ -44,7 +44,7 @@ const table = {
 				table.drag = {}
 				table.drag.elem = elem
 				table.drag.sourcePile = elem.getAttribute( 'data-pile' )
-				table.drag.origin = {left:elem.style.left, top:elem.style.top}
+				table.drag.origin = elem.getBoundingClientRect()
 				table.drag.card = dealer.peekTopOfPile(table.drag.sourcePile)
 				
 				let xdiff = event.x - event.offsetX
@@ -67,6 +67,7 @@ const table = {
 		// Abort quickly if we're not dragging anything.
 		if ( table.drag === undefined ) {
 			table.clickOnGlass( event )
+			return
 		}
 
 		// Did we drop over a pile?
@@ -85,8 +86,23 @@ const table = {
 
 				// Snap the card neatly onto the pile.
 				let rect = pile.elem.getBoundingClientRect()
-				table.drag.elem.style.top = rect.top + 'px'
-				table.drag.elem.style.left = rect.left + 'px'
+				//table.drag.elem.style.top = rect.top + 'px'
+				//table.drag.elem.style.left = rect.left + 'px'
+
+				const snappingCard = table.drag.elem
+				let x = snappingCard.getBoundingClientRect().left - rect.left
+				let y = snappingCard.getBoundingClientRect().top - rect.top
+				snappingCard.style.top = rect.top + 'px'
+				snappingCard.style.left = rect.left + 'px'
+				snappingCard.style.transform = `translate(${x}px,${y}px)`
+
+				// Now apply an animation to remove the translation again.
+				let anim = snappingCard.animate([{transform: 'translate(0px,0px)'}],{duration:125, easing: 'ease-in-out'});
+				anim.pause()
+				anim.onfinish = () => {
+					snappingCard.style.transform = 'none'
+				}
+				anim.play()
 
 				// Update the models.
 				let card = dealer.takeFromPile( table.drag.sourcePile )
@@ -101,9 +117,23 @@ const table = {
 			}
 		}
 
-		// Snap the card back to where it came from.
-		table.drag.elem.style.top = table.drag.origin.top
-		table.drag.elem.style.left = table.drag.origin.left
+		// Snap the card back to where it came from. First we put it at the end, with a transform which
+		// translates to where it was dropped.
+		const snappingCard = table.drag.elem
+		let x = snappingCard.getBoundingClientRect().left - table.drag.origin.left
+		let y = snappingCard.getBoundingClientRect().top - table.drag.origin.top
+		snappingCard.style.top = table.drag.origin.top + 'px'
+		snappingCard.style.left = table.drag.origin.left + 'px'
+		snappingCard.style.transform = `translate(${x}px,${y}px)`
+
+		// Now apply an animation to remove the translation again.
+		let anim = snappingCard.animate([{transform: 'translate(0px,0px)'}],{duration:250, easing: 'ease-in-out'});
+		anim.pause()
+		anim.onfinish = () => {
+			snappingCard.style.transform = 'none'
+		}
+		anim.play()
+
 		let cards = document.getElementById( 'cards' )
 		cards.appendChild( table.drag.elem )
 
