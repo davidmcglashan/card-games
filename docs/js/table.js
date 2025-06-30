@@ -165,6 +165,7 @@ const table = {
 				pile.elem.classList.add( 'hover' )
 			} else {
 				pile.elem.classList.remove( 'hover' )
+				pile.elem.classList.remove( 'interactive' )
 			}
 		}
 
@@ -193,7 +194,7 @@ const table = {
 	restart: () => {
 		let cards = document.getElementById( 'cards' )
 		cards.innerHTML = ''
-		
+
 		// Start the game by removing the banner.
 		let elem = document.getElementById('banner')
 		elem.classList.add( 'hidden' )
