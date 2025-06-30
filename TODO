@@ -2,7 +2,7 @@
 
 - decorate the card backs
 - decorate the card fronts
-- decorate the piles e.g. numbers in clock patience, aces in regular patience
+- decorate the piles aces in regular patience
 - pile stacking offsets (tight, diagonal, loose)
 
 - handle the window resizing 'cos the cards don't

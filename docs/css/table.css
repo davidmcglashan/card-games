@@ -142,7 +142,14 @@ a:hover {
 	right: 0.5em;
 	transform: rotate(180deg);
 }
-
+.pile .label,
+.pile .bottomlabel {
+	color: #040;
+}
+.pile.hover .label,
+.pile.hover .bottomlabel {
+	color: #fff;
+}
 .card.faceDown {
 	background-color: blue;
 }
