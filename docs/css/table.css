@@ -105,7 +105,7 @@ a:hover {
 
 .pile {
 	width: 12.5%;
-	border-radius: 8%;
+	border-radius: 5%;
 	aspect-ratio: 0.692;
 	position: relative;
 	border: 1px solid #040;
@@ -118,7 +118,7 @@ a:hover {
 
 .card {
 	border: 1px solid #040;
-	border-radius: 8%;
+	border-radius: 5%;
 	aspect-ratio: 0.0.692;
 	background-color: white;
 	position: absolute;
