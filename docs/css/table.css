@@ -152,5 +152,6 @@ a:hover {
 }
 .card.faceDown {
 	background-image: url('../assets/blueback.png');
-	background-size: contain;
+	background-size: cover;
+	background-position: center;
 }
