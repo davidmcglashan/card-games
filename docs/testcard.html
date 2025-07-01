@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test Card</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="css/table.css">
+		<link rel="stylesheet" href="css/testcard.css">
+		<script type="text/javascript" src="js/dealer.js"></script>
+		<script type="text/javascript" src="js/cardUI.js"></script>
+		<script type="text/javascript" src="js/table.js"></script>
+		<script type="text/javascript" src="js/testcard.js"></script>
+	</head>
+	<body>
+		<div id="table">
+			<div class="row">
+				<div class="pile" id="test-ace"></div>
+				<div class="pile" id="test-2"></div>
+				<div class="pile" id="test-3"></div>
+				<div class="pile" id="test-4"></div>
+				<div class="pile" id="test-5"></div>
+				<div class="pile" id="test-6"></div>
+			</div>
+			<div class="row">
+				<div class="pile" id="test-7"></div>
+				<div class="pile" id="test-8"></div>
+				<div class="pile" id="test-9"></div>
+				<div class="pile" id="test-10"></div>
+				<div class="pile" id="test-jack"></div>
+				<div class="pile" id="test-queen"></div>
+				<div class="pile" id="test-king"></div>
+			</div>
+		</div>
+		<div id="cards"></div>
+		<div id="glass"></div>
+		<div id="foot"></div>
+		<div id="banner">
+			<h1 id="headline"></h1>
+			<p id="message"></p>
+			<a class="btn" href="#" alt="Play" onclick="table.restart()">Play!</a>
+		</div>
+		<pre id="debug" class="hidden"></div>
+		<script>table.links()</script>
+	</body>
+</html>

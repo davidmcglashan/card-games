@@ -2,7 +2,8 @@ const table = {
 	games: [ 
 		{ name: 'Clock', description: 'Tick tock!', url: 'clock-patience.html' },
 		{ name: 'Patience', description: 'a.k.a. Solitaire', url: 'patience.html' },
-		{ name: 'Test', description: 'Nothing here matters', url: 'table.html' },
+		{ name: 'Test1', description: 'Nothing here matters', url: 'table.html' },
+		{ name: 'Test2', description: 'Look at the pretty cards', url: 'testcard.html' },
 	],
 
 	/**
