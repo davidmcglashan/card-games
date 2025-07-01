@@ -22,7 +22,8 @@ const dealer = {
 			for ( let value = 0; value < 13; value++ ) {
 				let card = {}
 				card.suit = dealer.deckmeta.suits[suit];
-				card.value = value;
+				card.value = 'v'+dealer.deckmeta.values[value];
+				card.ordValue = value
 				card.isRed = suit % 2 === 1
 				card.name = dealer.deckmeta.values[value] + '_of_' + dealer.deckmeta.suits[suit]
 				card.label = dealer.deckmeta.labels[value] + dealer.deckmeta.symbols[suit]

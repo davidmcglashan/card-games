@@ -6,7 +6,6 @@
 #table > div {
 	display: flex;
 	flex-direction: row;
-	flex: 1;
 	gap: 1rem;
 }
 #table div.pile {
