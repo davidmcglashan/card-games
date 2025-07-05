@@ -91,15 +91,16 @@ const table = {
 				let rect = pile.elem.getBoundingClientRect()
 				let x = snappingCard.getBoundingClientRect().left - rect.left
 				let y = snappingCard.getBoundingClientRect().top - rect.top
+				let transform = cardUI.getTransform( pile, snappingCard )
 				snappingCard.style.top = rect.top + 'px'
 				snappingCard.style.left = rect.left + 'px'
 				snappingCard.style.transform = `translate(${x}px,${y}px)`
 
 				// Now apply an animation to remove the translation again.
-				let anim = snappingCard.animate([{transform: 'translate(0px,0px)'}],{duration:125, easing: 'ease-in-out'});
+				let anim = snappingCard.animate([{transform: `translate(0px,0px) ${transform}`}],{duration:125, easing: 'ease-in-out'});
 				anim.pause()
 				anim.onfinish = () => {
-					snappingCard.style.transform = 'none'
+					snappingCard.style.transform = transform
 				}
 				anim.play()
 

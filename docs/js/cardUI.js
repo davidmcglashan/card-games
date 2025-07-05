@@ -17,7 +17,7 @@ const cardUI = {
 
 				cardUI.decorate( card )
 			}
-			
+
 			elem.style.left = i/2 + bounds.x + 'px'
 			elem.style.top = i/2 + bounds.y + 'px'
 			elem.style.width = bounds.width + 'px'
@@ -45,6 +45,15 @@ const cardUI = {
 			}
 		}
 		return null
+	},
+
+	getTransform: ( pile, card ) => {
+		switch ( pile.stackingMethod ) {
+			case dealer.stackingMethods.UNTIDY:
+				let a = Math.floor(Math.random() * 8) - 4;
+				return 'rotate('+a+'deg)'
+		}
+		return 'none'
 	},
 
 	/**

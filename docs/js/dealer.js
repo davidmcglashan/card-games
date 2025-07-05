@@ -6,6 +6,13 @@ const dealer = {
 		labels: ['A','2','3','4','5','6','7','8','9','10','J','Q','K'],
 	},
 
+	stackingMethods: {
+		TIGHT: 0,
+		DIAGONAL: 1,
+		VERTICAL: 2,
+		UNTIDY: 3
+	},
+
 	// All the piles will be stashed in here by their name.
 	piles: {},
 
@@ -65,7 +72,7 @@ const dealer = {
 		pile.name = name
 		pile.cards = []
 		pile.elem = document.getElementById( pile.name )
-
+		pile.stackingMethod = dealer.stackingMethods.UNTIDY
 		dealer.piles[name] = pile
 		return pile
 	},
@@ -76,6 +83,7 @@ const dealer = {
 	newFaceDownPile: ( name, cards ) => {
 		let pile = dealer.newEmptyPile( name )
 		pile.cards = cards
+		pile.stackingMethod = dealer.stackingMethods.DIAGONAL
 
 		for ( let card of cards ) {
 			card.isFaceUp = false
