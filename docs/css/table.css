@@ -103,6 +103,7 @@ a:hover {
 	display: none;
 }
 
+/* Piles are boxes with dark outlines, */
 .pile {
 	width: 12.5%;
 	border-radius: 5%;
@@ -110,38 +111,15 @@ a:hover {
 	position: relative;
 	border: 1px solid #040;
 }
+
+/* Piles being interacted with are white and glow a bit. */
 .pile.interactive, 
 .pile.hover {
 	border: 1px solid #fff;
 	box-shadow: 0px 0px 24px #fff;
 }
 
-.card {
-	border: 1px solid #040;
-	border-radius: 5%;
-	aspect-ratio: 0.0.692;
-	background-color: white;
-	position: absolute;
-}
-
-.hearts, .diamonds {
-	color: red;
-}
-
-.clubs, .spades {
-	color: black;
-}
-.label {
-	position: absolute;
-	top: 0.25em;
-	left: 0.5em;
-}
-.bottomlabel {
-	position: absolute;
-	bottom: 0.25em;
-	right: 0.5em;
-	transform: rotate(180deg);
-}
+/* Pile labels are dark unless in hover state. */
 .pile .label,
 .pile .bottomlabel {
 	color: #040;
@@ -150,8 +128,88 @@ a:hover {
 .pile.hover .bottomlabel {
 	color: #fff;
 }
+
+/* Cards look like playing cards :| */
+.card {
+	border: 1px solid #040;
+	border-radius: 5%;
+	aspect-ratio: 0.692;
+	background-color: white;
+	position: absolute;
+	container-type: size;
+}
+/* Red suits are red, black suits are black! */
+.hearts, .diamonds {
+	color: #f22;
+}
+.clubs, .spades {
+	color: black;
+}
+/* Cards have two labels in opposing corners. */
+.label {
+	position: absolute;
+	top: 0.25em;
+	left: 0.5em;
+}
+/* The bottom label is upside-down. */
+.bottomlabel {
+	position: absolute;
+	bottom: 0.25em;
+	right: 0.5em;
+	transform: rotate(180deg);
+}
+/* Face down cards show the nice blue printed back graphic. */
 .card.faceDown {
 	background-image: url('../assets/blueback.png');
 	background-size: cover;
 	background-position: center;
+}
+
+/* Face-up cards have the suit symbol drawn on them. */
+.suit {
+	font-size: 50cqh;
+	position: absolute;
+	right: 2cqw;
+	top: 25cqw;
+}
+/* Suit symbols are drawn in a lighter colour to stand out from values */
+.hearts .suit, .diamonds .suit {
+	color: #faa;
+}
+.clubs .suit, .spades .suit {
+	color: #888;
+}
+/* Face up cards also show their values in a cursive font. */
+.value {
+	font-family: "Fleur De Leah", cursive;
+	font-size: 46cqh;
+	filter: drop-shadow( 2px 2px 2px rgba(0,0,0,0.5));
+	position: absolute;
+	width: 100%;
+	top: 10cqh;
+}
+/* Black suit values have a white shadow to lift from the suit symbol. */
+.clubs .value, .spades .value {
+	filter: drop-shadow( 2px 2px 2px rgba(255,255,255,1));
+}
+
+/* Capital Qs move into the middle of the cards a bit. */
+.cssqueen .value {
+	left: 10cqh;
+
+	/* These rules overcome a bug? where the left hand side of the glyph is cropped off. */
+	margin-left: -10cqh;
+	padding-left: 10cqh;
+}
+
+/* Thinner numbers move into the middle of the cards. */
+.css2 .value, 
+.css3 .value,
+.css4 .value,
+.css5 .value,
+.css6 .value,
+.css7 .value,
+.css8 .value,
+.css9 .value {
+	left: 9cqh;
 }

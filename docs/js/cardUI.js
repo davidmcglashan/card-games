@@ -53,8 +53,9 @@ const cardUI = {
 		let elem = document.getElementById( card.name )
 
 		if ( card.isFaceUp ) {
-			elem.setAttribute( 'class', 'card faceUp ' + card.suit + ' ' + card.value )
-			elem.innerHTML = '<div class="label">'+card.label+'</div><div class="bottomlabel">'+card.label+'</div>'
+			elem.setAttribute( 'class', 'card faceUp ' + card.suit + ' ' + card.css )
+			let s = '<div class="label">'+card.label+'</div><div class="bottomlabel">'+card.label+'</div><div class="suit">'+card.symbol+'</div><div class="value">'+card.shortValue+'</div>'
+			elem.innerHTML = s
 		} else {
 			elem.setAttribute( 'class', 'card faceDown' )
 		}
