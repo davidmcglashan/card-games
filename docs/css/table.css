@@ -110,6 +110,7 @@ a:hover {
 	aspect-ratio: 0.692;
 	position: relative;
 	border: 1px solid #040;
+	container-type: size;
 }
 
 /* Piles being interacted with are white and glow a bit. */
@@ -136,7 +137,7 @@ a:hover {
 	aspect-ratio: 0.692;
 	background-color: white;
 	position: absolute;
-	container-type: size;
+	container: card / size;
 }
 /* Red suits are red, black suits are black! */
 .hearts, .diamonds {
@@ -148,14 +149,14 @@ a:hover {
 /* Cards have two labels in opposing corners. */
 .label {
 	position: absolute;
-	top: 0.25em;
-	left: 0.5em;
+	top: 1cqw;
+	left: 3cqh;
 }
 /* The bottom label is upside-down. */
 .bottomlabel {
 	position: absolute;
-	bottom: 0.25em;
-	right: 0.5em;
+	bottom: 1cqw;
+	right: 3cqh;
 	transform: rotate(180deg);
 }
 /* Face down cards show the nice blue printed back graphic. */
@@ -212,4 +213,21 @@ a:hover {
 .css8 .value,
 .css9 .value {
 	left: 9cqh;
+}
+
+/* Hide the suit and value elements when the cards get small. */
+@container card (width < 80px) {
+	.card .value {
+		display: none;
+	}
+	.card .suit {
+		right: 14cqw;
+		top: 19cqw;
+	}
+	.hearts .suit, .diamonds .suit {
+		color: #f22;
+	}
+	.clubs .suit, .spades .suit {
+		color: #000;
+	}
 }
