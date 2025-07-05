@@ -210,14 +210,17 @@ const table = {
 		}
 	},
 
+	/** 
+	 * Finishes the current game.
+	 */
 	finishGame: ( result ) => {
-		// Start the game by removing the banner.
+		// Finish the game by displaying the banner.
 		let elem = document.getElementById('banner')
 		elem.classList.remove( 'hidden' )
 
+		// Display a result-appropriate message ...
 		let banner = document.getElementById( 'headline' )
 		let message = document.getElementById( 'message' )
-
 		if ( result === 1 ) {
 			banner.innerHTML = 'Game over!'
 			message.innerHTML = 'Better luck next time ...'
@@ -228,9 +231,22 @@ const table = {
 	},
 
 	/**
-	 * Updates the links and the banner for game being played.
+	 * Called when the window is resized. Tries to make sure the cards are all properly
+	 * positioned.
 	 */
-	links: () => {
+	windowResized: (event ) => {
+		for ( const [name,pile] of Object.entries( dealer.piles ) ) {
+			if ( pile.cards.length > 0 ) {
+				cardUI.snapPile( pile )
+			}
+		}
+	},
+
+	/**
+	 * Prepare the table for playing. This also sets up various bits of UI. Only call this
+	 * once from the loading page.
+	 */
+	ready: () => {
 		// Put a <ul> in the foot.
 		let foot = document.getElementById( 'foot' )
 		let ul = document.createElement( 'ul' )
@@ -264,5 +280,7 @@ const table = {
 		glass.addEventListener( 'mouseup', table.releaseGlass )
 		glass.addEventListener( 'mousemove', table.moveOverGlass )
 		glass.addEventListener( 'mousedown', table.pressOnGlass )
+
+		window.addEventListener("resize", table.windowResized );
 	}
 }

@@ -11,16 +11,17 @@ const cardUI = {
 				elem.setAttribute( 'id', card.name )
 				elem.setAttribute( 'data-pile', pile.name )
 
-				elem.style.left = i/2 + bounds.x + 'px'
-				elem.style.top = i/2 + bounds.y + 'px'
-				elem.style.width = bounds.width + 'px'
-				elem.style.height = bounds.height + 'px'
 
 				let table = document.getElementById( 'cards' )
 				table.appendChild( elem )
 
 				cardUI.decorate( card )
 			}
+			
+			elem.style.left = i/2 + bounds.x + 'px'
+			elem.style.top = i/2 + bounds.y + 'px'
+			elem.style.width = bounds.width + 'px'
+			elem.style.height = bounds.height + 'px'
 
 			i++;
 		}

@@ -1,14 +1,13 @@
-- some other fragility around drag/drops and timings
-- web hosting
+- hide the value and suit elements at smaller sizes
+- pile stacking offsets (tight, diagonal, loose)
 - clock piles look pinched
 - hand icon pointers!
+- web hosting
+- some other fragility around drag/drops and timings
 
 - decorate the piles aces in regular patience
-- pile stacking offsets (tight, diagonal, loose)
 
-- handle the window resizing 'cos the cards don't
 - instructions
-
 - patience
 - that instagram game (accordion) - https://www.instagram.com/p/DENFxlMxzf6/
   - might need some dynamic pile animations :D
