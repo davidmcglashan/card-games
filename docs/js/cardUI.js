@@ -15,8 +15,19 @@ const cardUI = {
 				cardUI.decorate( card )
 			}
 
-			elem.style.left = i/2 + bounds.x + 'px'
-			elem.style.top = i/2 + bounds.y + 'px'
+			switch ( pile.stackingMethod ) {
+				case dealer.stackingMethods.TIGHT:
+				case dealer.stackingMethods.UNTIDY:
+				case dealer.stackingMethods.DIAGONAL:
+					elem.style.left = i/2 + bounds.x + 'px'
+					elem.style.top = i/2 + bounds.y + 'px'
+					break
+				case dealer.stackingMethods.VERTICAL:
+					elem.style.left = bounds.x + 'px'
+					elem.style.top = i*24 + bounds.y + 'px'
+					break
+			}
+			
 			elem.style.width = bounds.width + 'px'
 			elem.style.height = bounds.height + 'px'
 			elem.setAttribute( 'data-pile', pile.name )

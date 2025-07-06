@@ -15,13 +15,17 @@ const game = {
 			for ( let i=0; i<amount; i++ ) {
 				hand.push( game.deck.pop() )
 			}
-			dealer.newTopFacePile( name, hand )
-			cardUI.snapPile( dealer.piles[name] )
+			let pile = dealer.newTopFacePile( name, hand )
+			pile.stackingMethod = dealer.stackingMethods.VERTICAL
+			cardUI.snapPile( pile )
 		} 
 		
 		// everything else is an empty pile. The deck will be set up in cardsDealt()
 		else {
-			dealer.newEmptyPile( name )
+			let pile = dealer.newEmptyPile( name )
+			if ( name === 'deck' ) {
+				pile.stackingMethod = dealer.stackingMethods.DIAGONAL
+			}
 		}
 	},
 
@@ -87,4 +91,31 @@ const game = {
 		return false
 	},
 
+
+	/**
+	 * Can a drag be started from the pile in question using card?
+	 */
+	canStartDrag: ( cardName, pileName ) => {
+		let topCard = dealer.peekTopOfPile( pileName )
+		if ( !topCard.isFaceUp && topCard.name === cardName ) {
+			return false;
+		}
+
+		return true
+	},
+
+	canDrop: ( card, pile ) => {
+		// Permit the building of suits onto the suit piles 
+		if ( pile.name === ( 'suit-' + card.suit ) && pile.cards.length === card.ordValue ) {
+			return true
+		}
+		return false
+	},
+
+	/**
+	 * Called in response to a card drop. This game is fine with the default behaviour.
+	 */
+	dropHappened: ( card, startPileName, endPileName ) => {
+		//
+	},
 };
