@@ -152,10 +152,27 @@ const dealer = {
 	},
 
 	/**
-	 * Places a card on the top of a pile
+	 * Places all the passed in cards on the top of a pile. Cards are dealt one-by-one: the first
+	 * card in cards goes on the pile, then the second goes on top of it, and so on.
 	 */
-	xplaceAllOnPile: ( pile, cards ) => {
-		pile.cards = cards
+	placeAllOnPile: ( name, cards ) => {
+		for ( let card of cards ) {
+			dealer.placeOnPile( name, card )
+		}
+	},
+
+	/**
+	 * Places the passed in cards on top of the pile in one operation. The added pile is subsequently
+	 * order-unchanged on top of the existing pile.
+	 */
+	addCardsToPile: ( name, cards ) => {
+		let pile = dealer.piles[name]
+		if ( pile ) {
+			pile.cards = cards.concat( pile.cards )
+			for ( let card of cards ) {
+				card.pile = name
+			}
+		}
 	},
 
 	/**

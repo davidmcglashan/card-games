@@ -1,4 +1,7 @@
 const game = {
+	/**
+	 * This game doesn't require a start callback.
+	 */
 	start: () => {
 		game.deck = dealer.newCardArray()
 	},
@@ -12,6 +15,11 @@ const game = {
 		dealer.newTopFacePile( name, cards )
 		cardUI.snapPile( dealer.piles[name] )
 	},
+	
+	/**
+	 * This game doesn't require a cardsDealt callback.
+	 */
+	cardsDealt: () => {},
 
 	canClickOrDragFromPile: ( pile ) => {
 		return true

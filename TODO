@@ -2,10 +2,13 @@
 - hand icon pointers!
 - web hosting
 - some other fragility around drag/drops and timings
-
-- decorate the piles aces in regular patience
+- clicking rotated cards in test1 invokes another rotation
+- test1 doesn't restart properly any more - rotations and weird card orders.
 
 - instructions
+
 - patience
+  - decorate the piles aces in regular patience
+
 - that instagram game (accordion) - https://www.instagram.com/p/DENFxlMxzf6/
   - might need some dynamic pile animations :D

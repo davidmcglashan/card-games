@@ -209,6 +209,7 @@ const table = {
 		for ( let pile of piles ) {
 			game.newPile( pile.getAttribute( 'id' ) )
 		}
+		game.cardsDealt()
 	},
 
 	/** 

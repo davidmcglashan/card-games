@@ -1,5 +1,7 @@
 const game = {
-	// This game doesn't need a start method.
+	/**
+	 * This game doesn't require a start callback.
+	 */
 	start: () => {},
 
 	/**
@@ -14,6 +16,11 @@ const game = {
 			dealer.newEmptyPile( name )
 		}
 	},
+
+	/**
+	 * This game doesn't require a cardsDealt callback.
+	 */
+	cardsDealt: () => {},
 
 	canClickOrDragFromPile: ( pile ) => {
 		if ( pile.cards.length > 0 ) {

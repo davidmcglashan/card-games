@@ -1,0 +1,17 @@
+#table {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+.gap,
+.pile {
+	width: 11cqw;
+	max-height: 21cqh;
+	max-width: calc( 21cqh * 0.692 );
+}
