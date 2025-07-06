@@ -2,6 +2,7 @@ const cardUI = {
 	snapPile: ( pile ) => {
 		let pileElem = document.getElementById( pile.name )
 		let bounds = pileElem.getBoundingClientRect()
+		let prev = null;
 
 		let i = 0;
 		for ( let card of pile.cards ) {
@@ -9,12 +10,8 @@ const cardUI = {
 			if ( !elem ) {
 				elem = document.createElement( "div" )
 				elem.setAttribute( 'id', card.name )
-				elem.setAttribute( 'data-pile', pile.name )
-
-
 				let table = document.getElementById( 'cards' )
 				table.appendChild( elem )
-
 				cardUI.decorate( card )
 			}
 
@@ -22,7 +19,12 @@ const cardUI = {
 			elem.style.top = i/2 + bounds.y + 'px'
 			elem.style.width = bounds.width + 'px'
 			elem.style.height = bounds.height + 'px'
-
+			elem.setAttribute( 'data-pile', pile.name )
+			
+			if ( prev ) {
+				prev.after( elem )
+			}
+			prev = elem
 			i++;
 		}
 	},
@@ -67,6 +69,7 @@ const cardUI = {
 			let s = '<div class="label">'+card.label+'</div><div class="bottomlabel">'+card.label+'</div><div class="suit">'+card.symbol+'</div><div class="value">'+card.shortValue+'</div>'
 			elem.innerHTML = s
 		} else {
+			elem.innerHTML = ''
 			elem.setAttribute( 'class', 'card faceDown' )
 		}
 	}

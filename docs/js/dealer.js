@@ -121,13 +121,17 @@ const dealer = {
 	/**
 	 * Draws upto _n_ cards from the top of the pile, returning them as an array of cards.
 	 */
-	xdrawFromPile: ( pile, n ) => {
+	drawFromPile: ( name, n ) => {
 		let ret = []
-		let nn = Math.min( n, pile.cards.length )
-
-		for ( let i = 0; i < nn; i++ ) {
-			ret.push( pile.cards.pop() )
+		let pile = dealer.piles[name]
+		if ( pile ) {
+			let nn = Math.min( n, pile.cards.length )
+	
+			for ( let i = 0; i < nn; i++ ) {
+				ret.push( pile.cards.pop() )
+			}
 		}
+
 		return ret
 	},
 

@@ -25,8 +25,66 @@ const game = {
 		}
 	},
 
+	/**
+	 * Finalises the deck from the remaining undealt cards.
+	 */
 	cardsDealt: () => {
 		dealer.addCardsToPile( 'deck', game.deck )
 		cardUI.snapPile( dealer.piles['deck'] )
-	}
+	},
+
+	/**
+	 * Is the pile in question currently interactive?
+	 */
+	canClickOrDragFromPile: ( pile ) => {
+		// The deck is always interactive, if it has cards.
+		if ( pile.name === 'deck' && (dealer.piles['deck'].cards.length + dealer.piles['drawn'].cards.length > 0) ) {
+			return true
+		}
+		return false
+	},
+
+	/**
+	 * Respond to clicks on the various piles
+	 */
+	clickOnCard: ( cardName, pileName ) => {
+		if ( pileName === 'deck' ) {
+			// Deal three if there's cards in the deck.
+			if ( dealer.piles['deck'].cards.length > 0 ) {
+				let hand = dealer.drawFromPile( 'deck', 3 )
+				for ( let card of hand ) {
+					card.isFaceUp = true
+					cardUI.decorate( card )
+					dealer.placeOnPile( 'drawn', card )
+				}
+				cardUI.snapPile( dealer.piles['drawn'] )
+				return true
+			}
+		}
+		return false
+	},
+
+	clickOnPile: ( pileName ) => {
+		if ( pileName === 'deck' ) {
+			// If the deck is empty we return everything drawn back to it.
+			if ( dealer.piles['deck'].cards.length === 0 ) {
+				// Take all the cards from the drawn pile.
+				let cards = dealer.piles['drawn'].cards.reverse()
+				dealer.piles['drawn'].cards = []
+				
+				// Place them back onto the deck
+				for ( let card of cards ) {
+					card.isFaceUp = false
+					cardUI.decorate( card )
+					dealer.placeOnPile( 'deck', card )
+				}
+
+				cardUI.snapPile( dealer.piles['deck'] )
+				return true
+			}
+		}
+
+		return false
+	},
+
 };
