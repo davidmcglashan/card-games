@@ -3,7 +3,7 @@
 	flex-direction: column;
 	gap: 1rem;
 }
-#table > div {
+.row {
 	display: flex;
 	flex-direction: row;
 	gap: 1rem;
