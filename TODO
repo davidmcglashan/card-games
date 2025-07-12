@@ -1,16 +1,11 @@
-- cards rather than piles need click & drag affordances
-  - pile canDrop etc. needs to change since we really only consider empty piles
-  - after that it's dropping on cards ...
 - sloppy piles tend diagonally up and left
-- hand icon pointers!
+- pointers discerning clicks and drags
 - disable text selection and stuff
 - web hosting
 - some other fragility around drag/drops and timings
 - clicking rotated cards in test1 invokes another rotation
-- replace getBoundingClientRect() with a clever abstraction to be used in ifs
-  - if checkUI.bounds( pile, x, y )
-  - returns boundingrect
 - games maintaining a deck might benefit from pushing that to the dealer
+- dragging off a pile in demo.js prevents further drops to it - is it "leaving a card in there"?
 
 - instructions
 

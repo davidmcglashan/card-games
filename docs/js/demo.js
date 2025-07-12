@@ -22,9 +22,7 @@ const game = {
 		// Empty piles can't be interacted with
 		if ( pile.cards.length > 0 ) {
 			let topCard = dealer.peekTopOfPile( pile.name )
-			let rect = topCard.elem.getBoundingClientRect()
-
-			if ( x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height ) {
+			if ( cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
 				return 2
 			}
 		}
@@ -59,23 +57,18 @@ const game = {
 			return 0
 		}
 
-		// Is the (x,y) within the bounds of the checking pile?
-		let rect = pile.elem.getBoundingClientRect()
-		if ( x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height ) {
-			// Can drop on empty piles
+		// We can safely drop on empty piles
+		if ( cardUI.xyIsInBounds( x, y, pile.elem ) ) {
 			if ( pile.cards.length === 0 ) {
 				return 1
 			}
 		}
 	
-		// Can only drop on matching suits.
+		// Can only drop on cards with matching suits.
 		let topCard = dealer.peekTopOfPile( pile.name )
 		if ( topCard ) {
-			rect = topCard.elem.getBoundingClientRect()
-			if ( x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height ) {
-				if ( card.suit === topCard.suit ) {
-					return 2
-				}
+			if ( card.suit === topCard.suit && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
+				return 2
 			}
 		}
 

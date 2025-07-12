@@ -24,9 +24,7 @@ const game = {
 		// Empty piles can't be interacted with
 		if ( pile.cards.length > 0 ) {
 			let topCard = dealer.peekTopOfPile( pile.name )
-			let rect = topCard.elem.getBoundingClientRect()
-
-			if ( x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height ) {
+			if ( cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
 				return 2
 			}
 		}
