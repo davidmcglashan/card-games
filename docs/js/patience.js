@@ -47,11 +47,20 @@ const game = {
 		// The deck is always interactive, if it has cards.
 		if ( pile.name === 'deck' ) {
 			if ( pile.cards.length + dealer.piles['drawn'].cards.length > 0 ) {
+				// If there's a card on top it can be dealt to the drawn pile.
 				let topCard = dealer.peekTopOfPile( pile.name )
 				if ( topCard && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
 					return 2
 				}
-			} else {
+
+				// Do we need to reset the deck and put the drawn cards back?
+				else if ( pile.cards.length === 0 && dealer.piles['drawn'].cards.length > 0 && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
+					return 1
+				} 
+			} 
+			
+			// Nothing to do with the deck.
+			else {
 				return 0
 			}
 		}
@@ -176,6 +185,23 @@ const game = {
 			}
 
 		}
+
+		// Dropping on a tower ...
+		if ( pile.name.startsWith( 'tower-' ) ) {
+			// ... can be done following the "red 7 on black 8" rule.
+			if ( pile.cards.length > 0 ) {
+				let topCard = dealer.peekTopOfPile( pile.name )
+				if ( topCard.isRed !== card.isRed && topCard.ordValue === card.ordValue + 1 && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
+					return 2
+				}
+			}
+
+			// ... or by letting a king drop into a space.
+			else if ( card.ordValue === 12 && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
+				return 1
+			}
+		}
+
 		return 0
 	},
 
