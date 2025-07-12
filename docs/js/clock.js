@@ -106,7 +106,7 @@ const game = {
 		if ( pile.cards.length === 4 ) {
 			// If all the drop piles have four cards then this is a win!
 			for ( const [name,pile] of Object.entries( dealer.piles ) ) {
-				if ( pile.cards.length !== 4 ) {
+				if ( pile.name.startsWith( 'drop-' ) && pile.cards.length !== 4 ) {
 					return 1
 				}
 			}
