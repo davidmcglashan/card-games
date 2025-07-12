@@ -113,7 +113,7 @@ const table = {
 			cards.reverse()
 			dealer.placeAllOnPile( pile.name, cards )
 			if ( game.dropHappened ) {
-				game.dropHappened( card, table.drag.sourcePile, pile.name )
+				game.dropHappened( table.drag )
 			}
 
 			// Tidy up.
@@ -168,7 +168,7 @@ const table = {
 		// Now apply an animation to remove the translation again.
 		let transform = cardUI.getTransform( pile, elem )
 		let anim = elem.animate([{transform: `${transform}`}],{duration:250, easing: 'ease-in-out'});
-		
+
 		anim.pause()
 		anim.onfinish = () => {
 			elem.style.transform = transform

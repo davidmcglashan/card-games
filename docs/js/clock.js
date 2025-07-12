@@ -78,8 +78,8 @@ const game = {
 	/**
 	 * Called in response to a card drop. Works out where the name card must be drawn from.
 	 */
-	dropHappened: ( card, startPileName, endPileName ) => {
-		let num = card.name.split('_')
+	dropHappened: ( drag ) => {
+		let num = drag.card.name.split('_')
 		game.nextPile = 'clock-' + num[0]
 	},
 
