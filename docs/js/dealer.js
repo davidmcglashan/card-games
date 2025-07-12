@@ -152,6 +152,9 @@ const dealer = {
 		if ( pile ) {
 			pile.cards.push( card )
 			card.pile = name
+			if ( card.elem ) {
+				card.elem.setAttribute( 'data-pile', pile.name )
+			}
 		}
 	},
 
@@ -175,6 +178,9 @@ const dealer = {
 			pile.cards = cards.concat( pile.cards )
 			for ( let card of cards ) {
 				card.pile = name
+				if ( card.elem ) {
+					card.elem.setAttribute( 'data-pile', pile.name )
+				}
 			}
 		}
 	},

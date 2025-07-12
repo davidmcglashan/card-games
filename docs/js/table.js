@@ -46,22 +46,31 @@ const table = {
 			return
 		}
 
+		// Work out if there's a card under the pointer.
 		let elem = cardUI.getCardAtXY( event.clientX, event.clientY )
 		if ( elem ) {
 			if ( game.canStartDrag( elem.getAttribute( 'id' ), elem.getAttribute( 'data-pile' ) ) ) {
 				table.drag = {}
 				table.drag.sourcePile = elem.getAttribute( 'data-pile' )
 				table.drag.origin = elem.getBoundingClientRect()
-				table.drag.card = dealer.peekTopOfPile(table.drag.sourcePile)
+				table.drag.card = dealer.findCardInPile( elem.getAttribute( 'id' ), table.drag.sourcePile )
+				table.drag.otherCards = []
+
+				if ( game.embellishDrag ) {
+					game.embellishDrag( table.drag, elem.getAttribute( 'id' ), table.drag.sourcePile )
+				}
 				
 				let xdiff = event.x - event.offsetX
 				let ydiff = event.y - event.offsetY
 				table.drag.offsetX = event.x - elem.getBoundingClientRect().x + xdiff
 				table.drag.offsetY = event.y - elem.getBoundingClientRect().y + ydiff
 
-				// Move the dragged card to the #glass element so that it's above everything else
+				// Move the dragged card(s) to the #glass element so that it's above everything else
 				let glass = document.getElementById( 'glass' )
 				glass.appendChild( elem )
+				for ( let card of table.drag.otherCards ) {
+					glass.appendChild( card.elem )
+				}
 			}
 		}
 	},
@@ -91,35 +100,20 @@ const table = {
 				pile = dealer.piles[table.drag.destination.getAttribute('data-pile')]
 			}
 
-			// Snap the card neatly onto the pile.
-			const snappingCard = table.drag.card.elem
-			let destRect = cardUI.applyTranslation( pile, table.drag.destination.getBoundingClientRect() )			
-			let distX = snappingCard.getBoundingClientRect().left - destRect.left
-			let distY = snappingCard.getBoundingClientRect().top - destRect.top
-			
-			//  First we position the card on the pile, where we want it to finish ...
-			snappingCard.style.top = destRect.top + 'px'
-			snappingCard.style.left = destRect.left + 'px'
-			
-			// ... then apply a transform to translate it back to where it was dropped.
-			snappingCard.style.transform = `translate(${distX}px,${distY}px)`
-
-			// Now apply an animation to remove the translation again.
-			let transform = cardUI.getTransform( pile, snappingCard )
-			let anim = snappingCard.animate([{transform: `${transform}`}],{duration:250, easing: 'ease-in-out'});
-
-			anim.pause()
-			anim.onfinish = () => {
-				snappingCard.style.transform = transform
+			// Snap the card(s) neatly onto the pile.
+			table.playDropAnimation( pile, table.drag.card.elem )
+			let offset = 24
+			for ( let card of table.drag.otherCards ) {
+				table.playDropAnimation( pile, card.elem, offset )
+				offset += 24
 			}
-			anim.play()
 
 			// Update the models.
-			let card = dealer.takeFromPile( table.drag.sourcePile )
-			dealer.placeOnPile( pile.name, card )
-			table.drag.card.elem.setAttribute( 'data-pile', pile.name )
+			let cards = dealer.drawFromPile( table.drag.sourcePile, 1+table.drag.otherCards.length )
+			cards.reverse()
+			dealer.placeAllOnPile( pile.name, cards )
 			if ( game.dropHappened ) {
-				game.dropHappened( card, table.drag.sourcePile, name )
+				game.dropHappened( card, table.drag.sourcePile, pile.name )
 			}
 
 			// Tidy up.
@@ -136,27 +130,72 @@ const table = {
 
 		// Snap the card back to where it came from. First we put it at the end, with a transform which
 		// translates to where it was dropped.
-		const snappingCard = table.drag.card.elem
-		let x = snappingCard.getBoundingClientRect().left - table.drag.origin.left
-		let y = snappingCard.getBoundingClientRect().top - table.drag.origin.top
-		snappingCard.style.top = table.drag.origin.top + 'px'
-		snappingCard.style.left = table.drag.origin.left + 'px'
-		snappingCard.style.transform = `translate(${x}px,${y}px)`
-
-		// Now apply an animation to remove the translation again.
-		let anim = snappingCard.animate([{transform: 'translate(0px,0px)'}],{duration:250, easing: 'ease-in-out'});
-		anim.pause()
-		anim.onfinish = () => {
-			snappingCard.style.transform = 'none'
+		table.playSnapBackAnimation( table.drag.card.elem )
+		let offset = 24
+		for ( let card of table.drag.otherCards ) {
+			table.playSnapBackAnimation( card.elem, offset )
+			offset += 24
 		}
-		anim.play()
 
+		// Tidy up. Put the cards all back on the cards layer.
 		let cards = document.getElementById( 'cards' )
 		cards.appendChild( table.drag.card.elem )
+		for ( let card of table.drag.otherCards ) {
+			cards.appendChild( card.elem )
+		}
 
+		// Terminate the drag object.
 		table.drag = undefined
 	},
 	
+	/**
+	 * Animates a card dropping nicely onto its new pile home after a drag and drop operation.
+	 */
+	playDropAnimation: ( pile, elem, offset = 0 ) => {
+		let destRect = cardUI.applyTranslation( pile, table.drag.destination.getBoundingClientRect() )			
+
+		// Work out how far the card needs to travel.
+		let distX = elem.getBoundingClientRect().left - destRect.left
+		let distY = elem.getBoundingClientRect().top - destRect.top
+			
+		// Position the card on the destination pile, where we want it to finish ...
+		elem.style.top = offset + destRect.top + 'px'
+		elem.style.left = destRect.left + 'px'
+			
+		// ... then apply a transform to translate it back to where it was dropped.
+		elem.style.transform = `translate(${distX}px,${distY}px)`
+
+		// Now apply an animation to remove the translation again.
+		let transform = cardUI.getTransform( pile, elem )
+		let anim = elem.animate([{transform: `${transform}`}],{duration:250, easing: 'ease-in-out'});
+		
+		anim.pause()
+		anim.onfinish = () => {
+			elem.style.transform = transform
+		}
+		anim.play()
+	},
+
+	/**
+	 * Animates a card snapping back to its starting point after a failed
+	 * drag and drop operation.
+	 */
+	playSnapBackAnimation: ( elem, offset = 0 ) => {
+		let x = elem.getBoundingClientRect().left - table.drag.origin.left
+		let y = elem.getBoundingClientRect().top - table.drag.origin.top
+		elem.style.top = offset + table.drag.origin.top + 'px'
+		elem.style.left = table.drag.origin.left + 'px'
+		elem.style.transform = `translate(${x}px,${y}px)`
+
+		// Now apply an animation to remove the translation again.
+		let anim = elem.animate([{transform: 'translate(0px,0px)'}],{duration:250, easing: 'ease-in-out'});
+		anim.pause()
+		anim.onfinish = () => {
+			elem.style.transform = 'none'
+		}
+		anim.play()
+	},
+
 	/**
 	 * Called as a mouse is dragged over the game to check for affordances that might need
 	 * enabling. If a drag/drop operation is active this method will assess if a drop
@@ -197,6 +236,13 @@ const table = {
 		// Move the card to where the mouse is.
 		table.drag.card.elem.style.left = Math.max( 0, (event.clientX-table.drag.offsetX) ) + 'px' 
 		table.drag.card.elem.style.top = Math.max( 0, (event.clientY-table.drag.offsetY) ) + 'px'
+
+		let offset = 24;
+		for ( let card of table.drag.otherCards ) {
+			card.elem.style.left = Math.max( 0, (event.clientX-table.drag.offsetX) ) + 'px' 
+			card.elem.style.top = Math.max( 0, offset + (event.clientY-table.drag.offsetY) ) + 'px'
+			offset += 24
+		}
 	},
 
 	/**

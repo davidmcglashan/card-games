@@ -77,20 +77,50 @@ const game = {
 			}
 		}
 
-		// Towers can be clicked if their top card is face down, so you can turn it over.
+		// Interactions with towers.
 		if ( pile.name.startsWith( 'tower-' ) ) {
-			// Disallow clicks on empty pile
+			// Disallow clicks on empty tower
 			if ( pile.cards.length === 0 && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
 				return 0
 			}
-
-			let topCard = dealer.peekTopOfPile( pile.name )
-			if ( topCard && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
-				return 2
+			
+			// The top card of a tower can always be interacted with, to turn it over or drag it
+			// somewhere else. Any other face up card in a tower is also interactive.
+			for ( let card of pile.cards ) {
+				if ( card.isFaceUp && cardUI.xyIsInBounds( x, y, card.elem ) ) {
+					return 2
+				}
 			}
 		}
 
 		return 0
+	},
+
+	/**
+	 * If the card being dragged is from lower down a tower we need to tell the 
+	 * game that the higher cards are getting moved too.
+	 */
+	embellishDrag: ( drag, cardName, pileName ) => {
+		// Not a tower? Don't care ...
+		if ( !pileName.startsWith( 'tower-' ) ) {
+			return
+		}
+
+		// Don't do anything if we're only dragging the top card.
+		let topCard = dealer.peekTopOfPile( pileName )
+		if ( topCard.name === cardName ) {
+			return
+		}
+
+		// Add the cards above the dragged card into the drag object.
+		let adding = false
+		for ( let card of dealer.piles[pileName].cards ) {
+			if ( card.name === cardName ) {
+				adding = true
+			} else if ( adding ) {
+				drag.otherCards.push( card )
+			}
+		}
 	},
 
 	/**
