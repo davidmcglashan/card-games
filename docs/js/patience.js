@@ -85,7 +85,7 @@ const game = {
 			}
 
 			let topCard = dealer.peekTopOfPile( pile.name )
-			if ( cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
+			if ( topCard && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
 				return 2
 			}
 		}
@@ -203,13 +203,6 @@ const game = {
 		}
 
 		return 0
-	},
-
-	/**
-	 * Called in response to a card drop. This game is fine with the default behaviour.
-	 */
-	dropHappened: ( card, startPileName, endPileName ) => {
-		//
 	},
 
 	/**
