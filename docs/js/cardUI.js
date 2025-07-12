@@ -61,11 +61,38 @@ const cardUI = {
 
 	getTransform: ( pile, card ) => {
 		switch ( pile.stackingMethod ) {
+
 			case dealer.stackingMethods.UNTIDY:
 				let a = Math.floor(Math.random() * 8) - 4;
 				return 'rotate('+a+'deg)'
+			
 		}
 		return 'none'
+	},
+
+	/**
+	 * Apply a translation for a dropped card depending on the pile's stacking method.
+	 * Empty piles don't apply a translation. The first card always sits on the pile neatly.
+	 */
+	applyTranslation: ( pile, rect ) => {
+		// Empty piles don't apply a translation. The first card always sits on the pile neatly.
+		if ( pile.cards.length === 0 ) {
+			return rect
+		}
+
+		switch ( pile.stackingMethod ) {
+			// Verticals get shunted down nicely.
+			case dealer.stackingMethods.VERTICAL:
+				rect.y = rect.y + 24
+				break
+
+			// Diagonals get a tiny x,y offset applied.
+			case dealer.stackingMethods.DIAGONAL:
+				rect.x = rect.x + 0.5
+				rect.y = rect.y + 0.5
+		}
+		
+		return rect
 	},
 
 	/**

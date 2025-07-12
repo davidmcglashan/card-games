@@ -10,7 +10,7 @@ const table = {
 	 * A mouse click happened on the glass. This function detects which element
 	 * (card,pile) was under the click and asks the game object to handle the click
 	 */
-	clickOnGlass: ( event ) => {
+	mouseClicked: ( event ) => {
 		// Abort quickly if we're dragging something.
 		if ( table.drag !== undefined ) {
 			return
@@ -40,7 +40,7 @@ const table = {
 	 * This function detects which element (card,pile) was under the press and asks the
 	 * game object if a drag is appropriate. If true, it begins ...
 	 */
-	pressOnGlass: ( event ) => {
+	mousePressed: ( event ) => {
 		// If the game doesn't support dragging we can leave early ...
 		if ( !game.canStartDrag ) {
 			return
@@ -70,10 +70,10 @@ const table = {
 	 * The mouse was released. This function provides the default behaviour of placing the
 	 * dragged card on top of the destination drop pile
 	 */
-	releaseGlass: ( event ) => {
+	mouseReleased: ( event ) => {
 		// Abort quickly if we're not dragging anything.
 		if ( table.drag === undefined ) {
-			table.clickOnGlass( event )
+			table.mouseClicked( event )
 			return
 		}
 
@@ -91,19 +91,23 @@ const table = {
 				pile = dealer.piles[table.drag.destination.getAttribute('data-pile')]
 			}
 
-			// Snap the card neatly onto the pile. First we place the card on the pile, but apply a transform to
-			// translate it back to where it was dropped.
+			// Snap the card neatly onto the pile.
 			const snappingCard = table.drag.card.elem
-			let rect = table.drag.destination.getBoundingClientRect()
-			let x = snappingCard.getBoundingClientRect().left - rect.left
-			let y = snappingCard.getBoundingClientRect().top - rect.top
-			let transform = cardUI.getTransform( pile, snappingCard )
-			snappingCard.style.top = rect.top + 'px'
-			snappingCard.style.left = rect.left + 'px'
-			snappingCard.style.transform = `translate(${x}px,${y}px)`
+			let destRect = cardUI.applyTranslation( pile, table.drag.destination.getBoundingClientRect() )			
+			let distX = snappingCard.getBoundingClientRect().left - destRect.left
+			let distY = snappingCard.getBoundingClientRect().top - destRect.top
+			
+			//  First we position the card on the pile, where we want it to finish ...
+			snappingCard.style.top = destRect.top + 'px'
+			snappingCard.style.left = destRect.left + 'px'
+			
+			// ... then apply a transform to translate it back to where it was dropped.
+			snappingCard.style.transform = `translate(${distX}px,${distY}px)`
 
 			// Now apply an animation to remove the translation again.
-			let anim = snappingCard.animate([{transform: `translate(0px,0px) ${transform}`}],{duration:125, easing: 'ease-in-out'});
+			let transform = cardUI.getTransform( pile, snappingCard )
+			let anim = snappingCard.animate([{transform: `${transform}`}],{duration:250, easing: 'ease-in-out'});
+
 			anim.pause()
 			anim.onfinish = () => {
 				snappingCard.style.transform = transform
@@ -158,7 +162,7 @@ const table = {
 	 * enabling. If a drag/drop operation is active this method will assess if a drop
 	 * can be performed.
 	 */
-	moveOverGlass: ( event ) => {
+	mouseMoved: ( event ) => {
 		// If we're not dragging anything we only need to check for piles we can interact with.
 		if ( table.drag === undefined ) {
 			table.checkForInteractions( event.x, event.y )
@@ -321,9 +325,9 @@ const table = {
 
 		// Have the glass listen to mouse events
 		let glass = document.getElementById( 'glass' )
-		glass.addEventListener( 'mouseup', table.releaseGlass )
-		glass.addEventListener( 'mousemove', table.moveOverGlass )
-		glass.addEventListener( 'mousedown', table.pressOnGlass )
+		glass.addEventListener( 'mouseup', table.mouseReleased )
+		glass.addEventListener( 'mousemove', table.mouseMoved )
+		glass.addEventListener( 'mousedown', table.mousePressed )
 
 		window.addEventListener("resize", table.windowResized );
 	}
