@@ -25,10 +25,12 @@ const table = {
 		}
 
 		// Was the click on a pile?
-		elem = cardUI.getPileAtXY( event.clientX, event.clientY )
-		if ( elem ) {
-			if ( game.clickOnPile( elem.getAttribute('id') ) ) {
-				return
+		if ( game.clickOnPile ) {
+			elem = cardUI.getPileAtXY( event.clientX, event.clientY )
+			if ( elem ) {
+				if ( game.clickOnPile( elem.getAttribute('id') ) ) {
+					return
+				}
 			}
 		}
 	},
@@ -39,6 +41,11 @@ const table = {
 	 * game object if a drag is appropriate. If true, it begins ...
 	 */
 	pressOnGlass: ( event ) => {
+		// If the game doesn't support dragging we can leave early ...
+		if ( !game.canStartDrag ) {
+			return
+		}
+
 		let elem = cardUI.getCardAtXY( event.clientX, event.clientY )
 		if ( elem ) {
 			if ( game.canStartDrag( elem.getAttribute( 'id' ), elem.getAttribute( 'data-pile' ) ) ) {

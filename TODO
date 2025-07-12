@@ -10,6 +10,8 @@
 - replace getBoundingClientRect() with a clever abstraction to be used in ifs
   - if checkUI.bounds( pile, x, y )
   - returns boundingrect
+- games maintaining a deck might benefit from pushing that to the dealer
+
 - instructions
 
 - patience

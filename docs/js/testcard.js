@@ -1,13 +1,13 @@
 const game = {
 	/**
-	 * This game doesn't require a start callback.
+	 * This game maintains a deck to deal from when the suit changes.
 	 */
 	start: () => {
 		game.deck = dealer.newCardArray()
 	},
 
 	/**
-	 * Sets up the new piles. One is a deck, the others are all empty.
+	 * Called to set up a pile. Deals the next card from the game's deck onto it.
 	 */
 	newPile: ( name ) => {
 		let cards = []
@@ -17,20 +17,34 @@ const game = {
 	},
 	
 	/**
-	 * This game doesn't require a cardsDealt callback.
+	 * Respond to request for interactions with a pile at (x,y)
+	 * This returns true for card interactions if the (x,y) is within any card.
 	 */
-	cardsDealt: () => {},
+	canClickOrDragFromPileAtXY: ( pile, x, y ) => {
+		// Empty piles can't be interacted with
+		if ( pile.cards.length > 0 ) {
+			let topCard = dealer.peekTopOfPile( pile.name )
+			let rect = topCard.elem.getBoundingClientRect()
 
-	canClickOrDragFromPile: ( pile ) => {
-		return true
+			if ( x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height ) {
+				return 2
+			}
+		}
+
+		return 0
 	},
 
 	/**
-	 * Respond to clicks on the deck to turn the top card if it's face down.
+	 * Respond to clicks on the deck to deal out the next suit.
 	 */
 	clickOnCard: ( c, p ) => {
 		let cards = document.getElementById( 'cards' )
 		cards.innerHTML = ''
+
+		// if there are no cards left in the deck then it's time for a new deck!
+		if ( game.deck.length === 0 ) {
+			game.deck = dealer.newCardArray()
+		}
 
 		// Tell the game about the piles we find in the DOM.
 		let piles = document.getElementsByClassName( 'pile' )
@@ -41,38 +55,7 @@ const game = {
 	},
 
 	/**
-	 * Return true if card can be dropped on pile. There are simple rules ...
-	 *  - no to the deck
-	 *  - yes to an empty pile
-	 *  - yes to a pile if its suit matches the card
-	 */
-	canDrop: ( card, pile ) => {
-		return false
-	},
-
-	/**
-	 * Called in response to a card drop. This game is fine with the default behaviour.
-	 */
-	dropHappened: ( card, startPileName, endPileName ) => {
-		//
-	},
-
-	/**
-	 * Not used.
-	 */
-	clickOnPile: ( pile ) => {
-		return false
-	},
-
-	/**
-	 * Can a drag be started from the pile in question using card?
-	 */
-	canStartDrag: ( card, pile ) => {
-		return false;
-	},
-
-	/**
-	 * Returns 0 if the game isn't finished, 1 if the player loses, 2 if the player wins!
+	 * This game never ends. Sorry!
 	 */
 	hasFinished: () => {
 		return 0
