@@ -1,4 +1,7 @@
 const game = {
+	/**
+	 * Starts a new game, shuffles a deck.
+	 */
 	start: () => {
 		game.deck = dealer.newShuffledCardArray()
 		game.nextPile = 'clock-king'
@@ -28,12 +31,13 @@ const game = {
 	},
 
 	/**
-	 * This game doesn't require a cardsDealt callback.
+	 * Respond to requests for interactivity.
 	 */
-	cardsDealt: () => {},
-
-	canClickOrDragFromPile: ( pile ) => {
-		return pile.name === game.nextPile
+	canClickOrDragFromPileAtXY: ( pile, x, y ) => {
+		if ( pile.name === game.nextPile && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
+			return 1
+		}
+		return 0
 	},
 
 	/**
@@ -54,29 +58,29 @@ const game = {
 	},
 
 	/**
-	 * Return true if card can be dropped on pile. There are simple rules ...
-	 *  - no to the deck
-	 *  - yes to an empty pile
-	 *  - yes to a pile if its suit matches the card
+	 * Respond to a request for dropping a card on a pile. You can only do this if the
+	 * pile number matches the card number e.g. A,1,2,3,4,5,6,7,8,9,10,J,Q,K
 	 */
-	canDrop: ( card, pile ) => {
-		let num = card.name.split('_')
-		return pile.name.startsWith( 'drop' ) && pile.name.endsWith( num[0] )
+	canDropCardAtXYOnPile: ( card, x, y, pile ) => {
+		if ( cardUI.xyIsInBounds( x, y, pile.elem ) ) {
+			let num = card.name.split('_')
+			if ( pile.name.startsWith( 'drop' ) && pile.name.endsWith( num[0] ) ) {
+				if ( pile.cards.length === 0 ) {
+					return 1
+				}
+				return 2
+			}
+		}
+		
+		return 0
 	},
 
 	/**
-	 * Called in response to a card drop. This game is fine with the default behaviour.
+	 * Called in response to a card drop. Works out where the name card must be drawn from.
 	 */
 	dropHappened: ( card, startPileName, endPileName ) => {
 		let num = card.name.split('_')
 		game.nextPile = 'clock-' + num[0]
-	},
-
-	/**
-	 * Not used
-	 */
-	clickOnPile: ( pile ) => {
-		return false
 	},
 
 	/**

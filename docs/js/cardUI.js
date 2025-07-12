@@ -111,5 +111,19 @@ const cardUI = {
 			return card.elem
 		}
 		return null
+	},
+
+	/**
+	 * Convenience check for (x,y) being within the bounding client rect of the passed in 
+	 * elem. Returns the bounding client rect if it is, otherwise null.
+	 */
+	xyIsInBounds: ( x, y, elem ) => {
+		let rect = elem.getBoundingClientRect()
+
+		if ( x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height ) {
+			return rect
+		}
+
+		return null
 	}
 }
