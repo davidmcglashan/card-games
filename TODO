@@ -1,10 +1,15 @@
-- pile stacking offsets (tight, diagonal, loose)
+- cards rather than piles need click & drag affordances
+  - pile canDrop etc. needs to change since we really only consider empty piles
+  - after that it's dropping on cards ...
+- sloppy piles tend diagonally up and left
 - hand icon pointers!
+- disable text selection and stuff
 - web hosting
 - some other fragility around drag/drops and timings
 - clicking rotated cards in test1 invokes another rotation
-- test1 doesn't restart properly any more - rotations and weird card orders.
-
+- replace getBoundingClientRect() with a clever abstraction to be used in ifs
+  - if checkUI.bounds( pile, x, y )
+  - returns boundingrect
 - instructions
 
 - patience

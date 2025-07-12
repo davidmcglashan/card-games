@@ -42,9 +42,28 @@ const game = {
 	 */
 	canClickOrDragFromPile: ( pile ) => {
 		// The deck is always interactive, if it has cards.
-		if ( pile.name === 'deck' && (dealer.piles['deck'].cards.length + dealer.piles['drawn'].cards.length > 0) ) {
-			return true
+		if ( pile.name === 'deck' ) {
+			if ( dealer.piles['deck'].cards.length + dealer.piles['drawn'].cards.length > 0 ) {
+				return true
+			} else {
+				return false
+			}
 		}
+
+		// Towers can be clicked if their top card is face down. 
+		if ( pile.name.startsWith( 'tower-' ) ) {
+			if ( pile.cards.length === 0 ) {
+				return false
+			}
+
+			let topCard = dealer.peekTopOfPile( pile.name )
+			if ( !topCard.isFaceUp ) {
+				return true
+			}
+
+			return false
+		}
+
 		return false
 	},
 
@@ -96,12 +115,12 @@ const game = {
 	 * Can a drag be started from the pile in question using card?
 	 */
 	canStartDrag: ( cardName, pileName ) => {
-		let topCard = dealer.peekTopOfPile( pileName )
-		if ( !topCard.isFaceUp && topCard.name === cardName ) {
-			return false;
+		let card = dealer.findCardInPile( cardName, pileName )
+		if ( card && card.isFaceUp ) {
+			return true
 		}
 
-		return true
+		return false
 	},
 
 	canDrop: ( card, pile ) => {

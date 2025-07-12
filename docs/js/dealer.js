@@ -203,4 +203,13 @@ const dealer = {
 		}
 		return null
 	},
+
+	findCardInPile: ( cardName, pileName ) => {
+		for ( let card of dealer.piles[pileName].cards ) {
+			if ( card.name === cardName ) {
+				return card
+			}
+		}
+		return null
+	}
 };

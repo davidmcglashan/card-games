@@ -6,12 +6,11 @@ const cardUI = {
 
 		let i = 0;
 		for ( let card of pile.cards ) {
-			let elem = document.getElementById( card.name )
-			if ( !elem ) {
-				elem = document.createElement( "div" )
-				elem.setAttribute( 'id', card.name )
+			if ( !card.elem ) {
+				card.elem = document.createElement( "div" )
+				card.elem.setAttribute( 'id', card.name )
 				let table = document.getElementById( 'cards' )
-				table.appendChild( elem )
+				table.appendChild( card.elem )
 				cardUI.decorate( card )
 			}
 
@@ -19,23 +18,23 @@ const cardUI = {
 				case dealer.stackingMethods.TIGHT:
 				case dealer.stackingMethods.UNTIDY:
 				case dealer.stackingMethods.DIAGONAL:
-					elem.style.left = i/2 + bounds.x + 'px'
-					elem.style.top = i/2 + bounds.y + 'px'
+					card.elem.style.left = i/2 + bounds.x + 'px'
+					card.elem.style.top = i/2 + bounds.y + 'px'
 					break
 				case dealer.stackingMethods.VERTICAL:
-					elem.style.left = bounds.x + 'px'
-					elem.style.top = i*24 + bounds.y + 'px'
+					card.elem.style.left = bounds.x + 'px'
+					card.elem.style.top = i*24 + bounds.y + 'px'
 					break
 			}
-			
-			elem.style.width = bounds.width + 'px'
-			elem.style.height = bounds.height + 'px'
-			elem.setAttribute( 'data-pile', pile.name )
+
+			card.elem.style.width = bounds.width + 'px'
+			card.elem.style.height = bounds.height + 'px'
+			card.elem.setAttribute( 'data-pile', pile.name )
 			
 			if ( prev ) {
-				prev.after( elem )
+				prev.after( card.elem )
 			}
-			prev = elem
+			prev = card.elem
 			i++;
 		}
 	},
@@ -73,15 +72,44 @@ const cardUI = {
 	 * Decorate the DOM element based on the supplied card's face.
 	 */
 	decorate: ( card ) => {
-		let elem = document.getElementById( card.name )
-
 		if ( card.isFaceUp ) {
-			elem.setAttribute( 'class', 'card faceUp ' + card.suit + ' ' + card.css )
+			card.elem.setAttribute( 'class', 'card faceUp ' + card.suit + ' ' + card.css )
 			let s = '<div class="label">'+card.label+'</div><div class="bottomlabel">'+card.label+'</div><div class="suit">'+card.symbol+'</div><div class="value">'+card.shortValue+'</div>'
-			elem.innerHTML = s
+			card.elem.innerHTML = s
 		} else {
-			elem.innerHTML = ''
-			elem.setAttribute( 'class', 'card faceDown' )
+			card.elem.innerHTML = ''
+			card.elem.setAttribute( 'class', 'card faceDown' )
 		}
+	},
+
+	/**
+	 * Removes any affordance CSS classnames from a pile and its cards.
+	 */
+	removeAffordances: ( pile ) => {
+		pile.elem.classList.remove( 'interactive' )
+		for ( let card of pile.cards ) {
+			card.elem.classList.remove( 'interactive' )
+		}
+		return null
+	},
+
+	/**
+	 * Add an affordance CSS classnames to the pile.
+	 */
+	enablePileAffordances: ( pile ) => {
+		pile.elem.classList.add( 'interactive' )
+		return pile.elem
+	},
+	
+	/**
+	 * Add an affordance CSS classnames to the pile's top card.
+	 */
+	enableCardAffordances: ( pile ) => {
+		let card = dealer.peekTopOfPile( pile.name )
+		if ( card ) {
+			card.elem.classList.add( 'interactive' )
+			return card.elem
+		}
+		return null
 	}
 }

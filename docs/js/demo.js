@@ -1,10 +1,5 @@
 const game = {
 	/**
-	 * This game doesn't require a start callback.
-	 */
-	start: () => {},
-
-	/**
 	 * Sets up the new piles. One is a deck, the others are all empty.
 	 */
 	newPile: ( name ) => {
@@ -18,16 +13,23 @@ const game = {
 	},
 
 	/**
-	 * This game doesn't require a cardsDealt callback.
+	 * Returns the interactivity of a pile or card at event (x,y)
+	 * - 0 Nothing to interact with
+	 * - 1 Pile can be interacted with
+	 * - 2 Card can be interacted with
 	 */
-	cardsDealt: () => {},
-
-	canClickOrDragFromPile: ( pile ) => {
+	canClickOrDragFromPileAtXY: ( pile, x, y ) => {		
+		// Empty piles can't be interacted with
 		if ( pile.cards.length > 0 ) {
-			return true
+			let topCard = dealer.peekTopOfPile( pile.name )
+			let rect = topCard.elem.getBoundingClientRect()
+
+			if ( x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height ) {
+				return 2
+			}
 		}
 
-		return false
+		return 0
 	},
 
 	/**
@@ -46,32 +48,38 @@ const game = {
 	},
 
 	/**
-	 * Return true if card can be dropped on pile. There are simple rules ...
-	 *  - no to the deck
-	 *  - yes to an empty pile
-	 *  - yes to a pile if its suit matches the card
+	 * Work out if a card can be dropped onto a pile at (x,y). Returns ...
+	 * - 0 if no drop can be performed.
+	 * - 1 if a drop will be accepted onto the pile.
+	 * - 2 if a drop will be accepted onto the top card of the pile.
 	 */
-	canDrop: ( card, pile ) => {
+	canDropCardAtXYOnPile( card, x, y, pile ) {
 		// Can't drop on the deck ...
 		if ( pile.name === 'pile-deck' ) {
-			return false
+			return 0
 		}
 
-		// Can drop on empty piles
-		if ( pile.cards.length === 0 ) {
-			return true
+		// Is the (x,y) within the bounds of the checking pile?
+		let rect = pile.elem.getBoundingClientRect()
+		if ( x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height ) {
+			// Can drop on empty piles
+			if ( pile.cards.length === 0 ) {
+				return 1
+			}
 		}
 	
 		// Can only drop on matching suits.
 		let topCard = dealer.peekTopOfPile( pile.name )
-		return card.suit === topCard.suit
-	},
+		if ( topCard ) {
+			rect = topCard.elem.getBoundingClientRect()
+			if ( x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height ) {
+				if ( card.suit === topCard.suit ) {
+					return 2
+				}
+			}
+		}
 
-	/**
-	 * Called in response to a card drop. This game is fine with the default behaviour.
-	 */
-	dropHappened: ( card, startPileName, endPileName ) => {
-		//
+		return 0
 	},
 
 	/**
