@@ -95,8 +95,20 @@ const table = {
 			if ( table.drag.destination.classList.contains( 'pile' ) ) {
 				let cards = document.getElementById( 'cards' )
 				cards.insertBefore( table.drag.card.elem, cards.firstChild )
+				let previous = table.drag.card.elem
+				for ( let card of table.drag.otherCards ) {
+					cards.insertBefore( card.elem, previous.nextSibling )
+					previous = card.elem
+				}
 			} else {
 				table.drag.destination.after( table.drag.card.elem )
+				let cards = document.getElementById( 'cards' )
+				let previous = table.drag.card.elem
+				for ( let card of table.drag.otherCards ) {
+					cards.insertBefore( card.elem, previous.nextSibling )
+					previous = card.elem
+				}
+
 				pile = dealer.piles[table.drag.destination.getAttribute('data-pile')]
 			}
 
