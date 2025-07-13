@@ -382,7 +382,7 @@ const table = {
 			}
 		}
 
-		masthead.insertAdjacentHTML( 'beforeend', '<strong>v1.0</strong> &copy; 2025 David McGlashan' )
+		masthead.insertAdjacentHTML( 'beforeend', '<strong>v1.0</strong>&nbsp;| &copy; 2025 David McGlashan' )
 
 		// Have the glass listen to mouse events
 		let glass = document.getElementById( 'glass' )
