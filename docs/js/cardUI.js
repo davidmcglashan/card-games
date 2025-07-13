@@ -129,15 +129,30 @@ const cardUI = {
 	},
 	
 	/**
-	 * Add an affordance CSS classnames to the pile's top card.
+	 * Add an affordance CSS classnames to the named card or the pile's top card.
 	 */
-	enableCardAffordances: ( pile ) => {
-		let card = dealer.peekTopOfPile( pile.name )
-		if ( card ) {
-			card.elem.classList.add( 'interactive' )
-			return card.elem
+	enableCardAffordances: ( pile, cardName = null ) => {
+		// Empty piles get no processing.
+		if ( pile.cards.length === 0 ) {
+			return
 		}
-		return null
+
+		// No card name? Default to the top of the pile.
+		if ( cardName === null ) {
+			cardName = dealer.peekTopOfPile( pile.name ).name
+		}
+
+		let ret = null
+		for ( let card of pile.cards ) {
+			if ( card.name === cardName ) {
+				card.elem.classList.add( 'interactive' )
+				ret = card.elem
+			} else {
+				card.elem.classList.remove( 'interactive' )
+			}
+		}
+
+		return ret
 	},
 
 	/**

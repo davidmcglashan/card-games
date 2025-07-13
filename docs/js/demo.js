@@ -16,18 +16,18 @@ const game = {
 	 * Returns the interactivity of a pile or card at event (x,y)
 	 * - 0 Nothing to interact with
 	 * - 1 Pile can be interacted with
-	 * - 2 Card can be interacted with
+	 * - 2 Card can be interacted with - must also include the card name!
 	 */
 	canClickOrDragFromPileAtXY: ( pile, x, y ) => {		
 		// Empty piles can't be interacted with
 		if ( pile.cards.length > 0 ) {
 			let topCard = dealer.peekTopOfPile( pile.name )
 			if ( cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
-				return 2
+				return {outcome:2,card:topCard.name}
 			}
 		}
 
-		return 0
+		return {outcome:0}
 	},
 
 	/**

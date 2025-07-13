@@ -265,9 +265,9 @@ const table = {
 	checkForInteractions: ( x, y ) => {
 		let didAdd = false;
 		for ( const [name, pile] of Object.entries(dealer.piles) ) {
-			let outcome = game.canClickOrDragFromPileAtXY( pile, x, y )
+			let interactive = game.canClickOrDragFromPileAtXY( pile, x, y )
 
-			switch ( outcome ) {
+			switch ( interactive.outcome ) {
 				case 0: // Nothing to interact with
 					cardUI.removeAffordances( pile )
 					break
@@ -278,7 +278,7 @@ const table = {
 					break
 				
 				case 2: // Card can be interacted with
-					cardUI.enableCardAffordances( pile )
+					cardUI.enableCardAffordances( pile, interactive.card )
 					didAdd = true
 			}
 		}

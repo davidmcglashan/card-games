@@ -35,9 +35,10 @@ const game = {
 	 */
 	canClickOrDragFromPileAtXY: ( pile, x, y ) => {
 		if ( pile.name === game.nextPile && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
-			return 1
+			return {outcome:1}
 		}
-		return 0
+		
+		return {outcome:0}
 	},
 
 	/**

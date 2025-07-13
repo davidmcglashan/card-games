@@ -50,18 +50,18 @@ const game = {
 				// If there's a card on top it can be dealt to the drawn pile.
 				let topCard = dealer.peekTopOfPile( pile.name )
 				if ( topCard && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
-					return 2
+					return {outcome:2,card:topCard.name}
 				}
 
 				// Do we need to reset the deck and put the drawn cards back?
 				else if ( pile.cards.length === 0 && dealer.piles['drawn'].cards.length > 0 && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
-					return 1
+					return {outcome:1}
 				} 
 			} 
 			
 			// Nothing to do with the deck.
 			else {
-				return 0
+				return {outcome:0}
 			}
 		}
 
@@ -70,10 +70,10 @@ const game = {
 			if ( pile.cards.length > 0 ) {
 				let topCard = dealer.peekTopOfPile( pile.name )
 				if ( cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
-					return 2
+					return {outcome:2,card:topCard.name}
 				}
 			} else {
-				return 0
+				return {outcome:0}
 			}
 		}
 
@@ -81,19 +81,28 @@ const game = {
 		if ( pile.name.startsWith( 'tower-' ) ) {
 			// Disallow clicks on empty tower
 			if ( pile.cards.length === 0 && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
-				return 0
+				return {outcome:0}
 			}
 			
-			// The top card of a tower can always be interacted with, to turn it over or drag it
-			// somewhere else. Any other face up card in a tower is also interactive.
+			// The face-down top card of a tower can be interacted with to turn it over.
+			let topCard = dealer.peekTopOfPile( pile.name )
+			if ( topCard && !topCard.isFaceUp && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
+				return {outcome:2,card:topCard.name}
+			}
+			
+			// Any other face up card in a tower is interactive for dragging
+			let topMost = null
 			for ( let card of pile.cards ) {
 				if ( card.isFaceUp && cardUI.xyIsInBounds( x, y, card.elem ) ) {
-					return 2
+					topMost = card
 				}
+			}
+			if ( topMost ) {
+				return {outcome:2,card:topMost.name}
 			}
 		}
 
-		return 0
+		return {outcome:0}
 	},
 
 	/**
