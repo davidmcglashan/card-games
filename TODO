@@ -9,7 +9,7 @@
 - instructions
 
 - demo
-  - dragging off a pile in demo.js prevents further drops to it - is it "leaving a card in there"?
+  - dragging off a pile (not the deck) in demo.js drops the card where it is
   - clicking rotated cards in test1 invokes another rotation
 
 - clock
