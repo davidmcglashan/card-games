@@ -116,6 +116,7 @@ a:hover {
 	position: relative;
 	border: 1px solid #040;
 	container-type: size;
+	user-select: none;
 }
 
 /* Piles and cards being interacted with are white and glow a bit. */
@@ -145,7 +146,9 @@ a:hover {
 	background-color: white;
 	position: absolute;
 	container: card / size;
+	user-select: none;
 }
+
 /* Red suits are red, black suits are black! */
 .hearts, .diamonds {
 	color: #f22;

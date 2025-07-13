@@ -1,16 +1,21 @@
+- dragging over a pile and then letting go away from it does drop on the pile - not clearing destination state
 - sloppy piles tend diagonally up and left
 - pointers discerning clicks and drags
-- disable text selection and stuff
 - web hosting
 - some other fragility around drag/drops and timings
 - clicking rotated cards in test1 invokes another rotation
 - games maintaining a deck might benefit from pushing that to the dealer
 - dragging off a pile in demo.js prevents further drops to it - is it "leaving a card in there"?
+- game switcher at top
 
 - instructions
 
 - patience
-  - decorate the piles aces in regular patience
+  - decorate the piles aces
+  - settings 
+    - turn deck
+	- shuffle after turning
+	- only king on space
 
 - that instagram game (accordion) - https://www.instagram.com/p/DENFxlMxzf6/
   - might need some dynamic pile animations :D
