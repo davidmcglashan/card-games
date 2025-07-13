@@ -2,7 +2,6 @@ const cardUI = {
 	snapPile: ( pile ) => {
 		let pileElem = document.getElementById( pile.name )
 		let bounds = pileElem.getBoundingClientRect()
-		console.log( bounds )
 		let prev = null;
 
 		let i = 0;
