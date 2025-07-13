@@ -220,7 +220,9 @@ const table = {
 			return
 		}
 
-		// Are we dragging over a pile? Provide a drop affordance.
+		// Are we dragging over a pile? We can set this as the drag destination and
+		// set a nice drop affordance.
+		table.drag.destination = null
 		for ( const [name, pile] of Object.entries(dealer.piles) ) {
 			let outcome = game.canDropCardAtXYOnPile( table.drag.card, event.x, event.y, pile )
 			let destElem = null
