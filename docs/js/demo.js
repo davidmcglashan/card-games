@@ -20,14 +20,18 @@ const game = {
 	 */
 	canClickOrDragFromPileAtXY: ( pile, x, y ) => {		
 		// Empty piles can't be interacted with
-		if ( pile.cards.length > 0 ) {
-			let topCard = dealer.peekTopOfPile( pile.name )
-			if ( cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
-				return {outcome:2,card:topCard.name}
-			}
+		if ( pile.cards.length === 0 ) {
+			return { outcome: 0 }
 		}
 
-		return {outcome:0}
+		// Any other card can be interacted with if the pointer is in its bounds.
+		let topCard = dealer.peekTopOfPile( pile.name )
+		if ( cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
+			// Face down cards can be clicked, Face up can be dragged.
+			return { outcome: 2, card: topCard.name, type: topCard.isFaceUp ? 1 : 0 }
+		}
+
+		return { outcome: 0 }
 	},
 
 	/**

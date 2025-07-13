@@ -34,11 +34,13 @@ const game = {
 	 * Respond to requests for interactivity.
 	 */
 	canClickOrDragFromPileAtXY: ( pile, x, y ) => {
-		if ( pile.name === game.nextPile && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
-			return {outcome:1}
+		if ( pile.name === game.nextPile && pile.cards.length > 0  && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
+			// Face down cards can be clicked, Face up can be dragged.
+			let topCard = dealer.peekTopOfPile( pile.name )
+			return { outcome: 2, card: topCard.name, type: topCard.isFaceUp ? 1 : 0 }
 		}
-		
-		return {outcome:0}
+
+		return { outcome: 0 }
 	},
 
 	/**

@@ -1,16 +1,24 @@
 - sloppy piles tend diagonally up and left
-- pointers discerning clicks and drags
 - web hosting
 - some other fragility around drag/drops and timings
-- clicking rotated cards in test1 invokes another rotation
 - games maintaining a deck might benefit from pushing that to the dealer
-- dragging off a pile in demo.js prevents further drops to it - is it "leaving a card in there"?
 - game switcher at top
-- clock patience card sizes
+- make rotation a function of the distance snapped (for all card stack types?) :)
+- weird concertina when dragging a pile in patience
+- restart button
 
 - instructions
 
+- demo
+  - dragging off a pile in demo.js prevents further drops to it - is it "leaving a card in there"?
+  - clicking rotated cards in test1 invokes another rotation
+
+- clock
+  - variable card sizes - arrange in a circle?
+
 - patience
+  - game over detection and messages!
+  - double click a card to send it to a suit
   - decorate the piles aces
   - settings 
     - turn deck

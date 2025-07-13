@@ -263,7 +263,7 @@ const table = {
 	 * Can the pile or card at (x,y) be interacted with?
 	 */
 	checkForInteractions: ( x, y ) => {
-		let didAdd = false;
+		let addToGlass = null;
 		for ( const [name, pile] of Object.entries(dealer.piles) ) {
 			let interactive = game.canClickOrDragFromPileAtXY( pile, x, y )
 
@@ -274,19 +274,20 @@ const table = {
 
 				case 1: // Pile can be interacted with
 					cardUI.enablePileAffordances( pile )
-					didAdd = true
+					addToGlass = 'canClick'
 					break
 				
 				case 2: // Card can be interacted with
 					cardUI.enableCardAffordances( pile, interactive.card )
+					addToGlass = interactive.type === 0 ? 'canClick' : 'canDrag'
 					didAdd = true
 			}
 		}
 
 		// If we added an interactive element then we can click on the glass
 		let glass = document.getElementById( 'glass' )
-		if ( didAdd ) {
-			glass.setAttribute( 'class', 'canClick' )
+		if ( addToGlass ) {
+			glass.setAttribute( 'class', addToGlass )
 		} else {
 			glass.setAttribute( 'class', '' )
 		}

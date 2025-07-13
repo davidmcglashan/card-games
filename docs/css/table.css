@@ -32,7 +32,7 @@ body {
 	#glass.canClick {
 		cursor: pointer;
 	}
-	#glass.canGrab {
+	#glass.canDrag {
 		cursor: grab;
 	}
 #foot {
