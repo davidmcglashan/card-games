@@ -2,7 +2,6 @@
 - web hosting
 - some other fragility around drag/drops and timings
 - games maintaining a deck might benefit from pushing that to the dealer
-- game switcher at top
 - make rotation a function of the distance snapped (for all card stack types?) :)
 - weird concertina when dragging a pile in patience
 - restart button

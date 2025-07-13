@@ -11,7 +11,7 @@ body {
 #table {
 	position: absolute;
 	top: 1em;
-	bottom: 2em;
+	bottom: 1em;
 	left: 1em;
 	right: 1em;
 	min-width: 500px;
@@ -19,9 +19,11 @@ body {
 	background-color: #183;
 	border-radius: 8px;
 	padding: 1em;
+	margin-top: 1em;
 	box-shadow: 0px 8px 50px rgba(0,0,0,0.5);
 }
 
+#cards,
 #glass {
 	top: 0;
 	left: 0;
@@ -35,32 +37,33 @@ body {
 	#glass.canDrag {
 		cursor: grab;
 	}
-#foot {
+
+#masthead {
 	position: absolute;
-	bottom: 0;
+	top: 0;
 	padding: 0.5em;
 	display: flex;
 	left: 0;
 	right: 1rem;
 }
-	#foot ul {
+	#masthead ul {
 		flex: 10;
 		display: inline-flex;
 		gap: 1rem;
 		margin: 0;
 		padding-inline-start: 1rem;
 	}
-	#foot ul li {
+	#masthead ul li {
 		list-style-type: none;
 	}
-	#foot a.selected {
+	#masthead a.selected {
 		color: white;
-		border-top: 1px solid #fff;
+		border-bottom: 1px solid #fff;
 	}
-	#foot a {
+	#masthead a {
 		text-decoration: none;
 	}
-	#foot a:hover {
+	#masthead a:hover {
 		color: #fff;
 	}
 

@@ -356,10 +356,10 @@ const table = {
 	 * once from the loading page.
 	 */
 	ready: () => {
-		// Put a <ul> in the foot.
-		let foot = document.getElementById( 'foot' )
+		// Put a <ul> in the masthead.
+		let masthead = document.getElementById( 'masthead' )
 		let ul = document.createElement( 'ul' )
-		foot.append( ul )
+		masthead.append( ul )
 
 		// Put an <li> for each available game.
 		for ( let gg of table.games ) {
@@ -382,7 +382,7 @@ const table = {
 			}
 		}
 
-		foot.insertAdjacentHTML( 'beforeend', '<strong>v1.0</strong> &copy; 2025 David McGlashan' )
+		masthead.insertAdjacentHTML( 'beforeend', '<strong>v1.0</strong> &copy; 2025 David McGlashan' )
 
 		// Have the glass listen to mouse events
 		let glass = document.getElementById( 'glass' )
