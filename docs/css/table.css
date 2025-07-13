@@ -248,3 +248,20 @@ a:hover {
 		color: #000;
 	}
 }
+
+#listOfGames {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	padding-inline-start: 1em;
+	width: fit-content;
+}
+	#listOfGames li {
+		display: flex;
+		flex-direction: column;
+		width: fit-content;
+	}
+		#listOfGames li a {
+			display: inline;
+			width: fit-content;
+		}

@@ -391,5 +391,35 @@ const table = {
 		glass.addEventListener( 'mousedown', table.mousePressed )
 
 		window.addEventListener("resize", table.windowResized );
+	},
+
+	/**
+	 * Stuffs a list of the available games into a <ul> on index.html
+	 */
+	listOfGames: () => {
+		// Put a <ul> in the masthead.
+		let ul = document.getElementById( 'listOfGames' )
+
+		// Put an <li> for each available game.
+		for ( let gg of table.games ) {
+			let li = document.createElement( 'li' )
+			ul.appendChild( li )
+
+			let a = document.createElement( 'a' )
+			a.setAttribute( 'href', gg.url )
+			a.innerHTML = gg.name
+			li.appendChild( a )
+			li.appendChild( document.createTextNode( gg.description ) )
+
+			// If this is the current game then select the <li> and update the banner.
+			if ( document.URL.indexOf( '/' + gg.url ) !== -1 ) {
+				a.setAttribute( 'class', 'selected' )
+
+				let banner = document.getElementById( 'headline' )
+				banner.innerHTML = gg.name
+				let message = document.getElementById( 'message' )
+				message.innerHTML = gg.description
+			}
+		}
 	}
 }

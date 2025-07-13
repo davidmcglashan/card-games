@@ -1,11 +1,11 @@
 - sloppy piles tend diagonally up and left
-- web hosting
 - some other fragility around drag/drops and timings
 - games maintaining a deck might benefit from pushing that to the dealer
 - make rotation a function of the distance snapped (for all card stack types?) :)
 - weird concertina when dragging a pile in patience
 - restart button
 
+- web hosting needs a better index.html
 - instructions
 
 - demo
