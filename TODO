@@ -16,7 +16,6 @@
   - variable card sizes - arrange in a circle?
 
 - patience
-  - game over detection and messages!
   - double click a card to send it to a suit
   - decorate the piles aces
   - settings 
@@ -26,3 +25,9 @@
 
 - that instagram game (accordion) - https://www.instagram.com/p/DENFxlMxzf6/
   - might need some dynamic pile animations :D
+  - deal three cards to start
+  - then deal one at a time underneath
+  - numbers and suits can stack to the left or above
+  - cards move left to fill gaps left by upshifts
+  - having 1 pile left at the end is a "perfect" game -- three is good according to the vid
+  - video gets as many as five rows, briefly - we could do it with columns ...
