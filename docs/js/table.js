@@ -1,4 +1,5 @@
 const table = {
+	version: "1.0",
 	games: [ 
 		{ name: 'Clock', description: 'Tick tock!', url: 'clock-patience.html' },
 		{ name: 'Patience', description: 'a.k.a. Solitaire', url: 'patience.html' },
@@ -382,7 +383,7 @@ const table = {
 			}
 		}
 
-		masthead.insertAdjacentHTML( 'beforeend', '<strong>v1.0</strong>&nbsp;| &copy; 2025 David McGlashan' )
+		masthead.insertAdjacentHTML( 'beforeend', '<strong>v' + table.version + '</strong>&nbsp;| &copy; 2025 David McGlashan' )
 
 		// Have the glass listen to mouse events
 		let glass = document.getElementById( 'glass' )
