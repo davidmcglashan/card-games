@@ -164,26 +164,26 @@ const table = {
 	 * Animates a card dropping nicely onto its new pile home after a drag and drop operation.
 	 */
 	playDropAnimation: ( pile, elem, offset = 0 ) => {
-		let destRect = cardUI.applyTranslation( pile, table.drag.destination.getBoundingClientRect() )			
+		let destXY = cardUI.getDestinationXY( pile, table.drag.destination )			
 
 		// Work out how far the card needs to travel.
-		let distX = elem.getBoundingClientRect().left - destRect.left
-		let distY = elem.getBoundingClientRect().top - destRect.top
+		let distX = elem.getBoundingClientRect().left - destXY.x
+		let distY = elem.getBoundingClientRect().top - destXY.y
 			
 		// Position the card on the destination pile, where we want it to finish ...
-		elem.style.top = offset + destRect.top + 'px'
-		elem.style.left = destRect.left + 'px'
+		elem.style.top = offset + destXY.y + 'px'
+		elem.style.left = destXY.x + 'px'
 			
 		// ... then apply a transform to translate it back to where it was dropped.
 		elem.style.transform = `translate(${distX}px,${distY}px)`
 
 		// Now apply an animation to remove the translation again.
-		let transform = cardUI.getTransform( pile, elem )
-		let anim = elem.animate([{transform: `${transform}`}],{duration:250, easing: 'ease-in-out'});
+		let rotation = cardUI.getRotationTransform( pile, elem )
+		let anim = elem.animate([{transform: `${rotation}`}],{duration:250, easing: 'ease-in-out'});
 
 		anim.pause()
 		anim.onfinish = () => {
-			elem.style.transform = transform
+			elem.style.transform = rotation
 		}
 		anim.play()
 	},

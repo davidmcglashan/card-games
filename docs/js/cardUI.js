@@ -59,7 +59,7 @@ const cardUI = {
 		return null
 	},
 
-	getTransform: ( pile, card ) => {
+	getRotationTransform: ( pile, card ) => {
 		switch ( pile.stackingMethod ) {
 
 			case dealer.stackingMethods.UNTIDY:
@@ -74,25 +74,31 @@ const cardUI = {
 	 * Apply a translation for a dropped card depending on the pile's stacking method.
 	 * Empty piles don't apply a translation. The first card always sits on the pile neatly.
 	 */
-	applyTranslation: ( pile, rect ) => {
+	getDestinationXY: ( pile, elem ) => {
 		// Empty piles don't apply a translation. The first card always sits on the pile neatly.
 		if ( pile.cards.length === 0 ) {
-			return rect
+			let rect = elem.getBoundingClientRect()
+			return { x: rect.left, y: rect.top }
 		}
+
+		// We must be dealing with a card. Cards might have rotations, but should have top: and left:
+		let point = {}
+		point.x = parseInt( elem.style.left.slice(0,-2) )
+		point.y = parseInt( elem.style.top.slice(0,-2) )
 
 		switch ( pile.stackingMethod ) {
 			// Verticals get shunted down nicely.
 			case dealer.stackingMethods.VERTICAL:
-				rect.y = rect.y + 24
+				point.y = point.y + 24
 				break
 
 			// Diagonals get a tiny x,y offset applied.
 			case dealer.stackingMethods.DIAGONAL:
-				rect.x = rect.x + 0.5
-				rect.y = rect.y + 0.5
+				point.x = point.x + 0.5
+				point.y = point.y + 0.5
 		}
 		
-		return rect
+		return point
 	},
 
 	/**
