@@ -138,7 +138,8 @@ const dealer = {
 	/**
 	 * Take all the cards from the top of the pile, returning them as an array of cards.
 	 */
-	xdrawAllFromPile: ( pile, n ) => {
+	drawAllFromPile: ( pileName ) => {
+		let pile = dealer.piles[pileName]
 		let ret = pile.cards
 		pile.cards = []
 		return ret

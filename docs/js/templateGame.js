@@ -60,8 +60,17 @@ const game = {
 	},
 
 	/**
+	 * Called in response to a card drop. Works out where the name card must be drawn from.
+	 */
+	dropHappened: ( drag ) => {
+		let num = drag.card.name.split('_')
+		game.nextPile = 'clock-' + num[0]
+	},
+
+	/**
 	 * Returns 0 if the game isn't finished, 1 if the player loses, 2 if the player wins!
 	 */
 	hasFinished: () => {
 		return 0
-	}};
+	}
+};

@@ -1,7 +1,7 @@
 const table = {
 	version: "1.0",
 	games: [ 
-	//	{ name: 'Accordion', description: 'Tick tock!', url: 'accordion.html' },
+		{ name: 'Accordion', description: 'Tick tock!', url: 'accordion.html' },
 		{ name: 'Clock', description: 'Tick tock!', url: 'clock-patience.html' },
 		{ name: 'Patience', description: 'a.k.a. Solitaire', url: 'patience.html' },
 		{ name: 'Test1', description: 'Nothing here matters', url: 'table.html' },

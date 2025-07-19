@@ -4,14 +4,13 @@ const game = {
 	 */
 	start: () => {
 		game.deck = dealer.newShuffledCardArray()
-		table.nextPile = 4
 	},
 
 	/**
 	 * Sets up the new piles. There is a deck, and the first three piles each get one card ...
 	 */
 	newPile: ( name ) => {
-		// Towers require cards to be drawn from the deck
+		// We deal one card from the deck onto piles 1, 2, and 3.
 		if ( name.endsWith( '-1' ) || name.endsWith( '-2' ) || name.endsWith( '-3' ) ) {
 			// Deal from the pack
 			let hand = []
@@ -22,7 +21,7 @@ const game = {
 			cardUI.snapPile( pile )
 		} 
 		
-		// everything else is an empty pile. The deck will be set up in cardsDealt()
+		// Everything else is an empty pile. The deck will be set up in cardsDealt()
 		else {
 			let pile = dealer.newEmptyPile( name )
 			if ( name === 'deck' ) {
@@ -53,9 +52,41 @@ const game = {
 					type: table.interactionTypes.CLICK 
 				}
 			}
+
+			return { outcome: table.outcomes.NONE }
+		}
+
+		let fromCard = dealer.peekTopOfPile( pile.name )
+		if ( fromCard && cardUI.xyIsInBounds( x, y, fromCard.elem ) ) {
+			// Piles can be dragged if there are suit or number matches on the next pile down.
+			let outcome = game.getDragOutcome( fromCard, pile.name, 1 )
+
+			// ... or if it matches the next row across.
+			if ( !outcome ) {
+				outcome = game.getDragOutcome( fromCard, pile.name, 3 )
+			}
+
+			if ( outcome ) { 
+				return outcome
+			}
 		}
 
 		return { outcome: table.outcomes.NONE }
+	},
+
+	getDragOutcome: ( fromCard, fromPileName, distance ) => {
+		let toPileName = 'pile-' + ( parseInt( fromPileName.split('-')[1] ) - distance )
+		let toCard = dealer.peekTopOfPile( toPileName )
+		
+		if ( toCard ) {
+			if ( fromCard.suit === toCard.suit || fromCard.ordValue === toCard.ordValue ) {
+				return {
+					outcome: table.outcomes.CARD_IS_INTERACTIVE,
+					card: fromCard.name,
+					type: table.interactionTypes.DRAG
+				}
+			}
+		}
 	},
 
 	/**
@@ -69,12 +100,15 @@ const game = {
 				card.isFaceUp = true
 				cardUI.decorate( card )
 
-				let next = 'pile-' + table.nextPile
-				dealer.placeOnPile( next, card )
-				cardUI.snapPile( dealer.piles[next] )
-
-				table.nextPile++
-				return true
+				// Find the first pile with no cards.
+				for ( let p=2; p++; p<18 ) {
+					let next = 'pile-' + p
+					if ( dealer.piles[next].cards.length === 0 ) {
+						dealer.placeOnPile( next, card )
+						cardUI.snapPile( dealer.piles[next] )
+						return true
+					}
+				}
 			}
 		}
 
@@ -92,14 +126,59 @@ const game = {
 	 * Can a drag be started from the pile in question using card?
 	 */
 	canStartDrag: ( cardName, pileName ) => {
+		let fromCard = dealer.peekTopOfPile( pileName )
+		let outcome = game.getDragOutcome( fromCard, pileName, 1 )
+
+		// ... or if it matches the next row across.
+		if ( !outcome ) {
+			outcome = game.getDragOutcome( fromCard, pileName, 3 )
+		}
+
+		if ( outcome ) { 
+			return true
+		}	
+
 		return false
 	},
 
 	/**
 	 * Respond to a request for dropping a card on a pile. 
 	 */
-	canDropCardAtXYOnPile: ( card, x, y, pile ) => {
+	canDropCardAtXYOnPile: ( fromCard, x, y, toPile ) => {
+		let toCard = dealer.peekTopOfPile( toPile.name )
+		if ( toCard && cardUI.xyIsInBounds( x, y, toCard.elem ) ) {
+			if ( fromCard.name !== toCard.name && ( fromCard.suit === toCard.suit || fromCard.ordValue === toCard.ordValue ) ) {
+				return 2
+			}
+		}
+
 		return 0
+	},
+
+	/**
+	 * Called in response to a card drop. Works out where the name card must be drawn from.
+	 */
+	dropHappened: ( drag ) => {
+		// The dropped card should simply replace the card it's dropping onto
+		let pile = dealer.piles[drag.destination.getAttribute('data-pile')]
+		let keep = dealer.takeFromPile( pile.name )
+
+		for ( let card of pile.cards ) {
+			card.elem.remove()
+		}
+		pile.cards = [keep]
+
+		// Tidy up the empty piles.
+		for ( let i = 1; i<18; i++ ) {
+			let thisPile = 'pile-' + i
+			let nextPile = 'pile-' + (i+1)
+
+			if ( dealer.piles[thisPile].cards.length === 0 ) {
+				let hand = dealer.drawAllFromPile( nextPile )
+				dealer.addCardsToPile( thisPile, hand )
+				cardUI.snapPile( dealer.piles[thisPile] )
+			}
+		}
 	},
 
 	/**
@@ -107,4 +186,5 @@ const game = {
 	 */
 	hasFinished: () => {
 		return 0
-	}};
+	}
+};
