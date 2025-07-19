@@ -1,0 +1,17 @@
+#table {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 1rem;
+}
+
+/* Clock has four rows so limit the card height to 21% of the table's height, and maintain the aspect ratio. */
+.pile {
+	max-height: 21cqh;
+	max-width: calc( 21cqh * 0.692 );
+}

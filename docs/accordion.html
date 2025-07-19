@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Accordion</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="css/table.css">
+		<link rel="stylesheet" href="css/accordion.css">
+		<script type="text/javascript" src="js/dealer.js"></script>
+		<script type="text/javascript" src="js/cardUI.js"></script>
+		<script type="text/javascript" src="js/table.js"></script>
+		<script type="text/javascript" src="js/accordion.js"></script>
+	</head>
+	<body>
+		<div id="table">
+			<div class="row">
+				<div class="pile" id="pile-1"></div>
+				<div class="pile" id="pile-4"></div>
+				<div class="pile" id="pile-7"></div>
+				<div class="pile" id="pile-10"></div>
+				<div class="pile" id="pile-13"></div>
+				<div class="pile" id="pile-16"></div>
+			</div>
+			<div class="row">
+				<div class="pile" id="pile-2"></div>
+				<div class="pile" id="pile-5"></div>
+				<div class="pile" id="pile-8"></div>
+				<div class="pile" id="pile-11"></div>
+				<div class="pile" id="pile-14"></div>
+				<div class="pile" id="pile-17"></div>
+			</div>
+			<div class="row">
+				<div class="pile" id="pile-3"></div>
+				<div class="pile" id="pile-6"></div>
+				<div class="pile" id="pile-9"></div>
+				<div class="pile" id="pile-12"></div>
+				<div class="pile" id="pile-15"></div>
+				<div class="pile" id="pile-18"></div>
+			</div>
+			<div class="row">
+				<div class="pile" id="deck"></div>
+			</div>
+		</div>
+		<div id="cards"></div>
+		<div id="glass"></div>
+		<div id="masthead"></div>
+		<div id="banner">
+			<h1 id="headline"></h1>
+			<p id="message"></p>
+			<a class="btn" href="#" alt="Play" onclick="table.restart()">Play!</a>
+		</div>
+		<pre id="debug" class="hidden"></div>
+		<script>table.ready()</script>
+	</body>
+</html>
