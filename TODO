@@ -6,6 +6,7 @@
 
 - web hosting needs a better index.html
 - instructions
+- More games ... https://www.instagram.com/p/DKelpn5MMgn/
 
 - demo
   - dragging off a pile (not the deck) in demo.js drops the card where it is
@@ -19,16 +20,12 @@
   - decorate the piles aces
   - settings 
     - turn deck
-	- shuffle after turning
-	- only king on space
+	  - shuffle after turning
+	  - only king on space
 
-- that instagram game (accordion) - https://www.instagram.com/p/DENFxlMxzf6/
-  - might need some dynamic pile animations :D
-  - deal three cards to start
-  - then deal one at a time underneath
-  - numbers and suits can stack to the left or above
-  - cards move left to fill gaps left by upshifts
-  - having 1 pile left at the end is a "perfect" game -- three is good according to the vid
-  - video gets as many as five rows, briefly - we could do it with columns ...
-
-  - More ... https://www.instagram.com/p/DKelpn5MMgn/
+- accordion
+  - detect win state
+  - return custom game messages, including score!?
+  - animations after dealing.
+  - animations after dropping and the piles shift around.
+  - keeping all the cards and dragging whole piles!

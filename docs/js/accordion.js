@@ -101,7 +101,7 @@ const game = {
 				cardUI.decorate( card )
 
 				// Find the first pile with no cards.
-				for ( let p=2; p++; p<18 ) {
+				for ( let p=1; p++; p<18 ) {
 					let next = 'pile-' + p
 					if ( dealer.piles[next].cards.length === 0 ) {
 						dealer.placeOnPile( next, card )
