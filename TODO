@@ -24,7 +24,8 @@
 	  - only king on space
 
 - accordion
-  - disable affordances in CSS to make it harder
+  - settings
+    - enable/disable affordances in CSS to make it harder
   - detect win state
   - return custom game messages, including score!?
   - animations after dealing.
