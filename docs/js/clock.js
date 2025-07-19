@@ -37,10 +37,14 @@ const game = {
 		if ( pile.name === game.nextPile && pile.cards.length > 0  && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
 			// Face down cards can be clicked, Face up can be dragged.
 			let topCard = dealer.peekTopOfPile( pile.name )
-			return { outcome: 2, card: topCard.name, type: topCard.isFaceUp ? 1 : 0 }
+			return { 
+				outcome: table.outcomes.CARD_IS_INTERACTIVE, 
+				card: topCard.name, 
+				type: topCard.isFaceUp ? table.interactionTypes.DRAG : table.interactionTypes.CLICK
+			}
 		}
 
-		return { outcome: 0 }
+		return { outcome: table.outcomes.NONE }
 	},
 
 	/**

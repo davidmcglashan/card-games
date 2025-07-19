@@ -23,17 +23,21 @@ const game = {
 	canClickOrDragFromPileAtXY: ( pile, x, y ) => {
 		// Empty piles can't be interacted with
 		if ( pile.cards.length === 0 ) {
-			return { outcome: 0 }
+			return { outcome: table.outcomes.NONE }
 		}
 
 		// On the testcard there are always clicks if the pointer is over any card
 		let topCard = dealer.peekTopOfPile( pile.name )
 		if ( cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
-			return { outcome: 2, card: topCard.name, type: 0 }
+			return { 
+				outcome: table.outcomes.CARD_IS_INTERACTIVE, 
+				card: topCard.name, 
+				type: table.interactionTypes.CLICK
+			}
 		}
 
 		// Fallback return ...
-		return { outcome: 0 }
+		return { outcome: table.outcomes.NONE }
 	},
 
 	/**

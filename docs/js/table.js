@@ -1,11 +1,23 @@
 const table = {
 	version: "1.0",
 	games: [ 
+	//	{ name: 'Accordion', description: 'Tick tock!', url: 'accordion.html' },
 		{ name: 'Clock', description: 'Tick tock!', url: 'clock-patience.html' },
 		{ name: 'Patience', description: 'a.k.a. Solitaire', url: 'patience.html' },
 		{ name: 'Test1', description: 'Nothing here matters', url: 'table.html' },
 		{ name: 'Test2', description: 'Look at the pretty cards', url: 'testcard.html' },
 	],
+
+	outcomes: {
+		NONE: 0,
+		PILE_IS_INTERACTIVE: 1,
+		CARD_IS_INTERACTIVE: 2
+	},
+
+	interactionTypes: {
+		CLICK: 0,
+		DRAG: 1
+	},
 
 	/**
 	 * A mouse click happened on the glass. This function detects which element
@@ -269,16 +281,16 @@ const table = {
 			let interactive = game.canClickOrDragFromPileAtXY( pile, x, y )
 
 			switch ( interactive.outcome ) {
-				case 0: // Nothing to interact with
+				case table.outcomes.NONE:
 					cardUI.removeAffordances( pile )
 					break
 
-				case 1: // Pile can be interacted with
+				case table.outcomes.PILE_IS_INTERACTIVE:
 					cardUI.enablePileAffordances( pile )
 					addToGlass = 'canClick'
 					break
 				
-				case 2: // Card can be interacted with
+				case table.outcomes.CARD_IS_INTERACTIVE:
 					cardUI.enableCardAffordances( pile, interactive.card )
 					addToGlass = interactive.type === 0 ? 'canClick' : 'canDrag'
 					didAdd = true
