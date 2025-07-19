@@ -42,14 +42,19 @@ const game = {
 	 * Is the pile in question currently interactive?
 	 */
 	canClickOrDragFromPileAtXY: ( pile, x, y ) => {
-		// The deck can always be clicked, if it has cards in it.
+		// The deck can be clicked if it has cards in it and at least one pile is empty.
 		if ( pile.name === 'deck' ) {
 			let topCard = dealer.peekTopOfPile( pile.name )
 			if ( topCard && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
-				return { 
-					outcome: table.outcomes.CARD_IS_INTERACTIVE, 
-					card:topCard.name, 
-					type: table.interactionTypes.CLICK 
+				for ( let p=1; p++; p<18 ) {
+					let next = 'pile-' + p
+					if ( dealer.piles[next].cards.length === 0 ) {
+						return { 
+							outcome: table.outcomes.CARD_IS_INTERACTIVE, 
+							card: topCard.name, 
+							type: table.interactionTypes.CLICK 
+						}
+					}
 				}
 			}
 
@@ -96,16 +101,17 @@ const game = {
 		// The deck can always be clicked, if it has cards in it.
 		if ( pileName === 'deck' ) {
 			if ( dealer.piles['deck'].cards.length > 0 ) {
-				let card = dealer.takeFromPile( 'deck' )
-				card.isFaceUp = true
-				cardUI.decorate( card )
-
 				// Find the first pile with no cards.
 				for ( let p=1; p++; p<18 ) {
 					let next = 'pile-' + p
 					if ( dealer.piles[next].cards.length === 0 ) {
+						// Flip the card and place it on the next pile.
+						let card = dealer.takeFromPile( 'deck' )
+						card.isFaceUp = true
+						cardUI.decorate( card )
 						dealer.placeOnPile( next, card )
 						cardUI.snapPile( dealer.piles[next] )
+
 						return true
 					}
 				}
