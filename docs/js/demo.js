@@ -75,7 +75,7 @@ const game = {
 		// Can only drop on cards with matching suits.
 		let topCard = dealer.peekTopOfPile( pile.name )
 		if ( topCard ) {
-			if ( card.suit === topCard.suit && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
+			if ( card.name !== topCard.name && card.suit === topCard.suit && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
 				return 2
 			}
 		}
