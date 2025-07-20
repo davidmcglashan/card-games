@@ -19,10 +19,10 @@
 }
 
 /* Disable the affordances to make the game harder! */
-.card.interactive {
+body:not(.mouseEffects) .card.interactive {
 	box-shadow: none;
 }
-#glass.canDrag {
+body:not(.mouseEffects) #glass.canDrag {
 	cursor: default;
 }
 

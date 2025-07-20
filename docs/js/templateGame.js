@@ -72,5 +72,12 @@ const game = {
 	 */
 	hasFinished: () => {
 		return 0
-	}
+	},
+
+	/**
+	 * Called when a setting has changed. It is the game's job to change itself accordingly.
+	 */
+	settingChanged: ( setting, active ) => { 
+
+	},
 };

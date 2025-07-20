@@ -2,7 +2,19 @@ const games = {
 	version: "1.0",
 
 	allGames: [ 
-		{ name: 'Accordion', description: 'Tick tock!', url: 'accordion.html' },
+		{ 	
+			name: 'Accordion', 
+			description: 'Reduce the number of piles to one by matching neighbouring suits and numbers', 
+			url: 'accordion.html',
+			settings: [
+				{
+					key: 'mouseEffects',
+					label: 'Mouse effects',
+					description: 'Makes the game easier by highlighting possible moves with the mouse.'
+				}
+			]
+		 },
+
 		{ name: 'Clock', description: 'Tick tock!', url: 'clock-patience.html' },
 		{ name: 'Patience', description: 'a.k.a. Solitaire', url: 'patience.html' },
 		{ name: 'Test1', description: 'Nothing here matters', url: 'table.html' },
@@ -64,7 +76,26 @@ const games = {
 		tray.appendChild( section )
 
 		if ( thisGame.settings ) {
+			for ( let setting of thisGame.settings ) {
+				let label = document.createElement( 'label' )
+				
+				let check = document.createElement( 'input' )
+				check.setAttribute( 'type', 'checkbox' )
+				check.setAttribute( 'value', 'true' )
+				check.setAttribute( 'name', setting.key )
+				check.setAttribute( 'id', 'setting_' + setting.key )
+				label.appendChild( check )
+				
+				label.insertAdjacentHTML( 'beforeend', '<strong>' + setting.label + '</strong><br>' + setting.description )
+				section.appendChild( label )
+			}
 
+			elem = document.createElement( 'a' )
+			elem.setAttribute( 'href', '#' )
+			elem.setAttribute( 'onclick', 'games.saveSettings()' )
+			elem.setAttribute( 'class', 'btn' )
+			elem.innerHTML = 'Save settings'
+			section.appendChild( elem )
 		} else {
 			elem = document.createElement( 'p' )
 			elem.innerHTML = 'This game has no settings.'
@@ -85,8 +116,22 @@ const games = {
 		tray.appendChild( section )
 
 		elem = document.createElement( 'p' )
-		elem.innerHTML = 'v' + table.version + '<br>&copy 2025 David McGlashan<br><a href="https://cards.dvdmcglshn.com">https://cards.dvdmcglshn.com</a>'
+		elem.innerHTML = 'v' + games.version + '<br>&copy 2025 David McGlashan<br><a href="https://cards.dvdmcglshn.com">https://cards.dvdmcglshn.com</a>'
 		section.appendChild( elem )
+	},
+
+	saveSettings: () => {
+		// Inform the game of the new settings.
+		if ( game.settingChanged ) {
+			let checks = document.querySelectorAll( "#tray input[type='checkbox']" )
+			for ( let check of checks ) {
+				game.settingChanged( check.name, check.checked )
+			}
+		}
+
+		// Reset the UI.
+		games.settings()
+		table.restart()
 	},
 
 	/**
@@ -104,8 +149,6 @@ const games = {
 			tray.classList.toggle('closed')
 			tray.classList.toggle('open')
 		}
-
-		// Something here to stop the game from working.
 	},
 
 	/**

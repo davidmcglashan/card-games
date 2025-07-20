@@ -220,5 +220,20 @@ const game = {
 		} else {
 			return 1
 		}
-	}
+	},
+
+	/**
+	 * Called when a setting has changed. It is the game's job to change itself accordingly.
+	 */
+	settingChanged: ( setting, active ) => { 
+		// Handle the setting for mouse effects
+		if ( setting === 'mouseEffects' ) {
+			let elem = document.querySelector( 'body' )
+			if ( active ) {
+				elem.classList.add( 'mouseEffects' )
+			} else {
+				elem.classList.remove( 'mouseEffects' )
+			}
+		}
+	},
 };

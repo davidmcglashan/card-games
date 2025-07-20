@@ -24,8 +24,6 @@
 	  - only king on space
 
 - accordion
-  - settings
-    - enable/disable affordances in CSS to make it harder - put a class on <body> and refer to it in the CSS
   - return custom game messages, including score!?
   - animations after dealing.
   - animations after dropping and the piles shift around.

@@ -336,6 +336,20 @@ a:hover {
 		margin-top: 5rem;
 		border-bottom: 1px solid #666;
 	}
+	#tray div.settings {
+		margin-top: 1rem;
+	}
+	#tray div.settings label {
+		padding-left: 1.5rem;
+		position: relative;
+		display: block;
+		cursor: pointer;
+		min-height: 4rem;
+	}
+	#tray div.settings input {
+		position: absolute;
+		left: 0;
+	}
 
 /* Lightbox is a non-interactive element that appears under the slide-in tray. It fades in and out. */
 #lightbox {
