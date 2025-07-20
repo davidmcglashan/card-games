@@ -51,6 +51,9 @@ const games = {
 		}
 	},
 
+	/**
+	 * Builds the settings UI.
+	 */
 	buildSettings: ( thisGame ) => {
 		let tray = document.getElementById( 'tray' )
 		let section = document.createElement( 'div' )
@@ -84,8 +87,16 @@ const games = {
 				check.setAttribute( 'value', 'true' )
 				check.setAttribute( 'name', setting.key )
 				check.setAttribute( 'id', 'setting_' + setting.key )
+
+				// We can set the settings UI and the game settings state at the same time.
+				if ( localStorage[check.name] ) {
+					check.setAttribute( 'checked', 'true' )
+					game.settingChanged( check.name, true )
+				} else {
+					game.settingChanged( check.name, false )
+				}
+
 				label.appendChild( check )
-				
 				label.insertAdjacentHTML( 'beforeend', '<strong>' + setting.label + '</strong><br>' + setting.description )
 				section.appendChild( label )
 			}
@@ -120,12 +131,23 @@ const games = {
 		section.appendChild( elem )
 	},
 
+	/**
+	 * Called when the save settings button is pressed in the UI. Informs the game of any changes and persists
+	 * settings in localstorage.
+	 */
 	saveSettings: () => {
-		// Inform the game of the new settings.
 		if ( game.settingChanged ) {
 			let checks = document.querySelectorAll( "#tray input[type='checkbox']" )
 			for ( let check of checks ) {
+				// Inform the game of the new settings.
 				game.settingChanged( check.name, check.checked )
+
+				// Set the new values into localstorage for recall later.
+				if ( check.checked ) {
+					localStorage[check.name] = true
+				} else {
+					localStorage.removeItem( check.name )
+				}
 			}
 		}
 
@@ -193,6 +215,6 @@ const games = {
 		glass.addEventListener( 'mousemove', table.mouseMoved )
 		glass.addEventListener( 'mousedown', table.mousePressed )
 
-		window.addEventListener("resize", table.windowResized );
+		window.addEventListener("resize", table.windowResized );		
 	},
 }
