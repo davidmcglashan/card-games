@@ -4,14 +4,12 @@
 - games maintaining a deck might benefit from pushing that to the dealer
 - make rotation a function of the distance snapped (for all card stack types?) :)
 - weird concertina when dragging a pile in patience
-- restart button
 
 - web hosting needs a better index.html
 - instructions
 - More games ... https://www.instagram.com/p/DKelpn5MMgn/
 
 - demo
-  - dragging off a pile (not the deck) in demo.js drops the card where it is
   - clicking rotated cards in test1 invokes another rotation
 
 - clock

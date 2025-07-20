@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="js/dealer.js"></script>
 		<script type="text/javascript" src="js/cardUI.js"></script>
 		<script type="text/javascript" src="js/table.js"></script>
+		<script type="text/javascript" src="js/games.js"></script>
 		<script type="text/javascript" src="js/demo.js"></script>
 	</head>
 	<body>
@@ -37,8 +38,8 @@
 			<p id="message"></p>
 			<a class="btn" href="#" alt="Play" onclick="table.restart()">Play!</a>
 		</div>
-		<div id="lightbox" onclick="table.settings()"></div>
+		<div id="lightbox" onclick="games.settings()"></div>
 		<div id="tray"></div>
-		<script>table.ready()</script>
+		<script>games.readyTable()</script>
 	</body>
 </html>
