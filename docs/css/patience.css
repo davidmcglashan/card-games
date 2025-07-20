@@ -15,3 +15,9 @@
 	max-height: 21cqh;
 	max-width: calc( 21cqh * 0.692 );
 }
+
+.pile .label, 
+.pile .bottomlabel {
+	color: rgba(0,0,0,0.15);
+	font-size: 62cqh;
+}
