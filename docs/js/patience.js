@@ -194,8 +194,6 @@ const game = {
 				// Are we shuffling or simply flipping around?
 				if ( localStorage['patience.shuffleAfterDeal'] ) {
 					cards = dealer.shuffle( cards )
-				} else {
-					cards.reverse()
 				}
 
 				// Place them back onto the deck
