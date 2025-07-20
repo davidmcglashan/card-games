@@ -3,6 +3,7 @@ A bunch of single player card games for playing in web browers.
 
 ## v1.1.2
 * Fixed a bug where Patience was reversing the deck twice after each re-deal.
+* Decorated the Patience empty suit piles with big symbols.
 
 ## v1.1.1
 * Increased stabiilty around right-clicks and dragging cards out of the frame.
