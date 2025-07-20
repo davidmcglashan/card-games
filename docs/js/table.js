@@ -14,7 +14,7 @@ const table = {
 	 * A mouse click happened on the glass. This function detects which element
 	 * (card,pile) was under the click and asks the game object to handle the click
 	 */
-	mouseClicked: ( event ) => {
+	mouseClicked: ( event ) => {		
 		// Abort quickly if we're dragging something.
 		if ( table.drag !== undefined ) {
 			return
@@ -54,7 +54,7 @@ const table = {
 	 */
 	mousePressed: ( event ) => {
 		// If the game doesn't support dragging we can leave early ...
-		if ( !game.canStartDrag ) {
+		if ( event.which !== 1 || !game.canStartDrag ) {
 			return
 		}
 
@@ -172,6 +172,17 @@ const table = {
 		table.drag = undefined
 	},
 	
+	/**
+	 * The mouse left the window element, which means it left the table. If it was dragging
+	 * we invoke a drop here.
+	 */
+	mouseOut: ( event ) => {
+		// If we're dragging something it's time to drop it!
+		if ( table.drag !== undefined ) {
+			table.mouseReleased( event )
+		}
+	},
+
 	/**
 	 * Animates a card dropping nicely onto its new pile home after a drag and drop operation.
 	 */

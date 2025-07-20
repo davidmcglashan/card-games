@@ -288,7 +288,7 @@ a:hover {
 }
 @keyframes slideOut {
   0% { left: 40% }
-  100% { left: 100% }
+  100% { left: 100%; display: none; }
 }
 
 /* Styling and layout for the slide-in tray itself. */
@@ -301,12 +301,15 @@ a:hover {
 	background-color: #333;
 	border-left: 1px solid #888;
 	z-index: 2;
+	display: none;
 }
 	/* These two classes are applied to the tray to trigger its animations in and out. */
 	#tray.open {
+		display: block;
 		animation: slideIn 0.5s forwards;
 	}
 	#tray.closed {
+		display: block;
 		animation: slideOut 0.5s forwards;
 	}
 
@@ -358,7 +361,7 @@ a:hover {
 		margin-top: 1rem;
 		display: inline-block;
 	}
-	
+
 /* Lightbox is a non-interactive element that appears under the slide-in tray. It fades in and out. */
 #lightbox {
 	position: absolute;

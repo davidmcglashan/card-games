@@ -1,5 +1,5 @@
 const games = {
-	version: "1.1",
+	version: "1.1.1",
 
 	allGames: [ 
 		{ 	
@@ -236,6 +236,7 @@ const games = {
 		glass.addEventListener( 'mousemove', table.mouseMoved )
 		glass.addEventListener( 'mousedown', table.mousePressed )
 
+		glass.addEventListener( 'mouseleave', table.mouseOut )
 		window.addEventListener("resize", table.windowResized );		
 	},
 }
