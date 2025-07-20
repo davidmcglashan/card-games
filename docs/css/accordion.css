@@ -10,10 +10,12 @@
 	gap: 1rem;
 }
 
-/* Clock has four rows so limit the card height to 21% of the table's height, and maintain the aspect ratio. */
+/*  Accordion has four rows -- and the bottom row is a tall, diagonal stack -- so limit the card
+ *  height to 20% of the table's height, and maintain the aspect ratio. 
+ */
 .pile {
-	max-height: 21cqh;
-	max-width: calc( 21cqh * 0.692 );
+	max-height: 20cqh;
+	max-width: calc( 20cqh * 0.692 );
 }
 
 /* Disable the affordances to make the game harder! */
@@ -21,6 +23,6 @@
 	box-shadow: none;
 }
 #glass.canDrag {
-	cursor: pointer;
+	cursor: default;
 }
 

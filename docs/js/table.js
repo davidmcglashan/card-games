@@ -30,20 +30,28 @@ const table = {
 		}
 		
 		// Was the click on a card?
-		let elem = cardUI.getCardAtXY( event.clientX, event.clientY )
-		if ( elem ) {
-			if ( game.clickOnCard( elem.getAttribute('id'), elem.getAttribute('data-pile') ) ) {
-				return
-			}
-		}
-
-		// Was the click on a pile?
-		if ( game.clickOnPile ) {
-			elem = cardUI.getPileAtXY( event.clientX, event.clientY )
+		try {
+			let elem = cardUI.getCardAtXY( event.clientX, event.clientY )
 			if ( elem ) {
-				if ( game.clickOnPile( elem.getAttribute('id') ) ) {
+				if ( game.clickOnCard( elem.getAttribute('id'), elem.getAttribute('data-pile') ) ) {
 					return
 				}
+			}
+			
+			// Was the click on a pile?
+			if ( game.clickOnPile ) {
+				elem = cardUI.getPileAtXY( event.clientX, event.clientY )
+				if ( elem ) {
+					if ( game.clickOnPile( elem.getAttribute('id') ) ) {
+						return
+					}
+				}
+			}
+		} finally {
+			// Check the game hasn't finished
+			let result = game.hasFinished()
+			if ( result > 0 ) {
+				table.finishGame( result )
 			}
 		}
 	},

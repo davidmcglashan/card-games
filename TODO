@@ -1,4 +1,6 @@
 - some other fragility around drag/drops and timings
+  - disable right clicks
+  - look at drags out of the frame
 - games maintaining a deck might benefit from pushing that to the dealer
 - make rotation a function of the distance snapped (for all card stack types?) :)
 - weird concertina when dragging a pile in patience
@@ -25,8 +27,7 @@
 
 - accordion
   - settings
-    - enable/disable affordances in CSS to make it harder
-  - detect win state
+    - enable/disable affordances in CSS to make it harder - put a class on <body> and refer to it in the CSS
   - return custom game messages, including score!?
   - animations after dealing.
   - animations after dropping and the piles shift around.

@@ -191,6 +191,34 @@ const game = {
 	 * Returns 0 if the game isn't finished, 1 if the player loses, 2 if the player wins!
 	 */
 	hasFinished: () => {
-		return 0
+		// Can't win until we've dealt all the cards.
+		if ( dealer.piles['deck'].cards.length > 0 ) {
+			return 0
+		}
+
+		// Are there any legal moves left?
+		// Tidy up the empty piles.
+		for ( let i = 1; i<18; i++ ) {
+			let pileName = 'pile-' + i
+			let fromCard = dealer.peekTopOfPile( pileName )
+			if ( fromCard ) {
+				let outcome = game.getDragOutcome( fromCard, pileName, 1 )
+				if ( !outcome ) {
+					outcome = game.getDragOutcome( fromCard, pileName, 3 )
+				}
+
+				// Any outcome here means a move can be made so return 0
+				if ( outcome ) { 
+					return 0
+				}
+			}
+		}
+
+		// A "winning" game is having one pile left so check the number of pards on pile 2.
+		if ( dealer.piles['pile-2'].cards.length === 0 ) {
+			return 2
+		} else {
+			return 1
+		}
 	}
 };
