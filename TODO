@@ -1,6 +1,5 @@
 - games maintaining a deck might benefit from pushing that to the dealer
 - make rotation a function of the distance snapped (for all card stack types?) :)
-- weird concertina when dragging a pile in patience
 
 - web hosting needs a better index.html
   - favicon and all that jazz

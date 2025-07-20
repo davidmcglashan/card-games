@@ -191,7 +191,7 @@ const table = {
 
 		// Work out how far the card needs to travel.
 		let distX = elem.getBoundingClientRect().left - destXY.x
-		let distY = elem.getBoundingClientRect().top - destXY.y
+		let distY = elem.getBoundingClientRect().top - destXY.y - offset
 			
 		// Position the card on the destination pile, where we want it to finish ...
 		elem.style.top = offset + destXY.y + 'px'
@@ -202,7 +202,7 @@ const table = {
 
 		// Now apply an animation to remove the translation again.
 		let rotation = cardUI.getRotationTransform( pile, elem )
-		let anim = elem.animate([{transform: `${rotation}`}],{duration:250, easing: 'ease-in-out'});
+		let anim = elem.animate([{transform: `${rotation}`}],{duration:250, easing: 'ease-in-out', delay:offset/2});
 
 		anim.pause()
 		anim.onfinish = () => {
@@ -217,13 +217,13 @@ const table = {
 	 */
 	playSnapBackAnimation: ( elem, offset = 0 ) => {
 		let x = elem.getBoundingClientRect().left - table.drag.origin.left
-		let y = elem.getBoundingClientRect().top - table.drag.origin.top
+		let y = elem.getBoundingClientRect().top - table.drag.origin.top - offset
 		elem.style.top = offset + table.drag.origin.top + 'px'
 		elem.style.left = table.drag.origin.left + 'px'
 		elem.style.transform = `translate(${x}px,${y}px)`
 
 		// Now apply an animation to remove the translation again.
-		let anim = elem.animate([{transform: 'translate(0px,0px)'}],{duration:250, easing: 'ease-in-out'});
+		let anim = elem.animate([{transform: 'translate(0px,0px)'}],{duration:250, easing: 'ease-in-out', delay:offset/2});
 		anim.pause()
 		anim.onfinish = () => {
 			elem.style.transform = 'none'

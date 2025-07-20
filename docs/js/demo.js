@@ -8,7 +8,8 @@ const game = {
 			dealer.newFaceDownPile( name, dealer.newShuffledCardArray() )
 			cardUI.snapPile( dealer.piles[name] )
 		} else {
-			dealer.newEmptyPile( name )
+			let pile = dealer.newEmptyPile( name )
+			pile.stackingMethod = dealer.stackingMethods.VERTICAL
 		}
 	},
 
@@ -38,6 +39,32 @@ const game = {
 		return { outcome: table.outcomes.NONE }
 	},
 
+	/**
+	 * If the card being dragged is from lower down a tower we need to tell the 
+	 * game that the higher cards are getting moved too.
+	 */
+	embellishDrag: ( drag, cardName, pileName ) => {
+		// Not a tower? Don't care ...
+		if ( !pileName.startsWith( 'pile-' ) ) {
+			return
+		}
+
+		// Don't do anything if we're only dragging the top card.
+		let topCard = dealer.peekTopOfPile( pileName )
+		if ( topCard.name === cardName ) {
+			return
+		}
+
+		// Add the cards above the dragged card into the drag object.
+		let adding = false
+		for ( let card of dealer.piles[pileName].cards ) {
+			if ( card.name === cardName ) {
+				adding = true
+			} else if ( adding ) {
+				drag.otherCards.push( card )
+			}
+		}
+	},
 	/**
 	 * Respond to clicks on the deck to turn the top card if it's face down.
 	 */
@@ -75,7 +102,7 @@ const game = {
 		// Can only drop on cards with matching suits.
 		let topCard = dealer.peekTopOfPile( pile.name )
 		if ( topCard ) {
-			if ( card.name !== topCard.name && card.suit === topCard.suit && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
+			if ( card.name !== topCard.name && /*card.suit === topCard.suit && */cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
 				return 2
 			}
 		}
