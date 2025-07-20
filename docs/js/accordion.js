@@ -227,7 +227,7 @@ const game = {
 	 */
 	settingChanged: ( setting, active ) => { 
 		// Handle the setting for mouse effects
-		if ( setting === 'mouseEffects' ) {
+		if ( setting === 'accordion.mouseEffects' ) {
 			let elem = document.querySelector( 'body' )
 			if ( active ) {
 				elem.classList.add( 'mouseEffects' )

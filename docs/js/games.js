@@ -8,15 +8,34 @@ const games = {
 			url: 'accordion.html',
 			settings: [
 				{
-					key: 'mouseEffects',
+					key: 'accordion.mouseEffects',
 					label: 'Mouse effects',
-					description: 'Makes the game easier by highlighting possible moves with the mouse.'
+					description: 'Makes the game easier by highlighting possible moves with the mouse'
 				}
 			]
 		 },
 
 		{ name: 'Clock', description: 'Tick tock!', url: 'clock-patience.html' },
-		{ name: 'Patience', description: 'a.k.a. Solitaire', url: 'patience.html' },
+		{ 
+			name: 'Patience', 
+			description: 'The classic Solitaire', 
+			url: 'patience.html',
+			settings: [
+				{
+					key: 'patience.anyCardOnASpace',
+					label: 'Any card can be moved to a space',
+					description: 'When not checked only a King can be placed on an empty pile'
+				},{
+					key: 'patience.shuffleAfterDeal',
+					label: 'Shuffle when returning to deck',
+					description: 'Performs a shuffle when all the dealt cards are returned to the main deck'
+				},{
+					key: 'patience.oneAtATime',
+					label: 'Deal cards one at a time',
+					description: 'Cards are dealt from the main deck one at a time instead of three at once'
+				}
+			]
+		},
 		{ name: 'Test1', description: 'Nothing here matters', url: 'table.html' },
 		{ name: 'Test2', description: 'Look at the pretty cards', url: 'testcard.html' },
 	],
@@ -91,8 +110,10 @@ const games = {
 				// We can set the settings UI and the game settings state at the same time.
 				if ( localStorage[check.name] ) {
 					check.setAttribute( 'checked', 'true' )
-					game.settingChanged( check.name, true )
-				} else {
+					if ( game.settingChanged ) {
+						game.settingChanged( check.name, true )
+					} 
+				} else if ( game.settingChanged ) {
 					game.settingChanged( check.name, false )
 				}
 
@@ -136,18 +157,18 @@ const games = {
 	 * settings in localstorage.
 	 */
 	saveSettings: () => {
-		if ( game.settingChanged ) {
-			let checks = document.querySelectorAll( "#tray input[type='checkbox']" )
-			for ( let check of checks ) {
-				// Inform the game of the new settings.
+		let checks = document.querySelectorAll( "#tray input[type='checkbox']" )
+		for ( let check of checks ) {
+			// Inform the game of the new settings.
+			if ( game.settingChanged ) {
 				game.settingChanged( check.name, check.checked )
-
-				// Set the new values into localstorage for recall later.
-				if ( check.checked ) {
-					localStorage[check.name] = true
-				} else {
-					localStorage.removeItem( check.name )
-				}
+			}
+			
+			// Set the new values into localstorage for recall later.
+			if ( check.checked ) {
+				localStorage[check.name] = true
+			} else {
+				localStorage.removeItem( check.name )
 			}
 		}
 

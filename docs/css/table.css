@@ -345,12 +345,20 @@ a:hover {
 		display: block;
 		cursor: pointer;
 		min-height: 4rem;
+		color: #ccc;
+	}
+	#tray div.settings label strong {
+		color: #fff;
 	}
 	#tray div.settings input {
 		position: absolute;
 		left: 0;
 	}
-
+	#tray div.settings a.btn {
+		margin-top: 1rem;
+		display: inline-block;
+	}
+	
 /* Lightbox is a non-interactive element that appears under the slide-in tray. It fades in and out. */
 #lightbox {
 	position: absolute;

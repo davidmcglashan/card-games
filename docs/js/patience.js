@@ -156,7 +156,7 @@ const game = {
 		// Deal three if there's cards in the deck.
 		if ( pileName === 'deck' ) {
 			if ( dealer.piles['deck'].cards.length > 0 ) {
-				let hand = dealer.drawFromPile( 'deck', 3 )
+				let hand = dealer.drawFromPile( 'deck', localStorage['patience.oneAtATime'] ? 1 : 3 )
 				for ( let card of hand ) {
 					card.isFaceUp = true
 					cardUI.decorate( card )
@@ -191,6 +191,13 @@ const game = {
 				let cards = dealer.piles['drawn'].cards.reverse()
 				dealer.piles['drawn'].cards = []
 				
+				// Are we shuffling or simply flipping around?
+				if ( localStorage['patience.shuffleAfterDeal'] ) {
+					cards = dealer.shuffle( cards )
+				} else {
+					cards.reverse()
+				}
+
 				// Place them back onto the deck
 				for ( let card of cards ) {
 					card.isFaceUp = false
@@ -251,9 +258,12 @@ const game = {
 				}
 			}
 
-			// ... or by letting a king drop into a space.
-			else if ( card.ordValue === 12 && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
-				return 1
+			// ... or by building a new tower on an empty pile
+			else if ( cardUI.xyIsInBounds( x, y, pile.elem ) ) {
+				// Needs the anyCardOnASpace setting or to be a king ...
+				if ( localStorage['patience.anyCardOnASpace'] || card.ordValue === 12 ) {
+					return 1
+				}
 			}
 		}
 
@@ -276,4 +286,5 @@ const game = {
 		}
 
 		return 0
-	}};
+	},
+};
