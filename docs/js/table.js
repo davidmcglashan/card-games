@@ -318,12 +318,12 @@ const table = {
 	 * Let's begin!
 	 */
 	restart: () => {
-		let cards = document.getElementById( 'cards' )
-		cards.innerHTML = ''
+		// Tear down the pages a little
+		document.getElementById( 'cards' ).innerHTML = ''
+		document.getElementById( 'glass' ).innerHTML = ''
 
 		// Start the game by removing the banner.
-		let elem = document.getElementById('banner')
-		elem.classList.add( 'hidden' )
+		document.getElementById('banner').classList.add( 'hidden' )
 
 		// Tell the game we're about to start.
 		if ( game.start ) {
@@ -400,10 +400,13 @@ const table = {
 				banner.innerHTML = gg.name
 				let message = document.getElementById( 'message' )
 				message.innerHTML = gg.description
+
+				// Also build the settings pane while we have the current game at hand.
+				table.buildSettings( gg )
 			}
 		}
 
-		masthead.insertAdjacentHTML( 'beforeend', '<strong>v' + table.version + '</strong>&nbsp;| &copy; 2025 David McGlashan' )
+		masthead.insertAdjacentHTML( 'beforeend', '<div><a href="#" onclick="table.restart();">Restart</a><a href="#" onclick="table.settings();">Settings</a> </div>' )
 
 		// Have the glass listen to mouse events
 		let glass = document.getElementById( 'glass' )
@@ -442,5 +445,74 @@ const table = {
 				message.innerHTML = gg.description
 			}
 		}
-	}
+	},
+
+	buildSettings: ( thisGame ) => {
+		let tray = document.getElementById( 'tray' )
+		let section = document.createElement( 'div' )
+		section.setAttribute( 'class', 'header' )
+		tray.appendChild( section )
+
+		// Settings header
+		let elem = document.createElement( 'h1' )
+		elem.innerHTML = 'Settings'
+		section.appendChild( elem )
+
+		// Close button
+		elem = document.createElement( 'a' )
+		elem.innerHTML = '&times;'
+		elem.setAttribute( 'class', 'close' )
+		elem.setAttribute( 'onclick', 'table.settings();' )
+		elem.setAttribute( 'href', '#' )
+		section.appendChild( elem )
+
+		// New section for the settings controls.
+		section = document.createElement( 'div' )
+		section.setAttribute( 'class', 'settings' )
+		tray.appendChild( section )
+
+		if ( thisGame.settings ) {
+
+		} else {
+			elem = document.createElement( 'p' )
+			elem.innerHTML = 'This game has no settings.'
+			section.appendChild( elem )
+		}
+
+		// New section for About.
+		section = document.createElement( 'div' )
+		section.setAttribute( 'class', 'about' )
+		tray.appendChild( section )
+
+		elem = document.createElement( 'h1' )
+		elem.innerHTML = 'About'
+		section.appendChild( elem )
+
+		// New section for the About details.
+		section = document.createElement( 'div' )
+		tray.appendChild( section )
+
+		elem = document.createElement( 'p' )
+		elem.innerHTML = 'v' + table.version + '<br>&copy 2025 David McGlashan<br><a href="https://cards.dvdmcglshn.com">https://cards.dvdmcglshn.com</a>'
+		section.appendChild( elem )
+	},
+
+	/**
+	 * Toggles the slide-in tray so the user can access the settings.
+	 */
+	settings: () => {
+		document.getElementById('lightbox').classList.toggle('show')
+		
+		// The tray starts with neither an open or closed class since this triggers an animation. First time
+		// through simply set an open class on it. Subsequent goes can then toggle open and closed classes.
+		let tray = document.getElementById('tray')
+		if ( tray.classList.length === 0 ) {
+			tray.classList.add('open')
+		} else {
+			tray.classList.toggle('closed')
+			tray.classList.toggle('open')
+		}
+
+		// Something here to stop the game from working.
+	},
 }
