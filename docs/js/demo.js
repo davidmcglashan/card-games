@@ -9,7 +9,7 @@ const game = {
 			cardUI.snapPile( dealer.piles[name] )
 		} else {
 			let pile = dealer.newEmptyPile( name )
-			pile.stackingMethod = dealer.stackingMethods.VERTICAL
+			pile.stackingMethod = dealer.stackingMethods.UNTIDY
 		}
 	},
 
@@ -74,10 +74,9 @@ const game = {
 		if ( !topCard.isFaceUp && topCard.name === card ) {
 			topCard.isFaceUp = true
 			cardUI.decorate( topCard )
-			return true
 		}
 
-		return false
+		return true
 	},
 
 	/**

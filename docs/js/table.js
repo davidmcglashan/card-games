@@ -14,7 +14,7 @@ const table = {
 	 * A mouse click happened on the glass. This function detects which element
 	 * (card,pile) was under the click and asks the game object to handle the click
 	 */
-	mouseClicked: ( event ) => {		
+	mouseClicked: ( event ) => {	
 		// Abort quickly if we're dragging something.
 		if ( table.drag !== undefined ) {
 			return
@@ -93,83 +93,94 @@ const table = {
 	 */
 	mouseReleased: ( event ) => {
 		// Abort quickly if we're not dragging anything.
-		if ( table.drag === undefined ) {
+		if ( table.drag === undefined || !table.drag.hasMoved ) {
 			table.mouseClicked( event )
-			return
+			
+			if ( table.drag === undefined ) {
+				return
+			}
 		}
 
-		// Did we drop over a somewhere accepting? We'll have a table.drag.destination if we did ...
-		if ( table.drag.destination ) {
-			let pile = dealer.piles[table.drag.destination.getAttribute('id')]
-
-			// Move the dropped card to just after the DOM element it's being dropped onto. This will maintain the
-			// correct z-order in the DOM.
-			if ( table.drag.destination.classList.contains( 'pile' ) ) {
-				let cards = document.getElementById( 'cards' )
-				cards.insertBefore( table.drag.card.elem, cards.firstChild )
-				let previous = table.drag.card.elem
-				for ( let card of table.drag.otherCards ) {
-					cards.insertBefore( card.elem, previous.nextSibling )
-					previous = card.elem
-				}
-			} else {
-				table.drag.destination.after( table.drag.card.elem )
-				let cards = document.getElementById( 'cards' )
-				let previous = table.drag.card.elem
-				for ( let card of table.drag.otherCards ) {
-					cards.insertBefore( card.elem, previous.nextSibling )
-					previous = card.elem
-				}
-
-				pile = dealer.piles[table.drag.destination.getAttribute('data-pile')]
+		try {
+			// If the drag hasn't moved then abort. We don't abort above so we can
+			// take advantage of the finally{} block below.
+			if ( !table.drag.hasMoved ) {
+				return
 			}
 
-			// Snap the card(s) neatly onto the pile.
-			table.playDropAnimation( pile, table.drag.card.elem )
+			// Did we drop over a somewhere accepting? We'll have a table.drag.destination if we did ...
+			if ( table.drag.destination ) {
+				let pile = dealer.piles[table.drag.destination.getAttribute('id')]
+				
+				// Move the dropped card to just after the DOM element it's being dropped onto. This will maintain the
+				// correct z-order in the DOM.
+				if ( table.drag.destination.classList.contains( 'pile' ) ) {
+					let cards = document.getElementById( 'cards' )
+					cards.insertBefore( table.drag.card.elem, cards.firstChild )
+					let previous = table.drag.card.elem
+					for ( let card of table.drag.otherCards ) {
+						cards.insertBefore( card.elem, previous.nextSibling )
+						previous = card.elem
+					}
+				} else {
+					table.drag.destination.after( table.drag.card.elem )
+					let cards = document.getElementById( 'cards' )
+					let previous = table.drag.card.elem
+					for ( let card of table.drag.otherCards ) {
+						cards.insertBefore( card.elem, previous.nextSibling )
+						previous = card.elem
+					}
+					
+					pile = dealer.piles[table.drag.destination.getAttribute('data-pile')]
+				}
+				
+				// Snap the card(s) neatly onto the pile.
+				table.playDropAnimation( pile, table.drag.card.elem )
+				let offset = 24
+				for ( let card of table.drag.otherCards ) {
+					table.playDropAnimation( pile, card.elem, offset )
+					offset += 24
+				}
+				
+				// Update the models.
+				let cards = dealer.drawFromPile( table.drag.sourcePile, 1+table.drag.otherCards.length )
+				cards.reverse()
+				dealer.placeAllOnPile( pile.name, cards )
+				if ( game.dropHappened ) {
+					game.dropHappened( table.drag )
+				}
+				
+				// Tidy up.
+				cardUI.removeAffordances( pile )
+				table.drag = undefined
+				
+				// Check the game hasn't finished
+				let result = game.hasFinished()
+				if ( result > 0 ) {
+					table.finishGame( result )
+				}
+				return
+			}
+			
+			// Snap the card back to where it came from. First we put it at the end, with a transform which
+			// translates to where it was dropped.
+			table.playSnapBackAnimation( table.drag.card.elem )
 			let offset = 24
 			for ( let card of table.drag.otherCards ) {
-				table.playDropAnimation( pile, card.elem, offset )
+				table.playSnapBackAnimation( card.elem, offset )
 				offset += 24
 			}
-
-			// Update the models.
-			let cards = dealer.drawFromPile( table.drag.sourcePile, 1+table.drag.otherCards.length )
-			cards.reverse()
-			dealer.placeAllOnPile( pile.name, cards )
-			if ( game.dropHappened ) {
-				game.dropHappened( table.drag )
+		} finally {	
+			// Tidy up. Put the cards all back on the cards layer.
+			let cards = document.getElementById( 'cards' )
+			cards.appendChild( table.drag.card.elem )
+			for ( let card of table.drag.otherCards ) {
+				cards.appendChild( card.elem )
 			}
-
-			// Tidy up.
-			cardUI.removeAffordances( pile )
+			
+			// Terminate the drag object.
 			table.drag = undefined
-
-			// Check the game hasn't finished
-			let result = game.hasFinished()
-			if ( result > 0 ) {
-				table.finishGame( result )
-			}
-			return
 		}
-
-		// Snap the card back to where it came from. First we put it at the end, with a transform which
-		// translates to where it was dropped.
-		table.playSnapBackAnimation( table.drag.card.elem )
-		let offset = 24
-		for ( let card of table.drag.otherCards ) {
-			table.playSnapBackAnimation( card.elem, offset )
-			offset += 24
-		}
-
-		// Tidy up. Put the cards all back on the cards layer.
-		let cards = document.getElementById( 'cards' )
-		cards.appendChild( table.drag.card.elem )
-		for ( let card of table.drag.otherCards ) {
-			cards.appendChild( card.elem )
-		}
-
-		// Terminate the drag object.
-		table.drag = undefined
 	},
 	
 	/**
@@ -271,8 +282,14 @@ const table = {
 		}
 
 		// Move the card to where the mouse is.
-		table.drag.card.elem.style.left = Math.max( 0, (event.clientX-table.drag.offsetX) ) + 'px' 
-		table.drag.card.elem.style.top = Math.max( 0, (event.clientY-table.drag.offsetY) ) + 'px'
+		let distX = Math.max( 0, (event.clientX-table.drag.offsetX) )
+		let distY = Math.max( 0, (event.clientY-table.drag.offsetY) )
+		if ( distX > 0 || distY > 0 ) {
+			table.drag.hasMoved = true
+		}
+
+		table.drag.card.elem.style.left = distX + 'px' 
+		table.drag.card.elem.style.top = distY + 'px'
 
 		let offset = 24;
 		for ( let card of table.drag.otherCards ) {
