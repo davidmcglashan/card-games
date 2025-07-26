@@ -162,7 +162,7 @@ const game = {
 					cardUI.decorate( card )
 					dealer.placeOnPile( 'drawn', card )
 				}
-				cardUI.snapPile( dealer.piles['drawn'] )
+				cardUI.snapPileWithAnimation( dealer.piles['drawn'], 50, true )
 				return true
 			}
 		}
@@ -203,7 +203,7 @@ const game = {
 					dealer.placeOnPile( 'deck', card )
 				}
 
-				cardUI.snapPile( dealer.piles['deck'] )
+				cardUI.snapPileWithAnimation( dealer.piles['deck'], 5 )
 				return true
 			}
 		}

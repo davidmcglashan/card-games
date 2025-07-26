@@ -1,6 +1,9 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.1.4
+* Animations in Accordion and Patience
+
 ## v1.1.3
 * Switched the hosting domain to cardgames.dvdmcglshn.net 
 

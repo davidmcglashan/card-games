@@ -46,7 +46,7 @@ const game = {
 		if ( pile.name === 'deck' ) {
 			let topCard = dealer.peekTopOfPile( pile.name )
 			if ( topCard && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
-				for ( let p=1; p++; p<18 ) {
+				for ( let p=1; p<=18; p++ ) {
 					let next = 'pile-' + p
 					if ( dealer.piles[next].cards.length === 0 ) {
 						return { 
@@ -102,7 +102,7 @@ const game = {
 		if ( pileName === 'deck' ) {
 			if ( dealer.piles['deck'].cards.length > 0 ) {
 				// Find the first pile with no cards.
-				for ( let p=1; p++; p<18 ) {
+				for ( let p=1; p<=18; p++ ) {
 					let next = 'pile-' + p
 					if ( dealer.piles[next].cards.length === 0 ) {
 						// Flip the card and place it on the next pile.
@@ -110,7 +110,7 @@ const game = {
 						card.isFaceUp = true
 						cardUI.decorate( card )
 						dealer.placeOnPile( next, card )
-						cardUI.snapPile( dealer.piles[next] )
+						cardUI.snapPileWithAnimation( dealer.piles[next] )
 
 						return true
 					}
@@ -182,7 +182,7 @@ const game = {
 			if ( dealer.piles[thisPile].cards.length === 0 ) {
 				let hand = dealer.drawAllFromPile( nextPile )
 				dealer.addCardsToPile( thisPile, hand )
-				cardUI.snapPile( dealer.piles[thisPile] )
+				cardUI.snapPileWithAnimation( dealer.piles[thisPile], i*10 )
 			}
 		}
 	},
