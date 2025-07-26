@@ -129,13 +129,14 @@ const game = {
 	},
 
 	/**
-	 * Returns 0 if the game isn't finished, 1 if the player loses, 2 if the player wins!
+	 * Detect the game over state and return an appropriate constant to represent it.
 	 */
 	hasFinished: () => {
 		// If all the drop piles have four cards then this is a win!
 		if ( dealer.piles['pile-deck'].cards.length === 0 ) {
-			return 2
+			return table.gameOverStates.PLAYER_WINS
 		}
-		return 0
+
+		return table.gameOverStates.KEEP_PLAYING
 	}
 }

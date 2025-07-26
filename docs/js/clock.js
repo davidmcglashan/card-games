@@ -105,21 +105,22 @@ const game = {
 	},
 
 	/**
-	 * Returns 0 if the game isn't finished, 1 if the player loses, 2 if the player wins!
+	 * Detect the game over state and return an appropriate constant to represent it.
 	 */
 	hasFinished: () => {
 		// We're finished when the drop-king pile has four cards.
 		let pile = dealer.piles['drop-king']
 		if ( pile.cards.length === 4 ) {
-			// If all the drop piles have four cards then this is a win!
+			// If all the drop piles have four cards then this is a win! So if we find
+			// any with less than 4 it's a lose!
 			for ( const [name,pile] of Object.entries( dealer.piles ) ) {
 				if ( pile.name.startsWith( 'drop-' ) && pile.cards.length !== 4 ) {
-					return 1
+					return table.gameOverStates.PLAYER_LOSES
 				}
 			}
-			return 2
+			return table.gameOverStates.PLAYER_WINS
 		}
 
-		return 0
+		return table.gameOverStates.KEEP_PLAYING
 	}
 }

@@ -152,11 +152,11 @@ const game = {
 			if ( pile.name.startsWith( 'suit-' ) && pile.cards.length === 13 ) {
 				suit++
 				if ( suit === 4 ) {
-					return 2
+					return table.gameOverStates.PLAYER_WINS
 				}
 			}
 		}
 
-		return 0
+		return table.gameOverStates.KEEP_PLAYING
 	},
 };

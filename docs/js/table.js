@@ -10,6 +10,12 @@ const table = {
 		DRAG: 1
 	},
 
+	gameOverStates: {
+		KEEP_PLAYING: 0,
+		PLAYER_LOSES: 1,
+		PLAYER_WINS: 2
+	},
+
 	/**
 	 * A mouse click happened on the glass. This function detects which element
 	 * (card,pile) was under the click and asks the game object to handle the click

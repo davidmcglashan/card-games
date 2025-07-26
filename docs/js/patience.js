@@ -268,7 +268,7 @@ const game = {
 	},
 
 	/**
-	 * Returns 0 if the game isn't finished, 1 if the player loses, 2 if the player wins!
+	 * Detect the game over state and return an appropriate constant to represent it.
 	 */
 	hasFinished: () => {
 		// We're finished when the four suit piles each have 13 cards.
@@ -277,11 +277,11 @@ const game = {
 			if ( pile.name.startsWith( 'suit-' ) && pile.cards.length === 13 ) {
 				suit++
 				if ( suit === 4 ) {
-					return 2
+					return table.gameOverStates.PLAYER_WINS
 				}
 			}
 		}
 
-		return 0
+		return table.gameOverStates.KEEP_PLAYING
 	},
 };

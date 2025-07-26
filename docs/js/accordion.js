@@ -188,12 +188,12 @@ const game = {
 	},
 
 	/**
-	 * Returns 0 if the game isn't finished, 1 if the player loses, 2 if the player wins!
+	 * Detect the game over state and return an appropriate constant to represent it.
 	 */
 	hasFinished: () => {
 		// Can't win until we've dealt all the cards.
 		if ( dealer.piles['deck'].cards.length > 0 ) {
-			return 0
+			return table.gameOverStates.KEEP_PLAYING
 		}
 
 		// Are there any legal moves left?
@@ -207,18 +207,18 @@ const game = {
 					outcome = game.getDragOutcome( fromCard, pileName, 3 )
 				}
 
-				// Any outcome here means a move can be made so return 0
+				// Any outcome here means a move can be made so keep playing
 				if ( outcome ) { 
-					return 0
+					return table.gameOverStates.KEEP_PLAYING
 				}
 			}
 		}
 
 		// A "winning" game is having one pile left so check the number of pards on pile 2.
 		if ( dealer.piles['pile-2'].cards.length === 0 ) {
-			return 2
+			return table.gameOverStates.PLAYER_WINS
 		} else {
-			return 1
+			return table.gameOverStates.PLAYER_LOSES
 		}
 	},
 
