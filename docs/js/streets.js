@@ -111,14 +111,14 @@ const game = {
 		if ( pile.name === ( 'suit-' + card.suit ) && pile.cards.length === card.ordValue ) {
 			// Dropping an ace on an empty pile.
 			if ( pile.cards.length === 0 && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
-				return 1
+				return table.outcomes.PILE_IS_INTERACTIVE
 			}
 
 			// Dropping the next card onto a pile with cards already.
 			if ( pile.cards.length > 0 ) {
 				let topCard = dealer.peekTopOfPile( pile.name )
 				if ( cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
-					return 2
+					return table.outcomes.CARD_IS_INTERACTIVE
 				}
 			}
 		}
@@ -129,17 +129,17 @@ const game = {
 			if ( pile.cards.length > 0 ) {
 				let topCard = dealer.peekTopOfPile( pile.name )
 				if ( topCard.ordValue === card.ordValue + 1 && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
-					return 2
+					return table.outcomes.CARD_IS_INTERACTIVE
 				}
 			}
 
 			// ... or by building a new pile in an empty space
 			else if ( cardUI.xyIsInBounds( x, y, pile.elem ) ) {
-				return 1
+				return table.outcomes.PILE_IS_INTERACTIVE
 			}
 		}
 		
-		return 0
+		return table.outcomes.NONE
 	},
 
 	/**

@@ -1,5 +1,6 @@
 - make rotation a function of the distance snapped (for all card stack types?) :)
 - canDrop returns 0,1,2 - thse should be constants
+- game over states are also 0,1,2 and should be constants
 - remember game states in local storage and restore them when you revist the page
 - keep stats for each game in local storage
 

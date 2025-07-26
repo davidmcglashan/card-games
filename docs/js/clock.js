@@ -73,13 +73,13 @@ const game = {
 			let num = card.name.split('_')
 			if ( pile.name.startsWith( 'drop' ) && pile.name.endsWith( num[0] ) ) {
 				if ( pile.cards.length === 0 ) {
-					return 1
+					return table.outcomes.PILE_IS_INTERACTIVE
 				}
-				return 2
+				return table.outcomes.CARD_IS_INTERACTIVE
 			}
 		}
 		
-		return 0
+		return table.outcomes.NONE
 	},
 
 	/**

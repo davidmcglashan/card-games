@@ -88,13 +88,13 @@ const game = {
 	canDropCardAtXYOnPile( card, x, y, pile ) {
 		// Can't drop on the deck ...
 		if ( pile.name === 'pile-deck' ) {
-			return 0
+			return table.outcomes.NONE
 		}
 
 		// We can safely drop on empty piles
 		if ( cardUI.xyIsInBounds( x, y, pile.elem ) ) {
 			if ( pile.cards.length === 0 ) {
-				return 1
+				return table.outcomes.PILE_IS_INTERACTIVE
 			}
 		}
 	
@@ -102,7 +102,7 @@ const game = {
 		let topCard = dealer.peekTopOfPile( pile.name )
 		if ( topCard ) {
 			if ( card.name !== topCard.name && /*card.suit === topCard.suit && */cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
-				return 2
+				return table.outcomes.CARD_IS_INTERACTIVE
 			}
 		}
 

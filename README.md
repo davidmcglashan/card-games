@@ -1,15 +1,18 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.2.1
+* Suits show _under_ the card numbers on Streets & Alleys so they can be seen when cards are stacking to the left or right.
+
 ## v1.2
-* Added a new game: Streets & Alleys
-* Cards can stack to the left and right now
+* Added a new game: Streets & Alleys.
+* Cards can stack to the left and right now.
 
 ## v1.1.4
-* Animations in Accordion and Patience
+* Animations in Accordion and Patience.
 
 ## v1.1.3
-* Switched the hosting domain to cardgames.dvdmcglshn.net 
+* Switched the hosting domain to cardgames.dvdmcglshn.net
 
 ## v1.1.2
 * Fixed a bug where Patience was reversing the deck twice after each re-deal.

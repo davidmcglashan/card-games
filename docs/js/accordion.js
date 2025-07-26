@@ -154,11 +154,11 @@ const game = {
 		let toCard = dealer.peekTopOfPile( toPile.name )
 		if ( toCard && cardUI.xyIsInBounds( x, y, toCard.elem ) ) {
 			if ( fromCard.name !== toCard.name && ( fromCard.suit === toCard.suit || fromCard.ordValue === toCard.ordValue ) ) {
-				return 2
+				return table.outcomes.CARD_IS_INTERACTIVE
 			}
 		}
 
-		return 0
+		return table.outcomes.NONE
 	},
 
 	/**

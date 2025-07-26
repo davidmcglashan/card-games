@@ -264,18 +264,18 @@ const table = {
 			let destElem = null
 
 			switch ( outcome ) {
-				case 0: // Nothing to interact with
+				case table.outcomes.NONE:
 					cardUI.removeAffordances( pile )
 					break
 
-				case 1: // Pile can be interacted with
+				case table.outcomes.PILE_IS_INTERACTIVE:
 					destElem = cardUI.enablePileAffordances( pile )
 					if ( destElem ) {
 						table.drag.destination = destElem
 					}
 					break
 				
-				case 2: // Card can be interacted with
+				case table.outcomes.CARD_IS_INTERACTIVE:
 					destElem = cardUI.enableCardAffordances( pile )
 					if ( destElem ) {
 						table.drag.destination = destElem

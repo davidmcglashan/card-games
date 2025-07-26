@@ -56,7 +56,7 @@ const game = {
 	 * Respond to a request for dropping a card on a pile. 
 	 */
 	canDropCardAtXYOnPile: ( card, x, y, pile ) => {
-		return 0
+		return table.outcomes.NONE
 	},
 
 	/**
