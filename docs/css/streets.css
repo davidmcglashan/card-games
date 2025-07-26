@@ -10,13 +10,22 @@
 	justify-content: center;
 }
 
-/* Clock has four rows so limit the card height to 20% of the table's height, and maintain the aspect ratio. */
+/* S&A has four rows so limit the card height to 20% of the table's height, and maintain the aspect ratio. */
 .pile {
 	max-height: 20cqh;
 	max-width: calc( 20cqh * 0.692 );
 }
+
+/* Put the big labels on the suit piles. */
 .pile .label, 
 .pile .bottomlabel {
 	color: rgba(0,0,0,0.15);
 	font-size: 62cqh;
+}
+
+/* Make the corner card symbols go under the numbers so they can be seen when doing left & right stacking. */
+.symbol {
+	display: block;
+	margin-left: -2px;
+	margin-top: -4px;
 }

@@ -191,6 +191,10 @@ a:hover {
 	right: 3cqh;
 	transform: rotate(180deg);
 }
+.symbol {
+	display: inline;
+}
+
 /* Face down cards show the nice blue printed back graphic. */
 .card.faceDown {
 	background-image: url('../assets/blueback.png');

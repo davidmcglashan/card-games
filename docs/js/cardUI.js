@@ -173,7 +173,7 @@ const cardUI = {
 	decorate: ( card ) => {
 		if ( card.isFaceUp ) {
 			card.elem.setAttribute( 'class', 'card faceUp ' + card.suit + ' ' + card.css )
-			let s = '<div class="label">'+card.label+'</div><div class="bottomlabel">'+card.label+'</div><div class="suit">'+card.symbol+'</div><div class="value">'+card.shortValue+'</div>'
+			let s = '<div class="label">'+card.shortValue+'<div class="symbol">'+ card.symbol +'</div></div><div class="bottomlabel">'+card.shortValue+'<div class="symbol">'+ card.symbol +'</div></div><div class="suit">'+card.symbol+'</div><div class="value">'+card.shortValue+'</div>'
 			card.elem.innerHTML = s
 		} else {
 			card.elem.innerHTML = ''

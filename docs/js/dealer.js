@@ -38,7 +38,6 @@ const dealer = {
 
 				card.isRed = suit % 2 === 1
 				card.name = dealer.deckmeta.values[value] + '_of_' + dealer.deckmeta.suits[suit]
-				card.label = dealer.deckmeta.labels[value] + dealer.deckmeta.symbols[suit]
 				card.isFaceUp = false
 
 				cards.push( card )

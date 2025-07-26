@@ -1,6 +1,7 @@
 - make rotation a function of the distance snapped (for all card stack types?) :)
 - canDrop returns 0,1,2 - thse should be constants
 - remember game states in local storage and restore them when you revist the page
+- keep stats for each game in local storage
 
 - web hosting needs a better index.html
   - favicon and all that jazz
@@ -22,3 +23,4 @@
   - keeping all the cards and dragging whole piles!
 
 - streets & alleys
+  - undo
