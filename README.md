@@ -1,6 +1,11 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.2
+* Added a new game: Streets & Alleys
+* Cards can stack to the left and right now
+
+
 ## v1.1.4
 * Animations in Accordion and Patience
 

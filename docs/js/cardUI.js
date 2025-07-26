@@ -25,6 +25,14 @@ const cardUI = {
 					card.elem.style.left = bounds.x + 'px'
 					card.elem.style.top = i*24 + bounds.y + 'px'
 					break
+				case dealer.stackingMethods.LEFT:
+					card.elem.style.left = bounds.x - i*16+ 'px'
+					card.elem.style.top = bounds.y + 'px'
+					break
+					case dealer.stackingMethods.RIGHT:
+					card.elem.style.left = i*16 + bounds.x + 'px'
+					card.elem.style.top = bounds.y + 'px'
+					break
 			}
 
 			card.elem.style.width = bounds.width + 'px'
@@ -141,10 +149,19 @@ const cardUI = {
 				point.y = point.y + 24
 				break
 
-			// Diagonals get a tiny x,y offset applied.
+			// Left and right layouts are adjusted accordinlgy
+			case dealer.stackingMethods.LEFT:
+				point.x = point.x - 16
+				break
+				case dealer.stackingMethods.RIGHT:
+				point.x = point.x + 16
+				break
+				
+				// Diagonals get a tiny x,y offset applied.
 			case dealer.stackingMethods.DIAGONAL:
 				point.x = point.x + 0.5
 				point.y = point.y + 0.5
+				break
 		}
 		
 		return point

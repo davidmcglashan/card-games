@@ -63,8 +63,6 @@ const game = {
 	 * Called in response to a card drop. Works out where the name card must be drawn from.
 	 */
 	dropHappened: ( drag ) => {
-		let num = drag.card.name.split('_')
-		game.nextPile = 'clock-' + num[0]
 	},
 
 	/**
@@ -78,6 +76,5 @@ const game = {
 	 * Called when a setting has changed. It is the game's job to change itself accordingly.
 	 */
 	settingChanged: ( setting, active ) => { 
-
 	},
 };

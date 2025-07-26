@@ -243,7 +243,6 @@ const game = {
 					return 2
 				}
 			}
-
 		}
 
 		// Dropping on a tower ...

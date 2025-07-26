@@ -10,7 +10,9 @@ const dealer = {
 		TIGHT: 0,
 		DIAGONAL: 1,
 		VERTICAL: 2,
-		UNTIDY: 3
+		UNTIDY: 3,
+		LEFT: 4,
+		RIGHT: 5
 	},
 
 	// All the piles will be stashed in here by their name.
@@ -80,16 +82,30 @@ const dealer = {
 	/**
 	 * Creates a new pile object from an array of cards
 	 */
-	newFaceDownPile: ( name, cards ) => {
+	newPile: ( name, cards, faceUp = false ) => {
 		let pile = dealer.newEmptyPile( name )
 		pile.cards = cards
 		pile.stackingMethod = dealer.stackingMethods.DIAGONAL
 
 		for ( let card of cards ) {
-			card.isFaceUp = false
+			card.isFaceUp = faceUp
 			card.pile = pile
 		}
 		return pile
+	},
+
+	/**
+	 * Creates a new pile object from an array of cards
+	 */
+	newFaceDownPile: ( name, cards ) => {
+		return dealer.newPile( name, cards, false )
+	},
+
+	/**
+	 * Creates a new pile object from an array of cards
+	 */
+	newFaceUpPile: ( name, cards ) => {
+		return dealer.newPile( name, cards, true )
 	},
 
 	/**

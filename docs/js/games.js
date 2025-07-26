@@ -1,5 +1,5 @@
 const games = {
-	version: "1.1.4",
+	version: "1.2",
 
 	allGames: [ 
 		{ 	
@@ -35,7 +35,19 @@ const games = {
 					description: 'Cards are dealt from the main deck one at a time instead of three at once'
 				}
 			]
+		},{ 
+			name: 'Streets &amp; Alleys', 
+			description: 'This one is very tough.', 
+			url: 'streets.html',
+			settings: [
+				{
+					key: 'streets.startWithAces',
+					label: 'Start with the aces',
+					description: 'Make the game a bit easier by starting with all four aces already dealt'
+				}
+			]
 		},
+
 		{ name: 'Test1', description: 'Nothing here matters', url: 'table.html' },
 		{ name: 'Test2', description: 'Look at the pretty cards', url: 'testcard.html' },
 	],
