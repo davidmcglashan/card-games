@@ -5,7 +5,6 @@ A bunch of single player card games for playing in web browers.
 * Added a new game: Streets & Alleys
 * Cards can stack to the left and right now
 
-
 ## v1.1.4
 * Animations in Accordion and Patience
 
@@ -27,4 +26,3 @@ A bunch of single player card games for playing in web browers.
 
 ## v1.0
 A version of patience/solitaire, a version of clock patience, and two test games for finding bugs and checking the graphics.
-
