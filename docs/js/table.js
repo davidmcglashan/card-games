@@ -172,10 +172,12 @@ const table = {
 			}
 		} finally {	
 			// Tidy up. Put the cards all back on the cards layer.
-			let cards = document.getElementById( 'cards' )
-			cards.appendChild( table.drag.card.elem )
-			for ( let card of table.drag.otherCards ) {
-				cards.appendChild( card.elem )
+			if ( table.drag ) {
+				let cards = document.getElementById( 'cards' )
+				cards.appendChild( table.drag.card.elem )
+				for ( let card of table.drag.otherCards ) {
+					cards.appendChild( card.elem )
+				}
 			}
 			
 			// Terminate the drag object.
