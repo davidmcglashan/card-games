@@ -26,7 +26,10 @@ const game = {
 			}
 			cardUI.snapPile( dealer.piles[name] )
 		} else {
-			dealer.newEmptyPile( name )
+			let pile = dealer.newEmptyPile( name )
+			if ( name === 'drop-king' ) {
+				pile.stackingMethod = dealer.stackingMethods.RIGHT
+			}
 		}
 	},
 

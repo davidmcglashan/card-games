@@ -9,8 +9,126 @@
 	gap: 1rem;
 }
 
-/* Clock has four rows so limit the card height to 20% of the table's height, and maintain the aspect ratio. */
+/* Limit the card height to 12.5% (one 8th) of the table's height, and maintain the aspect ratio. */
 .pile {
-	max-height: 20cqh;
-	max-width: calc( 20cqh * 0.692 );
+	position: absolute;
+	max-height: 12.5cqh;
+	max-width: calc( 12.5cqh * 0.692 );
+}
+
+#clock-king {
+	left: 32cqh;
+	top: 39cqh;
+}
+#drop-king {
+	left: 42cqh;
+	top: 39cqh;
+}
+
+#clock-queen {
+	left: 40cqh;
+	top: 18cqh;
+}
+#drop-queen {
+	left: 40cqh;
+	top: 4cqh;
+}
+
+#clock-ace {
+	left: 50.5cqh;
+	top: 20cqh;
+}
+#drop-ace {
+	left: 52.5cqh;
+	top: 6cqh;
+}
+
+#clock-2 {
+	left: 61cqh;
+	top: 25cqh;
+}
+#drop-2 {
+	left: 65cqh;
+	top: 11cqh;
+}
+
+#clock-3 {
+	left: 66cqh;
+	top: 39cqh;
+}
+#drop-3 {
+	left: 76.5cqh;
+	top: 39cqh;
+}
+
+#clock-4 {
+	left: 61cqh;
+	top: 53cqh;
+}
+#drop-4 {
+	left: 65cqh;
+	top: 67cqh;
+}
+
+#clock-5 {
+	left: 50.5cqh;
+	top: 58cqh;
+}
+#drop-5 {
+	left: 52.5cqh;
+	top: 72cqh;
+}
+
+#clock-6 {
+	left: 40cqh;
+	top: 60cqh;
+}
+#drop-6 {
+	left: 40cqh;
+	top: 74cqh;
+}
+
+#clock-7 {
+	left: 29.5cqh;
+	top: 58cqh;
+}
+#drop-7 {
+	left: 27.5cqh;
+	top: 72cqh;
+}
+
+#clock-8 {
+	left: 19cqh;
+	top: 53cqh;
+}
+#drop-8 {
+	left: 15cqh;
+	top: 67cqh;
+}
+
+#clock-9 {
+	left: 14cqh;
+	top: 39cqh;
+}
+#drop-9 {
+	left: 4cqh;
+	top: 39cqh;
+}
+
+#clock-10 {
+	left: 19cqh;
+	top: 25cqh;
+}
+#drop-10 {
+	left: 15cqh;
+	top: 11cqh;
+}
+
+#clock-jack {
+	left: 29.5cqh;
+	top: 20cqh;
+}
+#drop-jack {
+	left: 27.5cqh;
+	top: 6cqh;
 }

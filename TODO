@@ -4,6 +4,7 @@
 - ratings for complexity
 - score: high, low, none
 - animation parameter could be an {}
+- textures/noise on the table green
 
 - web hosting needs a better index.html
   - favicon and all that jazz
@@ -13,7 +14,8 @@
   - clicking rotated cards in test1 invokes another rotation
 
 - clock
-  - variable card sizes - arrange in a circle?
+  - arrangement tweaks to the circle e.g. centralise, calc() involved in layout
+  - setting for auto-turning the next card
 
 - patience
   - double click a card to send it to a suit
