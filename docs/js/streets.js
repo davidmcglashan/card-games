@@ -143,7 +143,7 @@ const game = {
 	},
 
 	/**
-	 * Returns 0 if the game isn't finished, 1 if the player loses, 2 if the player wins!
+	 * Detect the game over state and return an appropriate constant to represent it.
 	 */
 	hasFinished: () => {
 		// We're finished when the four suit piles each have 13 cards.
