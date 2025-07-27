@@ -3,6 +3,7 @@ A bunch of single player card games for playing in web browers.
 
 ## v1.2.1
 * Suits show _under_ the card numbers on Streets & Alleys so they can be seen when cards are stacking to the left or right.
+* Some code improvements concerning constants.
 
 ## v1.2
 * Added a new game: Streets & Alleys.

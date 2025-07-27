@@ -1,11 +1,13 @@
 - make rotation a function of the distance snapped (for all card stack types?) :)
 - remember game states in local storage and restore them when you revist the page
 - keep stats for each game in local storage
+- ratings for complexity
+- score: high, low, none
+- animation parameter could be an {}
 
 - web hosting needs a better index.html
   - favicon and all that jazz
 - instructions
-- More games ... https://www.instagram.com/p/DKelpn5MMgn/
 
 - demo
   - clicking rotated cards in test1 invokes another rotation
@@ -20,6 +22,17 @@
   - return custom game messages, including score!?
   - detect and end-state if all the piles are full and there's no move
   - keeping all the cards and dragging whole piles!
+  - restore affordances even for illegal moves
 
 - streets & alleys
   - undo
+
+- aces up ... https://www.youtube.com/watch?v=zPMRDUGFHdE
+  - deal four, discard the lowest from each suit
+  - deal four, discard the lowest from each suit
+  - keep discarding until nothing can be discarded any more - including previous rows
+  - aces are high and can't be discarded, but can be moved to empty slots
+
+- flower garden
+
+- More games ... https://www.instagram.com/p/DKelpn5MMgn/
