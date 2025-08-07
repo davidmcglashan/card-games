@@ -113,7 +113,8 @@ const game = {
 	 */
 	canStartDrag: ( cardName, pileName ) => {
 		if ( pileName !== 'deck' ) {
-			return true
+			let topCard = dealer.peekTopOfPile( pileName )
+			return topCard && cardName === topCard.name
 		}
 		return false
 	},

@@ -10,6 +10,7 @@
 - animation parameter could be an {}
 - textures/noise on the table green
 - common CSS for glyphs and labels on piles e.g. "drop an ace here"
+- "Play Again" on Game Over button
 
 - web hosting needs a better index.html
   - favicon and all that jazz
@@ -36,8 +37,6 @@
 
 - aces up 
   - discard animation
-  - can drag only on top most cards - you can pull a bottom card out!
-  - decorate the deck pile for when it's empty
 
 - flower garden
 
