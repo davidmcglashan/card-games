@@ -190,7 +190,34 @@ const game = {
 
 		// Are there four keys for the four suits?
 		if ( Object.keys(result).length === 4 ) {
-			return { state: table.gameOverStates.PLAYER_LOSES }
+			// How many cards are left on the table?
+			let count = 0
+			for ( let t=1; t<=4; t++ ) {
+				count += dealer.piles['tower-'+t].cards.length
+			}
+
+			// Four means a perfect game!
+			if ( count === 4 ) {
+				return {
+					state: table.gameOverStates.PLAYER_WINS,
+					message: `${count} cards left: a perfect game!`
+				}
+			} else if ( count === 5 ) {
+				return {
+					state: table.gameOverStates.PLAYER_LOSES,
+					message: `So close! Only ${count} cards left. Why not try again?`
+				}
+			} else if ( count > 5 && count < 11 ) {
+				return {
+					state: table.gameOverStates.PLAYER_LOSES,
+					message: `You scored ${count} - Almost there. Have another go.`
+				}
+			} else {
+				return {
+					state: table.gameOverStates.PLAYER_LOSES,
+					message: `You scored ${count} - Better luck next time!`
+				}
+			}
 		}
 
 		// There's still a move in there ...

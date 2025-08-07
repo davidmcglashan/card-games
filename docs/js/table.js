@@ -381,10 +381,10 @@ const table = {
 		
 		if ( gameOver.state === table.gameOverStates.PLAYER_LOSES ) {
 			banner.innerHTML = 'Game over!'
-			message.innerHTML = 'Better luck next time ...'
+			message.innerHTML = gameOver.message ? gameOver.message : 'Better luck next time ...'
 		} else {
 			banner.innerHTML = 'Congratulations!'
-			message.innerHTML = 'Why not try and do that again?'
+			message.innerHTML = gameOver.message ? gameOver.message : 'Why not try and do that again?'
 		}
 
 		elem = document.getElementById( 'play-button' )
