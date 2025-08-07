@@ -3,6 +3,10 @@ A bunch of single player card games for playing in web browers.
 
 ## v1.3
 * Added a new game: Aces Up.
+* Games can now be hidden until they're ready.
+* The two test games have been hidden.
+* Button radius increased a little bit.
+* Games can return custom game over messages e.g. depending on how well the player did.
 
 ## v1.2.1
 * Suits show _under_ the card numbers on Streets & Alleys so they can be seen when cards are stacking to the left or right.
