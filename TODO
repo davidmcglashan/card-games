@@ -1,8 +1,12 @@
 - make rotation a function of the distance snapped (for all card stack types?) :)
 - remember game states in local storage and restore them when you revist the page
-- keep stats for each game in local storage
+- does a game have a score? 
+  - polarity: high score good/low score good/winning 
+  - ranges of good scores with strings e.g. 5 left in aces up is "so close!"
+  - keep stats for each game in local storage
+    - best score/number of wins
+    - number of games
 - ratings for complexity
-- score: high, low, none
 - animation parameter could be an {}
 - textures/noise on the table green
 
@@ -29,11 +33,10 @@
 - streets & alleys
   - undo
 
-- aces up ... https://www.youtube.com/watch?v=zPMRDUGFHdE
-  - deal four, discard the lowest from each suit
-  - deal four, discard the lowest from each suit
-  - keep discarding until nothing can be discarded any more - including previous rows
-  - aces are high and can't be discarded, but can be moved to empty slots
+- aces up 
+  - discard animation
+  - space out piles
+  - decorate the deck pile for when it's empty
 
 - flower garden
 

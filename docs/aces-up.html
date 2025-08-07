@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Aces Up</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="css/table.css">
+		<link rel="stylesheet" href="css/aces-up.css">
+		<script type="text/javascript" src="js/dealer.js"></script>
+		<script type="text/javascript" src="js/cardUI.js"></script>
+		<script type="text/javascript" src="js/table.js"></script>
+		<script type="text/javascript" src="js/games.js"></script>
+		<script type="text/javascript" src="js/aces-up.js"></script>
+
+	</head>
+	<body>
+		<div id="table">
+			<div class="row">
+				<div id="deck" class="pile"></div>
+				<div id="tower-1" class="pile"></div>
+				<div id="tower-2" class="pile"></div>
+				<div id="tower-3" class="pile"></div>
+				<div id="tower-4" class="pile"></div>
+				<div id="discard" class="pile">
+					<div class="label">Discard</div>
+				</div> 
+			</div>
+		</div>
+		<div id="cards"></div>
+		<div id="glass"></div>
+		<div id="masthead"></div>
+		<div id="banner">
+			<h1 id="headline"></h1>
+			<p id="message"></p>
+			<a class="btn" href="#" alt="Play" onclick="table.restart()">Play!</a>
+		</div>
+		<div id="lightbox" onclick="games.settings()"></div>
+		<div id="tray"></div>
+		<script>games.readyTable()</script>
+	</body>
+</html>

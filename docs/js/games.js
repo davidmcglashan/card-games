@@ -2,6 +2,7 @@ const games = {
 	version: "1.2.1",
 
 	allGames: [ 
+		{ name: 'Aces Up', description: 'Nothing here matters', url: 'aces-up.html' },
 		{ 	
 			name: 'Accordion', 
 			description: 'Reduce the number of piles to one by matching neighbouring suits and numbers', 
