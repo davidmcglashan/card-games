@@ -386,3 +386,6 @@ a:hover {
 		transition: opacity 250ms ease-in, visibility 0ms ease-in 0ms;
 	}
 
+.moreGames {
+	margin-left: 3rem;
+}

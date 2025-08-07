@@ -118,12 +118,12 @@ const game = {
 			// any with less than 4 it's a lose!
 			for ( const [name,pile] of Object.entries( dealer.piles ) ) {
 				if ( pile.name.startsWith( 'drop-' ) && pile.cards.length !== 4 ) {
-					return table.gameOverStates.PLAYER_LOSES
+					return { state: table.gameOverStates.PLAYER_LOSES }
 				}
 			}
-			return table.gameOverStates.PLAYER_WINS
+			return { state: table.gameOverStates.PLAYER_WINS }
 		}
 
-		return table.gameOverStates.KEEP_PLAYING
+		return { state: table.gameOverStates.KEEP_PLAYING }
 	}
 }

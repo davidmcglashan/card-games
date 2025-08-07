@@ -64,6 +64,6 @@ const game = {
 	 * This game never ends. Sorry!
 	 */
 	hasFinished: () => {
-		return 0
+		return { state: table.gameOverStates.KEEP_PLAYING }
 	}
 }

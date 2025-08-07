@@ -66,10 +66,12 @@ const game = {
 	},
 
 	/**
-	 * Returns 0 if the game isn't finished, 1 if the player loses, 2 if the player wins!
+	 * Detect the game over state and return an appropriate object to represent it.
+	 * Usually this will just contain the 'keep playing' state, but if the game has
+	 * finished it'll be a bit richer.
 	 */
 	hasFinished: () => {
-		return 0
+		return { state: table.gameOverStates.KEEP_PLAYING }
 	},
 
 	/**

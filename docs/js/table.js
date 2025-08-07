@@ -47,7 +47,7 @@ const table = {
 		} finally {
 			// Check the game hasn't finished
 			let result = game.hasFinished()
-			if ( result > 0 ) {
+			if ( result.state !== table.gameOverStates.KEEP_PLAYING ) {
 				table.finishGame( result )
 			}
 		}
@@ -162,7 +162,7 @@ const table = {
 				
 				// Check the game hasn't finished
 				let result = game.hasFinished()
-				if ( result > 0 ) {
+				if ( result.state !== table.gameOverStates.KEEP_PLAYING ) {
 					table.finishGame( result )
 				}
 				return
@@ -370,7 +370,7 @@ const table = {
 	/** 
 	 * Finishes the current game.
 	 */
-	finishGame: ( result ) => {
+	finishGame: ( gameOver ) => {
 		// Finish the game by displaying the banner.
 		let elem = document.getElementById('banner')
 		elem.classList.remove( 'hidden' )
@@ -378,13 +378,17 @@ const table = {
 		// Display a result-appropriate message ...
 		let banner = document.getElementById( 'headline' )
 		let message = document.getElementById( 'message' )
-		if ( result === 1 ) {
+		
+		if ( gameOver.state === table.gameOverStates.PLAYER_LOSES ) {
 			banner.innerHTML = 'Game over!'
 			message.innerHTML = 'Better luck next time ...'
 		} else {
 			banner.innerHTML = 'Congratulations!'
 			message.innerHTML = 'Why not try and do that again?'
 		}
+
+		elem = document.getElementById( 'play-button' )
+		elem.innerHTML = 'Play again'
 	},
 
 	/**

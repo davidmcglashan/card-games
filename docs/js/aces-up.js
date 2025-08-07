@@ -176,7 +176,7 @@ const game = {
 	hasFinished: () => {
 		// Can't win until we've dealt all the cards.
 		if ( dealer.piles['deck'].cards.length > 0 ) {
-			return table.gameOverStates.KEEP_PLAYING
+			return { state: table.gameOverStates.KEEP_PLAYING }
 		}
 
 		// There are moves left if we can't find all four suits from the top cards.
@@ -190,11 +190,11 @@ const game = {
 
 		// Are there four keys for the four suits?
 		if ( Object.keys(result).length === 4 ) {
-			return table.gameOverStates.PLAYER_LOSES
+			return { state: table.gameOverStates.PLAYER_LOSES }
 		}
 
 		// There's still a move in there ...
-		return table.gameOverStates.KEEP_PLAYING
+		return { state: table.gameOverStates.KEEP_PLAYING }
 	},
 
 	/**

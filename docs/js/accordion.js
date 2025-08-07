@@ -188,12 +188,12 @@ const game = {
 	},
 
 	/**
-	 * Detect the game over state and return an appropriate constant to represent it.
+	 * Detect the game over state and return an appropriate object to represent it.
 	 */
 	hasFinished: () => {
 		// Can't win until we've dealt all the cards.
 		if ( dealer.piles['deck'].cards.length > 0 ) {
-			return table.gameOverStates.KEEP_PLAYING
+			return { state: table.gameOverStates.KEEP_PLAYING }
 		}
 
 		// Are there any legal moves left?
@@ -209,16 +209,16 @@ const game = {
 
 				// Any outcome here means a move can be made so keep playing
 				if ( outcome ) { 
-					return table.gameOverStates.KEEP_PLAYING
+					return { state: table.gameOverStates.KEEP_PLAYING }
 				}
 			}
 		}
 
 		// A "winning" game is having one pile left so check the number of pards on pile 2.
 		if ( dealer.piles['pile-2'].cards.length === 0 ) {
-			return table.gameOverStates.PLAYER_WINS
+			return { state: table.gameOverStates.PLAYER_WINS }
 		} else {
-			return table.gameOverStates.PLAYER_LOSES
+			return { state: table.gameOverStates.PLAYER_LOSES }
 		}
 	},
 

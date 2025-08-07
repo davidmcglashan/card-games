@@ -134,9 +134,9 @@ const game = {
 	hasFinished: () => {
 		// If all the drop piles have four cards then this is a win!
 		if ( dealer.piles['pile-deck'].cards.length === 0 ) {
-			return table.gameOverStates.PLAYER_WINS
+			return { state: table.gameOverStates.PLAYER_WINS }
 		}
 
-		return table.gameOverStates.KEEP_PLAYING
+		return { state: table.gameOverStates.KEEP_PLAYING }
 	}
 }
