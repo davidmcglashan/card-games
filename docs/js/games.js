@@ -1,9 +1,12 @@
 const games = {
-	version: "1.2.1",
+	version: "1.3",
 
 	allGames: [ 
-		{ name: 'Aces Up', description: 'Nothing here matters', url: 'aces-up.html' },
-		{ 	
+		{ 
+			name: 'Aces Up', 
+			description: 'If you have two of a suit discard the lowest one (aces are high!) until all that\'s left are the aces.', 
+			url: 'aces-up.html' 
+		},{ 	
 			name: 'Accordion', 
 			description: 'Reduce the number of piles to one by matching neighbouring suits and numbers', 
 			url: 'accordion.html',

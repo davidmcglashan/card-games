@@ -156,8 +156,17 @@ const game = {
 		// The dropped card should simply replace the card it's dropping onto
 		let pile = dealer.piles[drag.destination.getAttribute('id')]
 		if ( pile.name === 'discard' ) {
-			let keep = dealer.takeFromPile( pile.name )
-			drag.card.elem.remove()
+			// Play a little animation rather than simply disappear the cartd.
+			let anim = drag.card.elem.animate([{transform: 'scale(0)'}],{duration:250, easing: 'ease-in-out'});
+			anim.pause()
+
+			// All the tidy up takes place when the animation finishes.
+			anim.onfinish = () => {
+				dealer.takeFromPile( pile.name )
+				drag.card.elem.remove()
+			}
+
+			anim.play()
 		}
 	},
 
