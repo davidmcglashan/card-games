@@ -12,3 +12,28 @@
 #table div.pile {
 	width: 12%;
 }
+
+#deck {
+	margin-right: 7cqh;
+}
+#discard {
+	margin-left: 7cqh;
+}
+
+
+.tower .label,
+#deck .label,
+#discard .label {
+	text-align: center;
+	margin-top: 10cqh;
+	width: 92%;
+}
+#deck .glyph,
+#discard .glyph {
+	position: absolute;
+	width: 100%;
+	color: #060;
+	text-align: center;
+	margin-top: 24cqh;
+	font-size: 40cqh;
+}
