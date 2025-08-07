@@ -52,8 +52,8 @@ const games = {
 			]
 		},
 
-		{ name: 'Test1', description: 'Nothing here matters', url: 'table.html' },
-		{ name: 'Test2', description: 'Look at the pretty cards', url: 'testcard.html' },
+		{ name: 'Test1', description: 'Nothing here matters', url: 'table.html', hidden: true },
+		{ name: 'Test2', description: 'Look at the pretty cards', url: 'testcard.html', hidden: true },
 	],
 
 	/**
@@ -65,6 +65,10 @@ const games = {
 
 		// Put an <li> for each available game.
 		for ( let gg of games.allGames ) {
+			if ( gg.hidden ) {
+				continue
+			}
+
 			let li = document.createElement( 'li' )
 			ul.appendChild( li )
 
@@ -222,6 +226,10 @@ const games = {
 
 		// Put an <li> for each available game.
 		for ( let gg of games.allGames ) {
+			if ( gg.hidden ) {
+				continue
+			}
+
 			let li = document.createElement( 'li' )
 			ul.appendChild( li )
 
