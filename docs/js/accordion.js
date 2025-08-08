@@ -145,11 +145,16 @@ const game = {
 	canDropCardAtXYOnPile: ( fromCard, x, y, toPile ) => {
 		// Can only drop on the neighbouring cards
 		let fromPile = fromCard.elem.getAttribute('data-pile')
-		let outcome = game.getDragOutcome( fromCard, fromPile, 1 )
-		if ( !outcome ) {
-			outcome = game.getDragOutcome( fromCard, fromPile, 3 )
+
+		let outcome = game.getDragOutcome( fromCard, fromPile, 1 )		
+		if ( outcome && toPile.name === outcome.pile ) {
+			let toCard = dealer.peekTopOfPile( toPile.name )
+			if ( toCard && cardUI.xyIsInBounds( x, y, toCard.elem ) ) {
+				return table.outcomes.CARD_IS_INTERACTIVE
+			}
 		}
 
+		outcome = game.getDragOutcome( fromCard, fromPile, 3 )
 		if ( outcome && toPile.name === outcome.pile ) {
 			let toCard = dealer.peekTopOfPile( toPile.name )
 			if ( toCard && cardUI.xyIsInBounds( x, y, toCard.elem ) ) {

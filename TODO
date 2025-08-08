@@ -26,7 +26,6 @@
 - accordion
   - return custom game messages, including score!?
   - detect an end-state if all the piles are full and there's no move
-  - restore affordances even for illegal moves
   - keeping all the cards and dragging whole piles!
 
 - streets & alleys
