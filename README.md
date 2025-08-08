@@ -1,6 +1,12 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.3.1
+* Added the affordances back into Accordion consistent with the other games.
+* Removed the affordances setting in Accordion in line with the above.
+* Tracks a game in progress to disable interactions when a banner is disabled.
+* Improved the game over detection for Aces Up.
+
 ## v1.3
 * Added a new game: Aces Up.
 * Games can now be hidden until they're ready.

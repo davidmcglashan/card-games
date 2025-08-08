@@ -61,18 +61,17 @@ const game = {
 			return { outcome: table.outcomes.NONE }
 		}
 
-		let fromCard = dealer.peekTopOfPile( pile.name )
-		if ( fromCard && cardUI.xyIsInBounds( x, y, fromCard.elem ) ) {
-			// Piles can be dragged if there are suit or number matches on the next pile down.
-			let outcome = game.getDragOutcome( fromCard, pile.name, 1 )
+		// Can always drag from a pile, apart from pile-1
+		if ( pile.name === 'pile-1' ) {
+			return { outcome: table.outcomes.NONE }
+		}
 
-			// ... or if it matches the next row across.
-			if ( !outcome ) {
-				outcome = game.getDragOutcome( fromCard, pile.name, 3 )
-			}
-
-			if ( outcome ) { 
-				return outcome
+		let topCard = dealer.peekTopOfPile( pile.name )
+		if ( topCard && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
+			return { 
+				outcome: table.outcomes.CARD_IS_INTERACTIVE, 
+				card: topCard.name, 
+				type: table.interactionTypes.DRAG 
 			}
 		}
 
@@ -88,7 +87,8 @@ const game = {
 				return {
 					outcome: table.outcomes.CARD_IS_INTERACTIVE,
 					card: fromCard.name,
-					type: table.interactionTypes.DRAG
+					type: table.interactionTypes.DRAG,
+					pile: toPileName
 				}
 			}
 		}
@@ -132,28 +132,27 @@ const game = {
 	 * Can a drag be started from the pile in question using card?
 	 */
 	canStartDrag: ( cardName, pileName ) => {
-		let fromCard = dealer.peekTopOfPile( pileName )
-		let outcome = game.getDragOutcome( fromCard, pileName, 1 )
-
-		// ... or if it matches the next row across.
-		if ( !outcome ) {
-			outcome = game.getDragOutcome( fromCard, pileName, 3 )
+		if ( pileName === 'pile-1' || pileName === 'deck' ) {
+			return false
 		}
-
-		if ( outcome ) { 
-			return true
-		}	
-
-		return false
+		
+		return true
 	},
 
 	/**
 	 * Respond to a request for dropping a card on a pile. 
 	 */
 	canDropCardAtXYOnPile: ( fromCard, x, y, toPile ) => {
-		let toCard = dealer.peekTopOfPile( toPile.name )
-		if ( toCard && cardUI.xyIsInBounds( x, y, toCard.elem ) ) {
-			if ( fromCard.name !== toCard.name && ( fromCard.suit === toCard.suit || fromCard.ordValue === toCard.ordValue ) ) {
+		// Can only drop on the neighbouring cards
+		let fromPile = fromCard.elem.getAttribute('data-pile')
+		let outcome = game.getDragOutcome( fromCard, fromPile, 1 )
+		if ( !outcome ) {
+			outcome = game.getDragOutcome( fromCard, fromPile, 3 )
+		}
+
+		if ( outcome && toPile.name === outcome.pile ) {
+			let toCard = dealer.peekTopOfPile( toPile.name )
+			if ( toCard && cardUI.xyIsInBounds( x, y, toCard.elem ) ) {
 				return table.outcomes.CARD_IS_INTERACTIVE
 			}
 		}
@@ -219,21 +218,6 @@ const game = {
 			return { state: table.gameOverStates.PLAYER_WINS }
 		} else {
 			return { state: table.gameOverStates.PLAYER_LOSES }
-		}
-	},
-
-	/**
-	 * Called when a setting has changed. It is the game's job to change itself accordingly.
-	 */
-	settingChanged: ( setting, active ) => { 
-		// Handle the setting for mouse effects
-		if ( setting === 'accordion.mouseEffects' ) {
-			let elem = document.querySelector( 'body' )
-			if ( active ) {
-				elem.classList.add( 'mouseEffects' )
-			} else {
-				elem.classList.remove( 'mouseEffects' )
-			}
 		}
 	},
 };

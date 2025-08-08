@@ -1,5 +1,5 @@
 const games = {
-	version: "1.3",
+	version: "1.3.1",
 
 	allGames: [ 
 		{ 
@@ -9,14 +9,7 @@ const games = {
 		},{ 	
 			name: 'Accordion', 
 			description: 'Reduce the number of piles to one by matching neighbouring suits and numbers', 
-			url: 'accordion.html',
-			settings: [
-				{
-					key: 'accordion.mouseEffects',
-					label: 'Mouse effects',
-					description: 'Makes the game easier by highlighting possible moves with the mouse'
-				}
-			]
+			url: 'accordion.html'
 		 },
 
 		{ name: 'Clock', description: 'Tick tock!', url: 'clock-patience.html' },

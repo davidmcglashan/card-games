@@ -17,12 +17,3 @@
 	max-height: 20cqh;
 	max-width: calc( 20cqh * 0.692 );
 }
-
-/* Disable the affordances to make the game harder! */
-body:not(.mouseEffects) .card.interactive {
-	box-shadow: none;
-}
-body:not(.mouseEffects) #glass.canDrag {
-	cursor: default;
-}
-

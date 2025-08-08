@@ -1,4 +1,3 @@
-- you can drag after game over
 - two different reds and blacks for quicker suit identification
 - common CSS for glyphs and labels on piles e.g. "drop an ace here"
 - remember game states in local storage and restore them when you revist the page
