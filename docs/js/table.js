@@ -16,13 +16,15 @@ const table = {
 		PLAYER_WINS: 2
 	},
 
+	gameInProgress: false,
+
 	/**
 	 * A mouse click happened on the glass. This function detects which element
 	 * (card,pile) was under the click and asks the game object to handle the click
 	 */
 	mouseClicked: ( event ) => {	
 		// Abort quickly if we're dragging something.
-		if ( table.drag !== undefined ) {
+		if ( !table.gameInProgress || table.drag !== undefined ) {
 			return
 		}
 		
@@ -60,7 +62,7 @@ const table = {
 	 */
 	mousePressed: ( event ) => {
 		// If the game doesn't support dragging we can leave early ...
-		if ( event.which !== 1 || !game.canStartDrag ) {
+		if ( !table.gameInProgress || event.which !== 1 || !game.canStartDrag ) {
 			return
 		}
 
@@ -98,6 +100,10 @@ const table = {
 	 * dragged card on top of the destination drop pile
 	 */
 	mouseReleased: ( event ) => {
+		if ( !table.gameInProgress ) {
+			return
+		}
+
 		// Abort quickly if we're not dragging anything.
 		if ( table.drag === undefined || !table.drag.hasMoved ) {
 			table.mouseClicked( event )
@@ -256,6 +262,10 @@ const table = {
 	 * can be performed.
 	 */
 	mouseMoved: ( event ) => {
+		if ( !table.gameInProgress ) {
+			return
+		}
+
 		// If we're not dragging anything we only need to check for piles we can interact with.
 		if ( table.drag === undefined ) {
 			table.checkForInteractions( event.x, event.y )
@@ -345,6 +355,8 @@ const table = {
 	 * Let's begin!
 	 */
 	restart: () => {
+		table.gameInProgress = true
+
 		// Tear down the pages a little
 		document.getElementById( 'cards' ).innerHTML = ''
 		document.getElementById( 'glass' ).innerHTML = ''
@@ -371,6 +383,8 @@ const table = {
 	 * Finishes the current game.
 	 */
 	finishGame: ( gameOver ) => {
+		table.gameInProgress = false
+
 		// Finish the game by displaying the banner.
 		let elem = document.getElementById('banner')
 		elem.classList.remove( 'hidden' )
