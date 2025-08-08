@@ -70,13 +70,6 @@ const game = {
 	},
 
 	/**
-	 * If the card being dragged is from lower down a tower we need to tell the 
-	 * game that the higher cards are getting moved too.
-	 */
-	embellishDrag: ( drag, cardName, pileName ) => {
-	},
-
-	/**
 	 * Respond to clicks on cards ... 
 	 */
 	clickOnCard: ( cardName, pileName ) => {
@@ -98,13 +91,6 @@ const game = {
 			}
 		}
 
-		return false
-	},
-
-	/**
-	 * Respond to clicks on piles ... 
-	 */
-	clickOnPile: ( pileName ) => {
 		return false
 	},
 
@@ -179,17 +165,30 @@ const game = {
 			return { state: table.gameOverStates.KEEP_PLAYING }
 		}
 
-		// There are moves left if we can't find all four suits from the top cards.
+		// There are moves left if all the towers have a different suit on the top. So count
+		// the different suits we get, and keep track of the empty towers.
 		let result = {}
+		let empties = 0
+		let aceAtTop = false
 		for ( let t=1; t<=4; t++ ) {
 			let topCard = dealer.peekTopOfPile('tower-'+t)
 			if ( topCard ) {
 				result[topCard.suit] = 'true'
+				if ( topCard.ordValue === 0 ) {
+					aceAtTop = true
+				}
+			} else {
+				empties++
 			}
 		}
 
-		// Are there four keys for the four suits?
-		if ( Object.keys(result).length === 4 ) {
+		// If there's an ace at the top and an empty tower then the game isn't over.
+		if ( aceAtTop && empties > 0 ) {
+			return { state: table.gameOverStates.KEEP_PLAYING }
+		}
+
+		// Are there n keys for the n suits from n towers?
+		if ( Object.keys(result).length === 4-empties ) {
 			// How many cards are left on the table?
 			let count = 0
 			for ( let t=1; t<=4; t++ ) {
@@ -222,11 +221,5 @@ const game = {
 
 		// There's still a move in there ...
 		return { state: table.gameOverStates.KEEP_PLAYING }
-	},
-
-	/**
-	 * Called when a setting has changed. It is the game's job to change itself accordingly.
-	 */
-	settingChanged: ( setting, active ) => { 
 	},
 };
