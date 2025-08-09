@@ -1,10 +1,13 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.3.2
+* Animation method for snapping piles now receives an {object} rather than lots of parameters.
+
 ## v1.3.1
 * Added the affordances back into Accordion consistent with the other games.
 * Removed the affordances setting in Accordion in line with the above.
-* Tracks a game in progress to disable interactions when a banner is disabled.
+* Tracks a game in progress to disable interactions when a banner is being displayed.
 * Improved the game over detection for Aces Up.
 
 ## v1.3

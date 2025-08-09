@@ -4,7 +4,6 @@
   - best score/number of wins
   - number of games
 - ratings for complexity
-- animation parameter could be an {}
 - make rotation a function of the distance snapped (for all card stack types?) :)
 - textures/noise on the table green
 

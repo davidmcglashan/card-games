@@ -50,7 +50,7 @@ const cardUI = {
 	/**
 	 * Animates the snapping of a card pile.
 	 */
-	snapPileWithAnimation: ( pile, delay=0, reverse=false ) => {
+	snapPileWithAnimation: ( pile, params ) => {
 		// Read the original card positions and store them in an object.
 		let orig = {}
 		for ( let card of pile.cards ) {
@@ -65,14 +65,19 @@ const cardUI = {
 
 		// Let snapPile do its thing.
 		cardUI.snapPile( pile )
+				
+		// Stuff some defaults into the params
+		if ( params === undefined ) { params = {} }
+		if ( !params.delay ) { params.delay = 0 }
+		if ( !params.reverse ) { params.reverse = false }
 
 		// Now grab a hold of all the cards that moved and install an animation
 		let offset = 1
 		let iterable = Object.entries( orig )
-		if ( reverse ) {
+		if ( params.reverse ) {
 			iterable = iterable.reverse()
 		}
-		
+
 		for ( const[name,pos] of iterable ) {
 			let elem = pos.card
 
@@ -85,7 +90,7 @@ const cardUI = {
 				pos.elem.style.transform = `translate(${left}px,${top}px)`
 
 				// Now apply an animation to remove the translation again.
-				let anim = pos.elem.animate([{transform: 'translate(0px,0px)'}],{duration:250, easing: 'ease-in-out', delay: delay*offset});
+				let anim = pos.elem.animate([{transform: 'translate(0px,0px)'}],{duration:250, easing: 'ease-in-out', delay: params.delay*offset});
 				anim.pause()
 				anim.onfinish = () => {
 					pos.elem.style.transform = 'none'

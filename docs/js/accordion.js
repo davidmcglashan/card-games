@@ -186,7 +186,7 @@ const game = {
 			if ( dealer.piles[thisPile].cards.length === 0 ) {
 				let hand = dealer.drawAllFromPile( nextPile )
 				dealer.addCardsToPile( thisPile, hand )
-				cardUI.snapPileWithAnimation( dealer.piles[thisPile], i*10 )
+				cardUI.snapPileWithAnimation( dealer.piles[thisPile], { delay: i*10 } )
 			}
 		}
 	},

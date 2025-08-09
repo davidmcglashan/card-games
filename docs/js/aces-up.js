@@ -85,7 +85,7 @@ const game = {
 					card.isFaceUp = true
 					cardUI.decorate( card )
 					dealer.placeOnPile( next, card )
-					cardUI.snapPileWithAnimation( dealer.piles[next], t*50, true )
+					cardUI.snapPileWithAnimation( dealer.piles[next], { delay:t*50, reverse:true }  )
 				}
 				return true
 			}
