@@ -1,6 +1,9 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.3.3
+* Switched the hosting domain to cardgames.mcglashan.net
+
 ## v1.3.2
 * Animation method for snapping piles now receives an {object} rather than lots of parameters.
 

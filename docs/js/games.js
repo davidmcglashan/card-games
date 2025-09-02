@@ -1,5 +1,5 @@
 const games = {
-	version: "1.3.2",
+	version: "1.3.3",
 
 	allGames: [ 
 		{ 
@@ -161,7 +161,7 @@ const games = {
 		tray.appendChild( section )
 
 		elem = document.createElement( 'p' )
-		elem.innerHTML = 'v' + games.version + '<br>&copy 2025 David McGlashan<br><a href="https://cardgames.dvdmcglshn.com">https://cardgames.dvdmcglshn.com</a>'
+		elem.innerHTML = 'v' + games.version + '<br>&copy 2025 David McGlashan<br><a href="https://cardgames.mcglashan.net">https://cardgames.mcglashan.net</a>'
 		section.appendChild( elem )
 	},
 

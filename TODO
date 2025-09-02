@@ -11,6 +11,10 @@
   - favicon and all that jazz
 - instructions
 
+- aces up
+  - setting for drag any card into a space
+  - maximum size for cards!
+
 - demo
   - clicking rotated cards in test1 invokes another rotation
 
@@ -20,6 +24,7 @@
 
 - patience
   - double click a card to send it to a suit
+  - fast clicking on the deck draws cards too fast which messes up the order and confuses the game logic.
 
 - accordion
   - return custom game messages, including score!?
