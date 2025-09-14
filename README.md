@@ -1,6 +1,9 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.3.4
+* Streets and Alleys now has two optional temporary storage piles for putting a single card in. This makes a difficult game slightly easier.
+
 ## v1.3.3
 * Switched the hosting domain to cardgames.mcglashan.net
 

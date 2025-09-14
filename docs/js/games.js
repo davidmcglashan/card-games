@@ -41,6 +41,10 @@ const games = {
 					key: 'streets.startWithAces',
 					label: 'Start with the aces',
 					description: 'Make the game a bit easier by starting with all four aces already dealt'
+				},{
+					key: 'streets.storage',
+					label: 'Use temporary storage',
+					description: 'Add two extra piles for temporarily placing a single card'
 				}
 			]
 		},

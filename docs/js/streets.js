@@ -66,11 +66,7 @@ const game = {
 	 * Is the pile in question currently interactive?
 	 */
 	canClickOrDragFromPileAtXY: ( pile, x, y ) => {		
-		// Interactions with piles - you can only drop on suits.
-		if ( pile.name.startsWith( 'suit' ) ) {
-			return { outcome: table.outcomes.NONE }
-		}
-		
+		// Interactions with piles ...
 		if ( pile.name.startsWith( 'pile-' ) ) {
 			// Disallow interactions with empty piles.
 			if ( pile.cards.length === 0 && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
@@ -88,15 +84,22 @@ const game = {
 			}
 		}
 
+		// You can only drop on suits and spares.
 		return { outcome: table.outcomes.NONE }
 	},
 
 	/**
-	 * Can a drag be started from the pile in question using card?
+	 * You can drag from anything, as long as there's a card there ...
 	 */
-	canStartDrag: ( cardName, pileName ) => {
+	canStartDrag: ( cardName, pileName ) => {		
+		game.dragPile = null
+		
 		let card = dealer.peekTopOfPile( pileName )
 		if ( card ) {
+			// Record the pile we dragged from if it's a spare so we can forbid certain drops later
+			if ( pileName.startsWith( 'spare-' ) ) {
+				game.dragPile = pileName
+			}
 			return true
 		}
 
@@ -107,6 +110,13 @@ const game = {
 	 * Respond to a request for dropping a card on a pile. 
 	 */
 	canDropCardAtXYOnPile: ( card, x, y, pile ) => {
+		// You can drop on a spare as long as it's empty.
+		if ( pile.name.startsWith( 'spare-' ) ) {
+			if ( pile.cards.length === 0 && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
+				return table.outcomes.PILE_IS_INTERACTIVE
+			}
+		}
+
 		// Permit the building of suits onto the suit piles 
 		if ( pile.name === ( 'suit-' + card.suit ) && pile.cards.length === card.ordValue ) {
 			// Dropping an ace on an empty pile.
@@ -125,6 +135,19 @@ const game = {
 
 		// Dropping on a tower ...
 		if ( pile.name.startsWith( 'pile-' ) ) {
+			// If we came from a spare we can only drop onto the piles at that side of the table.
+			if ( game.dragPile === 'spare-streets' ) {
+				if ( pile.name === 'pile-2' || pile.name === 'pile-4' || pile.name === 'pile-6' || pile.name === 'pile-8' ) {
+					return table.outcomes.NONE	
+				}
+			}
+
+			if ( game.dragPile === 'spare-alleys' ) {
+				if ( pile.name === 'pile-1' || pile.name === 'pile-3' || pile.name === 'pile-5' || pile.name === 'pile-7' ) {
+					return table.outcomes.NONE	
+				}
+			}
+
 			// ... can be done following the descending numbers rule.
 			if ( pile.cards.length > 0 ) {
 				let topCard = dealer.peekTopOfPile( pile.name )
@@ -158,5 +181,24 @@ const game = {
 		}
 
 		return { state: table.gameOverStates.KEEP_PLAYING }
+	},
+
+	/**
+	 * Called when a setting has changed. It is the game's job to change itself accordingly.
+	 */
+	settingChanged: ( setting, active ) => { 
+		if ( setting === 'streets.storage' ) {
+			if ( active ) {
+				let elem = document.getElementById( 'spare-streets' )
+				elem.classList.remove( 'hidden' )
+				elem = document.getElementById( 'spare-alleys' )
+				elem.classList.remove( 'hidden' )
+			} else {
+				let elem = document.getElementById( 'spare-streets' )
+				elem.classList.add( 'hidden' )
+				elem = document.getElementById( 'spare-alleys' )
+				elem.classList.add( 'hidden' )
+			}
+		}
 	},
 };
