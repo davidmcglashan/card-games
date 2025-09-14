@@ -45,6 +45,10 @@ const games = {
 					key: 'streets.storage',
 					label: 'Use temporary storage',
 					description: 'Add two extra piles for temporarily placing a single card'
+				},{
+					key: 'streets.strictStorage',
+					label: 'Strict storage',
+					description: 'Cards can only be placed and drawn from storage on their side of the table'
 				}
 			]
 		},

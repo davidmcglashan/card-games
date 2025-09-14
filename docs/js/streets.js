@@ -97,9 +97,7 @@ const game = {
 		let card = dealer.peekTopOfPile( pileName )
 		if ( card ) {
 			// Record the pile we dragged from if it's a spare so we can forbid certain drops later
-			if ( pileName.startsWith( 'spare-' ) ) {
-				game.dragPile = pileName
-			}
+			game.dragPile = pileName
 			return true
 		}
 
@@ -112,6 +110,21 @@ const game = {
 	canDropCardAtXYOnPile: ( card, x, y, pile ) => {
 		// You can drop on a spare as long as it's empty.
 		if ( pile.name.startsWith( 'spare-' ) ) {
+			// If we doing strict storage we we can only drop onto the spares at that side of the table.
+			if ( localStorage['streets.strictStorage'] ) {
+				if ( pile.name === 'spare-streets' ) {
+					if ( game.dragPile === 'pile-2' || game.dragPile === 'pile-4' || game.dragPile === 'pile-6' || game.dragPile === 'pile-8' ) {
+						return table.outcomes.NONE	
+					}
+				}
+
+				if ( pile.name === 'spare-alleys' ) {
+					if ( game.dragPile === 'pile-1' || game.dragPile === 'pile-3' || game.dragPile === 'pile-5' || game.dragPile === 'pile-7' ) {
+						return table.outcomes.NONE	
+					}
+				}
+			}
+
 			if ( pile.cards.length === 0 && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
 				return table.outcomes.PILE_IS_INTERACTIVE
 			}
@@ -133,22 +146,24 @@ const game = {
 			}
 		}
 
-		// Dropping on a tower ...
+		// Dropping on a tower
 		if ( pile.name.startsWith( 'pile-' ) ) {
 			// If we came from a spare we can only drop onto the piles at that side of the table.
-			if ( game.dragPile === 'spare-streets' ) {
-				if ( pile.name === 'pile-2' || pile.name === 'pile-4' || pile.name === 'pile-6' || pile.name === 'pile-8' ) {
-					return table.outcomes.NONE	
+			if ( localStorage['streets.strictStorage'] ) {
+				if ( game.dragPile === 'spare-streets' ) {
+					if ( pile.name === 'pile-2' || pile.name === 'pile-4' || pile.name === 'pile-6' || pile.name === 'pile-8' ) {
+						return table.outcomes.NONE	
+					}
+				}
+
+				if ( game.dragPile === 'spare-alleys' ) {
+					if ( pile.name === 'pile-1' || pile.name === 'pile-3' || pile.name === 'pile-5' || pile.name === 'pile-7' ) {
+						return table.outcomes.NONE	
+					}
 				}
 			}
 
-			if ( game.dragPile === 'spare-alleys' ) {
-				if ( pile.name === 'pile-1' || pile.name === 'pile-3' || pile.name === 'pile-5' || pile.name === 'pile-7' ) {
-					return table.outcomes.NONE	
-				}
-			}
-
-			// ... can be done following the descending numbers rule.
+			// Drops can be done following the descending numbers rule.
 			if ( pile.cards.length > 0 ) {
 				let topCard = dealer.peekTopOfPile( pile.name )
 				if ( topCard.ordValue === card.ordValue + 1 && cardUI.xyIsInBounds( x, y, topCard.elem ) ) {
