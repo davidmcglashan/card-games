@@ -181,6 +181,17 @@ const game = {
 	 * finished it'll be a bit richer.
 	 */
 	hasFinished: () => {
+		// We're finished when the four suit piles each have 13 cards.
+		let suit = 0
+		for ( const [name,pile] of Object.entries( dealer.piles ) ) {
+			if ( pile.name.startsWith( 'suit-' ) && pile.cards.length === 13 ) {
+				suit++
+				if ( suit === 4 ) {
+					return { state: table.gameOverStates.PLAYER_WINS }
+				}
+			}
+		}
+
 		return { state: table.gameOverStates.KEEP_PLAYING }
 	},
 
