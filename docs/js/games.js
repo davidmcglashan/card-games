@@ -10,10 +10,16 @@ const games = {
 			name: 'Accordion', 
 			description: 'Reduce the number of piles to one by matching neighbouring suits and numbers', 
 			url: 'accordion.html'
-		 },
-
-		{ name: 'Clock', description: 'Tick tock!', url: 'clock-patience.html' },
-		{ 
+		},{
+			name: 'Clock',
+			description: 'Tick tock!',
+			url: 'clock-patience.html' 
+		},{
+			name: 'Flower Garden',
+			description: 'Pretty flowers!',
+			url: 'flower-garden.html',
+			hidden: true
+		},{ 
 			name: 'Patience', 
 			description: 'The classic Solitaire', 
 			url: 'patience.html',

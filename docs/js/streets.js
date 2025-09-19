@@ -65,7 +65,7 @@ const game = {
 	/**
 	 * Is the pile in question currently interactive?
 	 */
-	canClickOrDragFromPileAtXY: ( pile, x, y ) => {		
+	canClickOrDragFromPileAtXY: ( pile, x, y ) => {
 		// Interactions with piles ...
 		if ( pile.name.startsWith( 'pile-' ) ) {
 			// Disallow interactions with empty piles.
@@ -84,14 +84,14 @@ const game = {
 			}
 		}
 
-		// You can only drop on suits and spares.
+		// You can only drag from on suits and spares.
 		return { outcome: table.outcomes.NONE }
 	},
 
 	/**
 	 * You can drag from anything, as long as there's a card there ...
 	 */
-	canStartDrag: ( cardName, pileName ) => {		
+	canStartDrag: ( cardName, pileName ) => {
 		game.dragPile = null
 		
 		let card = dealer.peekTopOfPile( pileName )

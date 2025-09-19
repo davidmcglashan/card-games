@@ -155,7 +155,12 @@ const table = {
 				}
 				
 				// Update the models.
-				let cards = dealer.drawFromPile( table.drag.sourcePile, 1+table.drag.otherCards.length )
+				let cards = []
+				if ( dealer.piles[table.drag.sourcePile].removalMethod === dealer.removalMethods.FREE ) {
+					cards.push( dealer.removeCardFromPile( table.drag.card.name, table.drag.sourcePile ) )
+				} else {
+					cards = dealer.drawFromPile( table.drag.sourcePile, 1+table.drag.otherCards.length )
+				}
 				cards.reverse()
 				dealer.placeAllOnPile( pile.name, cards )
 				if ( game.dropHappened ) {

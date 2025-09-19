@@ -1,3 +1,4 @@
+- pass in drag start to canDrop... and tidy up usage in streets.js
 - common CSS for glyphs and labels on piles e.g. "drop an ace here"
 - remember game states in local storage and restore them when you revist the page
 - keep stats for each game in local storage
@@ -6,6 +7,7 @@
 - ratings for complexity
 - make rotation a function of the distance snapped (for all card stack types?) :)
 - textures/noise on the table green
+- cards with the number of symbols that responsively change
 
 - web hosting needs a better index.html
   - favicon and all that jazz
@@ -35,5 +37,11 @@
   - undo
 
 - flower garden
+  - four suit piles
+  - six flowerbeds of six cards, all visible, take from bottom
+  - bouquet of remamining 16 cards along the bottom
+  - take from bottom of a flowerbed or the bouquet and place on ...
+    - suit pile as per
+	- bottom of another flowerbed in descending numbers (10 on jack), ignoring suit
 
 - More games ... https://www.instagram.com/p/DKelpn5MMgn/

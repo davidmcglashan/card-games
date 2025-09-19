@@ -14,6 +14,8 @@ const cardUI = {
 				cardUI.decorate( card )
 			}
 
+			let xfactor = (bounds.width-(bounds.height*0.692)) / (pile.cards.length-1)
+
 			switch ( pile.stackingMethod ) {
 				case dealer.stackingMethods.TIGHT:
 				case dealer.stackingMethods.UNTIDY:
@@ -29,13 +31,22 @@ const cardUI = {
 					card.elem.style.left = bounds.x - i*16+ 'px'
 					card.elem.style.top = bounds.y + 'px'
 					break
-					case dealer.stackingMethods.RIGHT:
+				case dealer.stackingMethods.RIGHT:
 					card.elem.style.left = i*16 + bounds.x + 'px'
+					card.elem.style.top = bounds.y + 'px'
+					break
+				case dealer.stackingMethods.HORIZONTAL:
+					card.elem.style.left = xfactor*i + bounds.x + 'px'
 					card.elem.style.top = bounds.y + 'px'
 					break
 			}
 
-			card.elem.style.width = bounds.width + 'px'
+			if ( pile.stackingMethod === dealer.stackingMethods.HORIZONTAL ) {
+				card.elem.style.width = (bounds.height*0.692) + 'px'
+			} else {
+				card.elem.style.width = bounds.width + 'px'
+
+			}
 			card.elem.style.height = bounds.height + 'px'
 			card.elem.setAttribute( 'data-pile', pile.name )
 			

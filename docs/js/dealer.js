@@ -12,7 +12,13 @@ const dealer = {
 		VERTICAL: 2,
 		UNTIDY: 3,
 		LEFT: 4,
-		RIGHT: 5
+		RIGHT: 5,
+		HORIZONTAL: 6
+	},
+
+	removalMethods: {
+		FROM_TOP: 0,
+		FREE: 1
 	},
 
 	// All the piles will be stashed in here by their name.
@@ -74,6 +80,7 @@ const dealer = {
 		pile.cards = []
 		pile.elem = document.getElementById( pile.name )
 		pile.stackingMethod = dealer.stackingMethods.UNTIDY
+		pile.removalMethod = dealer.removalMethods.FROM_TOP
 		dealer.piles[name] = pile
 		return pile
 	},
@@ -231,6 +238,18 @@ const dealer = {
 			if ( card.name === cardName ) {
 				return card
 			}
+		}
+		return null
+	},
+
+	removeCardFromPile: ( cardName, pileName ) => {
+		let i = 0
+		for ( let card of dealer.piles[pileName].cards ) {
+			if ( card.name === cardName ) {
+				dealer.piles[pileName].cards.splice(i,1)
+				return card
+			}
+			i++
 		}
 		return null
 	}
