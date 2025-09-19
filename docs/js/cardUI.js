@@ -14,7 +14,21 @@ const cardUI = {
 				cardUI.decorate( card )
 			}
 
-			let xfactor = (bounds.width-(bounds.height*0.692)) / (pile.cards.length-1)
+			// Calculate a nice way to spread the cards for use with HORIZONTAL stacking
+			// methods.
+			let offset = 0
+			let xfactor = 0
+			if ( pile.stackingMethod === dealer.stackingMethods.HORIZONTAL ) {
+				// the X distance between cards in the spread.
+				xfactor = (bounds.width-(bounds.height*0.692)) / (pile.cards.length-1)
+
+				// If it's above a certain size, keep the spread neatly centred in its bounds
+				// by limiting the xfactor and adding an offset to all card positions.
+				if ( xfactor > 8 + (bounds.height*0.692) ) {
+					xfactor = 8 + (bounds.height*0.692) 
+					offset = ( bounds.width - ( xfactor*pile.cards.length ) ) / 2
+				}
+			}
 
 			switch ( pile.stackingMethod ) {
 				case dealer.stackingMethods.TIGHT:
@@ -36,7 +50,7 @@ const cardUI = {
 					card.elem.style.top = bounds.y + 'px'
 					break
 				case dealer.stackingMethods.HORIZONTAL:
-					card.elem.style.left = xfactor*i + bounds.x + 'px'
+					card.elem.style.left = offset + xfactor*i + bounds.x + 'px'
 					card.elem.style.top = bounds.y + 'px'
 					break
 			}

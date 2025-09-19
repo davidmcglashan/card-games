@@ -17,10 +17,22 @@
 	flex-grow: 1;
 }
 
+.bouquet {
+	position: relative;
+	border: 0;
+	padding: 1rem;
+	border-radius: 8px;
+	background-color: rgba(0,0,0,0.15);
+	display: flex;
+	gap: 0;
+}
 #bouquet {
-	width: 100%;
 	max-width: unset;
 	border-radius: 0;
+	border-color: transparent;
+	flex-grow: 1;
+	max-height: 16cqh;
+	margin: 0;
 }
 
 /* Limit the card height to 16% of the table's height, and maintain the aspect ratio. */
