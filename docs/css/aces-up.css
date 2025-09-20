@@ -10,7 +10,8 @@
 	gap: 1rem;
 }
 #table div.pile {
-	width: 12%;
+	max-height: 20cqh;
+	max-width: calc( 20cqh * 0.692 );
 }
 
 #deck {
@@ -34,6 +35,6 @@
 	width: 100%;
 	color: #060;
 	text-align: center;
-	margin-top: 24cqh;
+	margin-top: 40cqh;
 	font-size: 40cqh;
 }
