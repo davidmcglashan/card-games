@@ -1,6 +1,12 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.3.6
+Various improvements to Aces Up ...
+* Added a setting to drag any card into a space, not just an ace.
+* Set a maximum size for cards so they don't get too big.
+* Made the banner lower so you can see the end game cards.
+
 ## v1.3.5
 * Added a new game: Flower Garden.
 
