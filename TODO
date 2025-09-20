@@ -7,6 +7,7 @@ PROGRAMMING
 
 FEATURES
 --------
+- press keys to highlight cards e.g. 'A' shows the aces
 - remember game states in local storage and restore them when you revist the page
 - keep stats for each game in local storage
   - best score/number of wins
@@ -49,6 +50,3 @@ GAMES
 
 - flower garden
   - drags don't show affordances
-  - remove border and tweak alignment rules of the bouquet
-  - "place any card"
-  - unhide
