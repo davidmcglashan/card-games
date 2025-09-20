@@ -21,7 +21,6 @@
 	margin-left: 7cqh;
 }
 
-
 .tower .label,
 #deck .label,
 #discard .label {
@@ -37,4 +36,9 @@
 	text-align: center;
 	margin-top: 40cqh;
 	font-size: 40cqh;
+}
+
+#banner {
+	top: 45%;
+	bottom: 20%;
 }
