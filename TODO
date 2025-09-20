@@ -1,3 +1,9 @@
+VERSIONING
+----------
+- Major - some developmental overhaul
+- Point - Adding a new game or major feature e.g. touch gestures
+- Patch - bugfix, minor feature or improvement
+
 PROGRAMMING
 -----------
 - pass in drag start to canDrop... and tidy up usage in streets.js
@@ -27,6 +33,7 @@ GAMES
 - aces up
   - setting for drag any card into a space
   - maximum size for cards!
+  - Make the banner lower so you can see the end game cards
 
 - demo
   - clicking rotated cards in test1 invokes another rotation
@@ -46,7 +53,8 @@ GAMES
 
 - streets & alleys
   - undo
-  - replace "temporary storage" with something better
+    - probably a global feature that hooks into stored game state
+	- be nice to hook in an animation ...
 
 - flower garden
   - drags don't show affordances
