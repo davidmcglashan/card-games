@@ -1,6 +1,9 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.3.5
+* Added a new game: Flower Garden.
+
 ## v1.3.4
 * Streets and Alleys now has two optional temporary storage piles for putting a single card in. This makes a difficult game slightly easier.
 

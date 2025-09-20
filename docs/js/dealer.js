@@ -36,11 +36,12 @@ const dealer = {
 		for ( let suit = 0; suit < 4; suit++ ) {
 			for ( let value = 0; value < 13; value++ ) {
 				let card = {}
-				card.suit = dealer.deckmeta.suits[suit];
-				card.shortValue = dealer.deckmeta.labels[value];
+				card.suitOrd = suit
+				card.suit = dealer.deckmeta.suits[suit]
+				card.shortValue = dealer.deckmeta.labels[value]
 				card.symbol = dealer.deckmeta.symbols[suit]
 				card.ordValue = value
-				card.css = 'css'+dealer.deckmeta.values[value];
+				card.css = 'css'+dealer.deckmeta.values[value]
 
 				card.isRed = suit % 2 === 1
 				card.name = dealer.deckmeta.values[value] + '_of_' + dealer.deckmeta.suits[suit]
@@ -252,5 +253,25 @@ const dealer = {
 			i++
 		}
 		return null
+	},
+
+	sort: ( pile ) => {
+		pile.cards.sort( dealer.compare )
+	},
+
+	compare: ( a, b ) => {
+		if ( a.ordValue < b.ordValue ) {
+			return -1;
+		}
+		if ( a.ordValue > b.ordValue ) {
+			return 1;
+		}
+		if ( a.suitOrd < b.suitOrd ) {
+			return -1;
+		}
+		if ( a.suitOrd > b.suitOrd ) {
+			return 1;
+		}
+		return 0;
 	}
-};
+}

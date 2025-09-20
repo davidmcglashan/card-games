@@ -1,5 +1,5 @@
 const games = {
-	version: "1.3.4",
+	version: "1.3.5",
 
 	allGames: [ 
 		{ 
@@ -16,9 +16,8 @@ const games = {
 			url: 'clock-patience.html' 
 		},{
 			name: 'Flower Garden',
-			description: 'Pretty flowers!',
-			url: 'flower-garden.html',
-			hidden: true
+			description: 'Sort the deck into suits by rearranging six beds in descending numbers.',
+			url: 'flower-garden.html'
 		},{ 
 			name: 'Patience', 
 			description: 'The classic Solitaire', 

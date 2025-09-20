@@ -35,6 +35,7 @@ const game = {
 			pile.stackingMethod = dealer.stackingMethods.HORIZONTAL
 			pile.removalMethod = dealer.removalMethods.FREE
 
+			dealer.sort( pile )
 			cardUI.snapPile( pile )
 		} 
 		
@@ -83,27 +84,6 @@ const game = {
 		}
 
 		return { outcome: table.outcomes.NONE }
-	},
-
-	/**
-	 * If the card being dragged is from lower down a tower we need to tell the 
-	 * game that the higher cards are getting moved too.
-	 */
-	embellishDrag: ( drag, cardName, pileName ) => {
-	},
-
-	/**
-	 * Respond to clicks on cards ... 
-	 */
-	clickOnCard: ( cardName, pileName ) => {
-		return false
-	},
-
-	/**
-	 * Respond to clicks on piles ... 
-	 */
-	clickOnPile: ( pileName ) => {
-		return false
 	},
 
 	/**
@@ -193,11 +173,5 @@ const game = {
 		}
 
 		return { state: table.gameOverStates.KEEP_PLAYING }
-	},
-
-	/**
-	 * Called when a setting has changed. It is the game's job to change itself accordingly.
-	 */
-	settingChanged: ( setting, active ) => { 
 	},
 };
