@@ -125,8 +125,13 @@ const game = {
 			}
 		}
 
-		// Can drop on an ace on an empty tower.
-		if ( card.ordValue === 0 && pile.name.startsWith( 'tower-' ) && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
+		// Can only drop on an ace on an empty pile unless the setting overrides it.
+		let legalCard = card.ordValue === 0 
+		if ( localStorage['acesUp.anyCardOnASpace'] ) {
+			legalCard = true
+		}
+
+		if ( legalCard && pile.name.startsWith( 'tower-' ) && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
 			if ( pile.cards.length === 0 ) {
 				return table.outcomes.PILE_IS_INTERACTIVE
 			}
@@ -221,5 +226,21 @@ const game = {
 
 		// There's still a move in there ...
 		return { state: table.gameOverStates.KEEP_PLAYING }
+	},
+
+	/**
+	 * Called when a setting has changed. It is the game's job to change itself accordingly.
+	 */
+	settingChanged: ( setting, active ) => { 
+		if ( setting === 'acesUp.anyCardOnASpace' ) {
+			let elems = document.getElementsByClassName( 'ace' )
+			for ( let e of elems ) {
+				e.style.display = active ? 'none' : 'inline'
+			}
+			elems = document.getElementsByClassName( 'any' )
+			for ( let e of elems ) {
+				e.style.display = active ? 'inline' : 'none'
+			}
+		}
 	},
 };

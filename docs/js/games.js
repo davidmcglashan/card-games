@@ -5,7 +5,14 @@ const games = {
 		{ 
 			name: 'Aces Up', 
 			description: 'If you have two of a suit discard the lowest one (aces are high!) until all that\'s left are the aces.', 
-			url: 'aces-up.html' 
+			url: 'aces-up.html',
+			settings: [
+				{
+					key: 'acesUp.anyCardOnASpace',
+					label: 'Any card can be moved to an empty pile',
+					description: 'When not checked only aces can be placed on empty piles'
+				}
+			]
 		},{ 	
 			name: 'Accordion', 
 			description: 'Reduce the number of piles to one by matching neighbouring suits and numbers', 
