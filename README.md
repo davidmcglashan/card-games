@@ -3,6 +3,7 @@ A bunch of single player card games for playing in web browers.
 
 ## 1.4
 * Improved card faces that look like the classic design. Picture cards use the chess king and queen unicode symbols.
+* Changed certain hyperlink buttons from linking to "#" because it caused issueds with browser history.
 
 ## v1.3.6
 Various improvements to Aces Up ...

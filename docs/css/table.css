@@ -124,10 +124,16 @@ a.btn {
 /* Hyperlinks are yellow. */
 a {
 	color: yellow;
+	cursor: pointer;
 }
 	a:hover {
 		text-decoration: none;
 	}
+
+/* This element appears on the banner. */
+.moreGames {
+	margin-left: 3rem;
+}
 
 /* Hidden elements are hidden :| */
 .hidden {
@@ -434,7 +440,3 @@ a {
 		opacity: 1;
 		transition: opacity 250ms ease-in, visibility 0ms ease-in 0ms;
 	}
-
-.moreGames {
-	margin-left: 3rem;
-}

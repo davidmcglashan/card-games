@@ -265,7 +265,7 @@ const games = {
 			}
 		}
 
-		masthead.insertAdjacentHTML( 'beforeend', '<div><a href="#" onclick="table.restart();">Restart</a><a href="#" onclick="games.settings();">Settings</a> </div>' )
+		masthead.insertAdjacentHTML( 'beforeend', '<div><a role="button" onclick="table.restart();">Restart</a><a role="button" onclick="games.settings();">Settings</a> </div>' )
 
 		// Have the glass listen to mouse events
 		let glass = document.getElementById( 'glass' )
