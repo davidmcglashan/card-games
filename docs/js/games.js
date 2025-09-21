@@ -239,6 +239,15 @@ const games = {
 
 		// Put an <li> for each available game.
 		for ( let gg of games.allGames ) {
+			// Display the current game detials in the banner
+			if ( document.URL.indexOf( '/' + gg.url ) !== -1 ) {
+				let banner = document.getElementById( 'headline' )
+				banner.innerHTML = gg.name
+				let message = document.getElementById( 'message' )
+				message.innerHTML = gg.description
+			}
+
+			// If the game is hidden don't do any more.
 			if ( gg.hidden ) {
 				continue
 			}
@@ -251,16 +260,9 @@ const games = {
 			a.innerHTML = gg.name
 			li.appendChild( a )
 
-			// If this is the current game then select the <li> and update the banner.
+			// If this is the current game then select the <li> and build the settings pane.
 			if ( document.URL.indexOf( '/' + gg.url ) !== -1 ) {
 				a.setAttribute( 'class', 'selected' )
-
-				let banner = document.getElementById( 'headline' )
-				banner.innerHTML = gg.name
-				let message = document.getElementById( 'message' )
-				message.innerHTML = gg.description
-
-				// Also build the settings pane while we have the current game at hand.
 				games.buildSettings( gg )
 			}
 		}
