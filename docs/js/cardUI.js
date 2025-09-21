@@ -148,7 +148,6 @@ const cardUI = {
 
 	getRotationTransform: ( pile, card ) => {
 		switch ( pile.stackingMethod ) {
-
 			case dealer.stackingMethods.UNTIDY:
 				let a = Math.floor(Math.random() * 8) - 4;
 				return 'rotate('+a+'deg)'
@@ -183,7 +182,7 @@ const cardUI = {
 			case dealer.stackingMethods.LEFT:
 				point.x = point.x - 16
 				break
-				case dealer.stackingMethods.RIGHT:
+			case dealer.stackingMethods.RIGHT:
 				point.x = point.x + 16
 				break
 				
@@ -203,7 +202,40 @@ const cardUI = {
 	decorate: ( card ) => {
 		if ( card.isFaceUp ) {
 			card.elem.setAttribute( 'class', 'card faceUp ' + card.suit + ' ' + card.css )
-			let s = '<div class="label">'+card.shortValue+'<div class="symbol">'+ card.symbol +'</div></div><div class="bottomlabel">'+card.shortValue+'<div class="symbol">'+ card.symbol +'</div></div><div class="suit">'+card.symbol+'</div><div class="value">'+card.shortValue+'</div>'
+			let s = '<div class="label">'
+						+ '<div class="ordValue">' + card.shortValue + '</div>'
+						+ '<div class="symbol">' + card.symbol + '</div>'
+					+ '</div>'
+					+ '<div class="label bottomlabel">' 
+						+ '<div class="ordValue">' + card.shortValue + '</div>'
+						+ '<div class="symbol">'+ card.symbol +'</div>'
+					+ '</div>'
+					+ '<div class="facia">'
+
+			// Build the appropriate facia for the card.
+			if ( card.ordValue < 10 ) {
+				for ( let c of card.facia ) {
+					switch( c ) {
+						case '1':
+							s = s + '<div class="facia1"><div>' + card.symbol + '</div></div>'
+							break
+						case '2':
+							s = s + '<div class="facia2"><div>' + card.symbol + '</div><div>' + card.symbol + '</div></div>'
+							break
+						case '3':
+							s = s + '<div class="facia3"><div>' + card.symbol + '</div><div>' + card.symbol + '</div><div>' + card.symbol + '</div></div>'
+							break
+						case '4':
+							s = s + '<div class="facia4"><div>' + card.symbol + '</div><div>' + card.symbol + '</div><div>' + card.symbol + '</div><div>' + card.symbol + '</div></div>'
+							break
+					}
+				}
+			} else {
+				s = s + '<div class="facia2"><div>' + card.facia + '</div><div>' + card.symbol + '</div></div>'
+			}
+
+			// Close the open 'facia' <div>
+			s = s   + '</div>'
 			card.elem.innerHTML = s
 		} else {
 			card.elem.innerHTML = ''

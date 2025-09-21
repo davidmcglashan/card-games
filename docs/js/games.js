@@ -65,8 +65,8 @@ const games = {
 			]
 		},
 
-		{ name: 'Test1', description: 'Nothing here matters', url: 'table.html', hidden: true },
-		{ name: 'Test2', description: 'Look at the pretty cards', url: 'testcard.html', hidden: true },
+		{ name: 'Test1', description: 'Nothing here matters', url: 'test1.html', hidden: true },
+		{ name: 'Test2', description: 'Look at the pretty cards', url: 'test2.html', hidden: true },
 	],
 
 	/**

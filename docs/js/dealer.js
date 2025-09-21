@@ -4,6 +4,7 @@ const dealer = {
 		symbols: [ '&spadesuit;','&heartsuit;','&clubsuit;','&diamondsuit;'],
 		values: ['ace','2','3','4','5','6','7','8','9','10','jack','queen','king'],
 		labels: ['A','2','3','4','5','6','7','8','9','10','J','Q','K'],
+		facias: [ '1', '2', '3', '22', '212', '33', '313', '323', '414', '424', '&#9812;', '&#9819;', '&#9818;' ]
 	},
 
 	stackingMethods: {
@@ -40,6 +41,7 @@ const dealer = {
 				card.suit = dealer.deckmeta.suits[suit]
 				card.shortValue = dealer.deckmeta.labels[value]
 				card.symbol = dealer.deckmeta.symbols[suit]
+				card.facia = dealer.deckmeta.facias[value]
 				card.ordValue = value
 				card.css = 'css'+dealer.deckmeta.values[value]
 

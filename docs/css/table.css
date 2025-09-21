@@ -1,3 +1,4 @@
+/* Basic set up stuff. */
 body {
 	background-color: #444;
 	color: #fff;
@@ -5,11 +6,13 @@ body {
 	overflow-x: hidden;
 }
 
+/* Disable text selection on everything since we'll be doing lots of dragging and dropping. */
 * {
 	-webkit-user-select: none;
 	user-select: none;
 }
 
+/* The table is green. */
 #table {
 	position: absolute;
 	top: 1em;
@@ -25,6 +28,7 @@ body {
 	box-shadow: 0px 8px 50px rgba(0,0,0,0.5);
 }
 
+/* Cards and glass are 'invisible' <div>s used to interact with the cards. */
 #cards,
 #glass {
 	top: 0;
@@ -33,6 +37,7 @@ body {
 	bottom: 0;
 	position: absolute;
 }
+	/* Affordances for mouse cursors. */
 	#glass.canClick {
 		cursor: pointer;
 	}
@@ -40,6 +45,7 @@ body {
 		cursor: grab;
 	}
 
+/* The masthead is the element at the top of the page with the menu options in it. */
 #masthead {
 	position: absolute;
 	top: 0;
@@ -83,6 +89,7 @@ body {
 		border-radius: 5px;
 	}
 
+/* Banner overlays the game at the start and end. */
 #banner {
 	position: absolute;
 	left: 0;
@@ -100,11 +107,7 @@ body {
 		margin: 1em 0 2em;
 	}
 
-#debug {
-	position:absolute;
-	right: 0;
-}
-
+/* Buttons are blue. */
 a.btn {
 	background-color: #36f;
 	padding: 0.5em 2em;
@@ -114,18 +117,19 @@ a.btn {
 	box-shadow: 0px 4px 8px rgba(0,0,0,0.25);
 	text-decoration: none;
 }
+	a.btn:hover {
+		background-color: #139;
+	}
 
-a.btn:hover {
-	background-color: #139;
-}
-
+/* Hyperlinks are yellow. */
 a {
 	color: yellow;
 }
-a:hover {
-	text-decoration: none;
-}
+	a:hover {
+		text-decoration: none;
+	}
 
+/* Hidden elements are hidden :| */
 .hidden {
 	display: none;
 }
@@ -171,30 +175,6 @@ a:hover {
 	user-select: none;
 }
 
-/* Red suits are red, black suits are black! */
-.hearts, .diamonds {
-	color: #f22;
-}
-.clubs, .spades {
-	color: black;
-}
-/* Cards have two labels in opposing corners. */
-.label {
-	position: absolute;
-	top: 1cqw;
-	left: 3cqh;
-}
-/* The bottom label is upside-down. */
-.bottomlabel {
-	position: absolute;
-	bottom: 1cqw;
-	right: 3cqh;
-	transform: rotate(180deg);
-}
-.symbol {
-	display: inline;
-}
-
 /* Face down cards show the nice blue printed back graphic. */
 .card.faceDown {
 	background-image: url('../assets/blueback.png');
@@ -202,72 +182,141 @@ a:hover {
 	background-position: center;
 }
 
-/* Face-up cards have the suit symbol drawn on them. */
-.suit {
-	font-size: 50cqh;
+/* Red suits are red, black suits are black! */
+.hearts, .diamonds {
+	color: #f22;
+}
+.clubs, .spades {
+	color: black;
+}
+
+/* Cards have two labels in opposing corners. */
+.label {
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+	margin: 0cqh 2cqh
+}
+	.label .ordValue {
+		font-size: 13cqh;
+		text-align: center;
+		min-width: 12cqw;
+	}
+	.label .symbol {
+		font-size: 9cqh;
+		text-align: center;
+		width: 0;
+		line-height: 0;
+		margin-left: -1cqh;
+		margin-top: 4cqh;
+	}
+
+/* The bottom label is upside-down. */
+.bottomlabel {
 	position: absolute;
-	right: 2cqw;
-	top: 25cqw;
+	bottom: -1px;
+	right: 1px;
+	transform: rotate(180deg);
 }
-/* Suit symbols are drawn in a lighter colour to stand out from values */
-.hearts .suit, .diamonds .suit {
-	color: #faa;
-}
-.clubs .suit, .spades .suit {
-	color: #888;
-}
-/* Face up cards also show their values in a cursive font. */
-.value {
-	font-family: "Fleur De Leah", cursive;
-	font-size: 46cqh;
-	filter: drop-shadow( 2px 2px 2px rgba(0,0,0,0.5));
+
+/* Facias are an arrangement of glyphs on the card face. */
+.facia {
 	position: absolute;
-	width: 100%;
-	top: 10cqh;
+	top: 17cqh;
+	bottom: 15cqh;
+	left: 28cqw;
+	right: 28cqw;
+	font-size: 18cqh;
+	display: flex;
+	justify-content: space-between;
 }
-/* Black suit values have a white shadow to lift from the suit symbol. */
-.clubs .value, .spades .value {
-	filter: drop-shadow( 2px 2px 2px rgba(255,255,255,1));
-}
-
-/* Capital Qs move into the middle of the cards a bit. */
-.cssqueen .value {
-	left: 10cqh;
-
-	/* These rules overcome a bug? where the left hand side of the glyph is cropped off. */
-	margin-left: -10cqh;
-	padding-left: 10cqh;
-}
-
-/* Thinner numbers move into the middle of the cards. */
-.css2 .value, 
-.css3 .value,
-.css4 .value,
-.css5 .value,
-.css6 .value,
-.css7 .value,
-.css8 .value,
-.css9 .value {
-	left: 9cqh;
-}
-
-/* Hide the suit and value elements when the cards get small. */
-@container card (width < 80px) {
-	.card .value {
-		display: none;
+	.facia > div {
+		display: flex;
+		width: 0;
+		line-height: 0;
 	}
-	.card .suit {
-		right: 14cqw;
-		top: 19cqw;
+
+/* One glyph columns are centered vertically ... */
+.facia1 {
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+}
+	/* ... except on 7s */
+	.css7 .facia1 {
+		justify-content: start;
+		margin-top: 16cqh;
 	}
-	.hearts .suit, .diamonds .suit {
-		color: #f22;
+
+/* Two-glyph columns are top and bottom of the column */
+.facia2, .facia3, .facia4 {
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+}
+	/* ... except on 8s ... */
+	.css8 .facia2 {
+		justify-content: start;
+		margin-top: 1cqh;
+		line-height: unset;
 	}
-	.clubs .suit, .spades .suit {
-		color: #000;
+	/* ... and 10s ... */
+	.css10 .facia2 {
+		line-height: 22cqh;
 	}
+	
+/* Aces are a big single glyph. */
+.cssace .facia {
+	font-size: 20cqh;
+	align-items: center;
+	justify-content: space-around;
+}
+	.cssace.spades .facia {
+		font-size: 43cqh;
+		align-items: center;
+		justify-content: space-around;
+	}
+
+/* Twos and threes have a single column of glyphs so put it up the middle. */
+.css2 .facia,
+.css3 .facia {
+	justify-content: center;
 }
 
+/* Picture cards use big chess HTML entities for their glyphs. */
+.cssking .facia,
+.cssqueen .facia,
+.cssjack .facia {
+	align-items: center;
+	justify-content: space-around;
+}
+	.cssking .facia {
+		font-size: 75cqh;
+		margin-top: 6cqh;
+	}
+	.cssqueen .facia {
+		font-size: 70cqh;
+		margin-top: 14cqh;
+	}
+	.cssjack .facia {
+		font-size: 60cqh;
+		margin-top: 7cqh;
+	}
+
+	.cssking .facia .facia2 div:last-child {
+		margin-top: 37cqh;
+		font-size: 17cqh;
+	}
+	.cssqueen .facia .facia2 div:last-child {
+		margin-top: 37cqh;
+		font-size: 17cqh;
+	}
+	.cssjack .facia .facia2 div:last-child {
+		margin-top: 33cqh;
+		font-size: 17cqh;
+	}
+
+/* The list of games shows on the root page and is a simple <ul> list. */
 #listOfGames {
 	display: flex;
 	flex-direction: column;

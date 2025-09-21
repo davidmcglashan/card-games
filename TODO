@@ -4,23 +4,26 @@ VERSIONING
 - Point - Adding a new game or major feature e.g. touch gestures
 - Patch - bugfix, minor feature or improvement
 
+BUGS & GLITCHES
+---------------
+- Get rid of # hyperlinks because they end up in the history
+- hidden games don't show text in the banner
+
 PROGRAMMING
 -----------
 - pass in drag start to canDrop... and tidy up usage in streets.js
-- common CSS for glyphs and labels on piles e.g. "drop an ace here"
 - make rotation a function of the distance snapped (for all card stack types?) :)
-- textures/noise on the table green
 
 FEATURES
 --------
+- More games ... https://www.instagram.com/p/DKelpn5MMgn/
 - press keys to highlight cards e.g. 'A' shows the aces
+- textures/noise on the table green
 - remember game states in local storage and restore them when you revist the page
 - keep stats for each game in local storage
   - best score/number of wins
   - number of games
 - ratings for complexity
-- cards with the number of symbols that responsively change
-- More games ... https://www.instagram.com/p/DKelpn5MMgn/
 - instructions
 
 HOSTING
