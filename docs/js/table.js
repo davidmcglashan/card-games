@@ -17,14 +17,15 @@ const table = {
 	},
 
 	gameInProgress: false,
+	animationCounter: 0,
 
 	/**
 	 * A mouse click happened on the glass. This function detects which element
 	 * (card,pile) was under the click and asks the game object to handle the click
 	 */
 	mouseClicked: ( event ) => {	
-		// Abort quickly if we're dragging something.
-		if ( !table.gameInProgress || table.drag !== undefined ) {
+		// Abort quickly if we're in the middile of something.
+		if ( table.animationCounter !== 0 || !table.gameInProgress || table.drag !== undefined ) {
 			return
 		}
 		
@@ -62,7 +63,7 @@ const table = {
 	 */
 	mousePressed: ( event ) => {
 		// If the game doesn't support dragging we can leave early ...
-		if ( !table.gameInProgress || event.which !== 1 || !game.canStartDrag ) {
+		if ( table.animationCounter !== 0 || !table.gameInProgress || event.which !== 1 || !game.canStartDrag ) {
 			return
 		}
 
@@ -217,6 +218,7 @@ const table = {
 	 * Animates a card dropping nicely onto its new pile home after a drag and drop operation.
 	 */
 	playDropAnimation: ( pile, elem, offset = 0 ) => {
+		table.animationCounter += 1
 		let destXY = cardUI.getDestinationXY( pile, table.drag.destination )			
 
 		// Work out how far the card needs to travel.
@@ -237,6 +239,7 @@ const table = {
 		anim.pause()
 		anim.onfinish = () => {
 			elem.style.transform = rotation
+			table.animationCounter -= 1
 		}
 		anim.play()
 	},
@@ -253,10 +256,12 @@ const table = {
 		elem.style.transform = `translate(${x}px,${y}px)`
 
 		// Now apply an animation to remove the translation again.
+		table.animationCounter += 1
 		let anim = elem.animate([{transform: 'translate(0px,0px)'}],{duration:250, easing: 'ease-in-out', delay:offset/2});
 		anim.pause()
 		anim.onfinish = () => {
 			elem.style.transform = 'none'
+			table.animationCounter -= 1
 		}
 		anim.play()
 	},

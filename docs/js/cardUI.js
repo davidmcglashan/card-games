@@ -115,10 +115,12 @@ const cardUI = {
 				pos.elem.style.transform = `translate(${left}px,${top}px)`
 
 				// Now apply an animation to remove the translation again.
+				table.animationCounter += 1
 				let anim = pos.elem.animate([{transform: 'translate(0px,0px)'}],{duration:250, easing: 'ease-in-out', delay: params.delay*offset});
 				anim.pause()
 				anim.onfinish = () => {
 					pos.elem.style.transform = 'none'
+					table.animationCounter -= 1
 				}
 				anim.play()
 				offset++

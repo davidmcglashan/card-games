@@ -1,6 +1,10 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## 1.4.1
+* Improved handling of animations to prevent stray click and "concurrency" issues.
+* Added github.com link to the About section in the settings tray.
+
 ## 1.4
 * Improved card faces that look like the classic design. Picture cards use the chess king and queen unicode symbols.
 * Changed certain hyperlink buttons from linking to "#" because it caused issues with browser history.
