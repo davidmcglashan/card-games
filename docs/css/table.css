@@ -23,7 +23,7 @@ body {
 	border: 2px solid #142;
 	background-color: #183;
 	border-radius: 8px;
-	padding: 1em;
+	padding: 1em 3rem;
 	margin-top: 1em;
 	box-shadow: 0px 8px 50px rgba(0,0,0,0.5);
 }
@@ -325,20 +325,58 @@ a {
 /* The list of games shows on the root page and is a simple <ul> list. */
 #listOfGames {
 	display: flex;
-	flex-direction: column;
-	gap: 1em;
-	padding-inline-start: 1em;
-	width: fit-content;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding-inline-start: 0rem;
+	width: 100%;
+	margin-top: 2rem;
 }
 	#listOfGames li {
 		display: flex;
-		flex-direction: column;
-		width: fit-content;
+		flex-direction: row;
+		width: calc(50% - 1rem);
+		border: 1px solid black;
+		border-radius: 0.5rem;
+		margin-bottom: 2rem;
+		box-shadow: 0px 8px 50px rgba(0,0,0,0.15);
 	}
-		#listOfGames li a {
-			display: inline;
-			width: fit-content;
-		}
+	#listOfGames li:has(a:hover) {
+		box-shadow: 0px 8px 50px rgba(0,0,0,0.45);
+		background-color: rgba(255,255,255,0.15);
+	}
+	#listOfGames li a {
+		padding: 1rem;
+		flex: 8;
+		text-decoration: none;
+		font-size: 1.2rem;
+	}
+	#listOfGames li a.icon span {
+		transform: rotate(-20deg);
+		display: block;
+		margin-top: -1rem;
+	}
+
+	#listOfGames li a span.sub {
+		display: block;
+		color: #fff;
+		margin-top: 0.25rem;
+		font-size: 1rem;
+	}
+	#listOfGames li a.icon {
+		display: block;
+		height: 4rem;
+		background-color: white;
+		flex: 1;
+		overflow: hidden;
+		border-radius: 0.5rem;
+		color: black;
+		font-size: 6rem;
+		transform: rotate(6deg);
+	}
+	#listOfGames li a.icon.red {
+		color: #f22;
+	}
 
 /* Keyframes which manage the tray sliding in and out by setting its left position. */
 @keyframes slideIn {

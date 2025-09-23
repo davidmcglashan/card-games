@@ -75,6 +75,7 @@ const games = {
 	listOfGames: () => {
 		// Put a <ul> in the masthead.
 		let ul = document.getElementById( 'listOfGames' )
+		let symbols = [ '&#9824;', '&#9827;', '&#9829;', '&#9830;' ]
 
 		// Put an <li> for each available game.
 		for ( let gg of games.allGames ) {
@@ -82,25 +83,42 @@ const games = {
 				continue
 			}
 
+			// Card
 			let li = document.createElement( 'li' )
 			ul.appendChild( li )
 
+			// Icon of one of the suit glyphs
 			let a = document.createElement( 'a' )
+			li.appendChild( a )
+			a.setAttribute( 'href', gg.url )
+			let sym = Math.floor(4*Math.random())
+			a.setAttribute( 'class', 'icon ' + (sym>1 ? 'red' : 'black') )
+			a.innerHTML = '<span>'+symbols[sym]+'</span>'
+
+			// Game name
+			a = document.createElement( 'a' )
+			li.appendChild( a )
 			a.setAttribute( 'href', gg.url )
 			a.innerHTML = gg.name
-			li.appendChild( a )
-			li.appendChild( document.createTextNode( gg.description ) )
 
-			// If this is the current game then select the <li> and update the banner.
+			// Game sub-title
+			let span = document.createElement( 'span' )
+			span.setAttribute( 'class', 'sub' )
+			span.innerHTML = gg.description
+			a.appendChild( span )
+
+			// If this is the current game then also update the banner.
 			if ( document.URL.indexOf( '/' + gg.url ) !== -1 ) {
-				a.setAttribute( 'class', 'selected' )
-
 				let banner = document.getElementById( 'headline' )
 				banner.innerHTML = gg.name
 				let message = document.getElementById( 'message' )
 				message.innerHTML = gg.description
 			}
 		}
+
+		// Put the credits on here as well.
+		let elem = document.getElementById( 'credits' )
+		elem.appendChild( games.credits() )
 	},
 
 	/**
@@ -122,7 +140,7 @@ const games = {
 		elem.innerHTML = '&times;'
 		elem.setAttribute( 'class', 'close' )
 		elem.setAttribute( 'onclick', 'games.settings();' )
-		elem.setAttribute( 'href', '#' )
+		elem.setAttribute( 'role', 'button' )
 		section.appendChild( elem )
 
 		// New section for the settings controls.
@@ -156,7 +174,7 @@ const games = {
 			}
 
 			elem = document.createElement( 'a' )
-			elem.setAttribute( 'href', '#' )
+			elem.setAttribute( 'role', 'button' )
 			elem.setAttribute( 'onclick', 'games.saveSettings()' )
 			elem.setAttribute( 'class', 'btn' )
 			elem.innerHTML = 'Save settings'
@@ -179,15 +197,7 @@ const games = {
 		// New section for the About details.
 		section = document.createElement( 'div' )
 		tray.appendChild( section )
-
-		elem = document.createElement( 'p' )
-		elem.innerHTML 
-			= 'v' + games.version 
-			+ '<br>&copy 2025 David McGlashan<br>'
-			+ '<a href="https://cardgames.mcglashan.net">https://cardgames.mcglashan.net</a>'
-			+ '<p>Source code on <a href="https://github.com/davidmcglashan/card-games">github.com</a></p>'
-
-		section.appendChild( elem )
+		section.appendChild( games.credits() )
 	},
 
 	/**
@@ -230,6 +240,17 @@ const games = {
 			tray.classList.toggle('closed')
 			tray.classList.toggle('open')
 		}
+	},
+
+	credits: () => {
+		let	elem = document.createElement( 'p' )
+		elem.innerHTML 
+			= 'v' + games.version 
+			+ '<br>&copy 2025 David McGlashan<br>'
+			+ '<a href="https://cardgames.mcglashan.net">https://cardgames.mcglashan.net</a>'
+			+ '<p>Source code on <a href="https://github.com/davidmcglashan/card-games">github.com</a></p>'
+		
+		return elem
 	},
 
 	/**
