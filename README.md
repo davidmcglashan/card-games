@@ -13,13 +13,13 @@ A bunch of single player card games for playing in web browers.
 * Changed certain hyperlink buttons from linking to "#" because it caused issues with browser history.
 * Fixed an issue where hidden games didn't show text in the banner.
 
-## v1.3.6
+## v1.3.6
 Various improvements to Aces Up ...
 * Added a setting to drag any card into a space, not just an ace.
 * Set a maximum size for cards so they don't get too big.
 * Made the banner lower so you can see the end game cards.
 
-## v1.3.5
+## v1.3.5
 * Added a new game: Flower Garden.
 
 ## v1.3.4
@@ -31,7 +31,7 @@ Various improvements to Aces Up ...
 ## v1.3.2
 * Animation method for snapping piles now receives an {object} rather than lots of parameters.
 
-## v1.3.1
+## v1.3.1
 * Added the affordances back into Accordion consistent with the other games.
 * Removed the affordances setting in Accordion in line with the above.
 * Tracks a game in progress to disable interactions when a banner is being displayed.
