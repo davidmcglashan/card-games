@@ -281,9 +281,12 @@ const games = {
 		li.setAttribute( 'class', 'home' )
 		ul.appendChild( li )
 
+		let symbols = [ '&#9824;', '&#9827;', '&#9829;', '&#9830;' ]
 		let a = document.createElement( 'a' )
-		a.setAttribute( 'href', 'https://cardgames.mcglashan.net/')
-		a.innerHTML = '<span>&spadesuit;</span>'
+		a.setAttribute( 'href', 'index.html')
+		let sym = Math.floor(4*Math.random())
+		a.setAttribute( 'class', (sym>1 ? 'red' : 'black') )
+		a.innerHTML = '<span>'+symbols[sym]+'</span>'
 		li.appendChild( a )
 
 		// Put an <li> for each available game.
