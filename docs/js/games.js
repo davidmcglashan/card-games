@@ -1,10 +1,11 @@
 const games = {
-	version: "1.4.2",
+	version: "1.4.3",
 
 	allGames: [ 
 		{ 
 			name: 'Aces Up', 
-			description: 'If you have two of a suit discard the lowest one (aces are high!) until all that\'s left are the aces.', 
+			sub: 'Reduce the deck to only the aces',
+			description: 'If you can see two of a suit discard the lowest one (aces are high) until all that\'s left are the aces.', 
 			url: 'aces-up.html',
 			settings: [
 				{
@@ -15,19 +16,23 @@ const games = {
 			]
 		},{ 	
 			name: 'Accordion', 
-			description: 'Reduce the number of piles to one by matching neighbouring suits and numbers', 
+			sub: 'Match until there\'s one card left',
+			description: 'Deal one at a time. Cards on the table can be moved on top of their upward or leftward neighbour if they match suit or number.', 
 			url: 'accordion.html'
 		},{
 			name: 'Clock',
-			description: 'Tick tock!',
+			sub: 'Tick tock!',
+			description: 'Place the overturned card into its position around the clock face. Will you end with a King?',
 			url: 'clock-patience.html' 
 		},{
 			name: 'Flower Garden',
-			description: 'Sort the deck into suits by rearranging six beds in descending numbers.',
+			sub: 'Tidy the beds and plant the bouquet',
+			description: 'Sort the deck into suits, aces first. Deal from the bouquet onto one of the six beds in descending numbers.',
 			url: 'flower-garden.html'
 		},{ 
 			name: 'Patience', 
-			description: 'The classic Solitaire', 
+			sub: 'The classic Solitaire', 
+			description: 'Sort the deck into suits, aces first. Deal onto the towers, subsequent cards must change colour and decrease in number.',
 			url: 'patience.html',
 			settings: [
 				{
@@ -46,7 +51,8 @@ const games = {
 			]
 		},{ 
 			name: 'Streets &amp; Alleys', 
-			description: 'This one is very tough.', 
+			sub: 'Don\'t get lost', 
+			description: 'Sort the deck into suits, aces first. Swap cards between the piles, placing a card only on another with a number one higher',
 			url: 'streets.html',
 			settings: [
 				{
@@ -104,7 +110,7 @@ const games = {
 			// Game sub-title
 			let span = document.createElement( 'span' )
 			span.setAttribute( 'class', 'sub' )
-			span.innerHTML = gg.description
+			span.innerHTML = gg.sub
 			a.appendChild( span )
 
 			// If this is the current game then also update the banner.
@@ -263,6 +269,16 @@ const games = {
 		let ul = document.createElement( 'ul' )
 		masthead.append( ul )
 
+		// Put an <li> for the "home" link
+		let li = document.createElement( 'li' )
+		li.setAttribute( 'class', 'home' )
+		ul.appendChild( li )
+
+		let a = document.createElement( 'a' )
+		a.setAttribute( 'href', 'https://cardgames.mcglashan.net/')
+		a.innerHTML = '<span>&spadesuit;</span>'
+		li.appendChild( a )
+
 		// Put an <li> for each available game.
 		for ( let gg of games.allGames ) {
 			// Display the current game detials in the banner
@@ -278,10 +294,10 @@ const games = {
 				continue
 			}
 
-			let li = document.createElement( 'li' )
+			li = document.createElement( 'li' )
 			ul.appendChild( li )
 
-			let a = document.createElement( 'a' )
+			a = document.createElement( 'a' )
 			a.setAttribute( 'href', gg.url )
 			a.innerHTML = gg.name
 			li.appendChild( a )

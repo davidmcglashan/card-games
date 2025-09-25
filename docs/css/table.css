@@ -64,6 +64,31 @@ body {
 	#masthead ul li {
 		list-style-type: none;
 	}
+	#masthead li.home a {
+		display: block;
+		height: 2rem;
+		width: 1.9rem;
+		margin-top: -0.5rem;
+		background-color: white;
+		flex: 1;
+		overflow: hidden;
+		border-radius: 0.5rem;
+		border: 2px solid black;
+		color: black;
+		font-size: 2rem;
+		transform: rotate(6deg);
+		box-shadow: 0px 8px 50px rgba(0,0,0,0.45);
+	}
+	#masthead li.home a:hover {
+		box-shadow: 0px 0px 8px rgba(255,255,255);
+	}
+	#masthead li.home a span {
+		transform: rotate(-20deg);
+		display: block;
+		margin-left: 0.5rem;
+		margin-top: -0.1rem;
+	}
+
 	#masthead a.selected {
 		color: white;
 		border-bottom: 1px solid #fff;
