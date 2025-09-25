@@ -1,6 +1,9 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## 1.4.3
+* Appearance tweaks to the new list of games page.
+
 ## 1.4.2
 * Improved list of games page with a snazzy design.
 
