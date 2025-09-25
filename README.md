@@ -1,6 +1,10 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## 1.4.4
+* Added helpful pile labels to some of the games.
+
+
 ## 1.4.3
 * Appearance tweaks to the new list of games page.
 * Games have a subtitle and a description.
