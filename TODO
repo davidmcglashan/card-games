@@ -17,14 +17,13 @@ PROGRAMMING
 FEATURES
 --------
 - More games ... https://www.instagram.com/p/DKelpn5MMgn/
-- short instructions in the games JSON for the banner AND a sub-title for index.html - current impl is a mix of this.
+- Random red or black card for the home icon
 - textures/noise on the table green
 - press keys to highlight cards e.g. 'A' shows the aces
 - remember game states in local storage and restore them when you revist the page
 - keep stats for each game in local storage
   - best score/number of wins
   - number of games
-- ratings for complexity
 
 HOSTING
 -------
@@ -38,10 +37,10 @@ GAMES
 
 - clock
   - arrangement tweaks to the circle e.g. centralise, calc() involved in layout
-  - setting for auto-turning the next card
 
 - patience
   - double click a card to send it to a suit
+  - animation for turning a card - this and clock
 
 - accordion
   - return custom game messages, including score!?

@@ -91,6 +91,15 @@ const game = {
 	dropHappened: ( drag ) => {
 		let num = drag.card.name.split('_')
 		game.nextPile = 'clock-' + num[0]
+
+		// If we're auto-turning the next card, now would be the time.
+		if ( localStorage['clock.autoTurnNextCard'] ) {
+			let topCard = dealer.peekTopOfPile( game.nextPile )
+			if ( topCard ) {
+				topCard.isFaceUp = true
+				cardUI.decorate( topCard )
+			}
+		}
 	},
 
 	/**

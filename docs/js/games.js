@@ -23,7 +23,14 @@ const games = {
 			name: 'Clock',
 			sub: 'Tick tock!',
 			description: 'Place the overturned card into its position around the clock face. Will you end with a King?',
-			url: 'clock-patience.html' 
+			url: 'clock-patience.html',
+			settings: [
+				{
+					key: 'clock.autoTurnNextCard',
+					label: 'Automatically turn the next card',
+					description: 'When a card is placed the next one will automatically be turned over'
+				}
+			] 
 		},{
 			name: 'Flower Garden',
 			sub: 'Tidy the beds and plant the bouquet',
