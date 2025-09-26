@@ -15,7 +15,7 @@ PROGRAMMING
 FEATURES
 --------
 - More games ... https://www.instagram.com/p/DKelpn5MMgn/
-- textures/noise on the table green
+
 - press keys to highlight cards e.g. 'A' shows the aces
 - remember game states in local storage and restore them when you revist the page
 - keep stats for each game in local storage
