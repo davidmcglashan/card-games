@@ -6,7 +6,6 @@ VERSIONING
 
 BUGS & GLITCHES
 ---------------
-- S&A might need maximum card height
 
 PROGRAMMING
 -----------
@@ -40,8 +39,7 @@ GAMES
   - animation for turning a card - this and clock
 
 - accordion
-  - return custom game messages, including score!?
-  - detect an end-state if all the piles are full and there's no move
+  - dealing animation goes under the dealt cards! 
   - keeping all the cards and dragging whole piles!
 
 - streets & alleys

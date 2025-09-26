@@ -1,12 +1,16 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## 1.4.5
+* Accordion has end game messages and scores
+* Fixed an issue where Accordion games wouldn't end yet there were no legal moves
+
 ## 1.4.4
 * Added helpful pile labels to some of the games.
 * Added setting in Clock to automatically turn the next card.
 * The Home icon in the navbar is now red when a red suit is chosen.
 * Fixed an issue where Streets and alleys with strict let you drag from one spare pile to the other.
-* Fine grainy gradient texture added to table
+* Fine grainy gradient texture added to table.
 
 ## 1.4.3
 * Appearance tweaks to the new list of games page.
