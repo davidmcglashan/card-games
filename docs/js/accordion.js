@@ -194,35 +194,63 @@ const game = {
 	/**
 	 * Detect the game over state and return an appropriate object to represent it.
 	 */
-	hasFinished: () => {
-		// Can't win until we've dealt all the cards.
-		if ( dealer.piles['deck'].cards.length > 0 ) {
-			return { state: table.gameOverStates.KEEP_PLAYING }
-		}
-
-		// Are there any legal moves left?
-		// Tidy up the empty piles.
-		for ( let i = 1; i<18; i++ ) {
+	hasFinished: () => {		
+		// This loop has two purposes: 1. count the piles with cards on, 2. check for legal moves.
+		// If we detect any legal move then the game is not finished ...
+		let pileCount = 0
+		for ( let i = 1; i<=18; i++ ) {
 			let pileName = 'pile-' + i
 			let fromCard = dealer.peekTopOfPile( pileName )
+			
 			if ( fromCard ) {
+				pileCount += 1
+
 				let outcome = game.getDragOutcome( fromCard, pileName, 1 )
 				if ( !outcome ) {
 					outcome = game.getDragOutcome( fromCard, pileName, 3 )
 				}
-
-				// Any outcome here means a move can be made so keep playing
+				
+				// Any outcome here means a move can be made so keep playing.
 				if ( outcome ) { 
 					return { state: table.gameOverStates.KEEP_PLAYING }
 				}
 			}
 		}
 
-		// A "winning" game is having one pile left so check the number of pards on pile 2.
-		if ( dealer.piles['pile-2'].cards.length === 0 ) {
-			return { state: table.gameOverStates.PLAYER_WINS }
-		} else {
-			return { state: table.gameOverStates.PLAYER_LOSES }
+		// You can lose with every pile full and no legal moves.
+		if ( pileCount === 18 ) {
+			return {
+				state: table.gameOverStates.PLAYER_LOSES,
+				message: `No legal moves left. Try again ... !`
+			}
 		}
+
+		// Can't win until we've dealt all the cards.
+		if ( dealer.piles['deck'].cards.length > 0 ) {
+			return { state: table.gameOverStates.KEEP_PLAYING }
+		}
+	
+		// No legal moves and no cards left to deal is the end of the game. The player won if there is but one pile left ...
+		if ( pileCount === 1 ) {
+			return { 
+				state: table.gameOverStates.PLAYER_WINS,
+				message: `A perfect game!`
+			}
+		} else if ( pileCount < 4 ) {
+			return {
+				state: table.gameOverStates.PLAYER_LOSES,
+				message: `So close! Only ${pileCount} cards left. Why not try again?`
+			}
+		} else if ( pileCount > 3 && pileCount < 8 ) {
+			return {
+				state: table.gameOverStates.PLAYER_LOSES,
+				message: `You scored ${pileCount} - Almost there. Have another go.`
+			}
+		} else {
+			return {
+				state: table.gameOverStates.PLAYER_LOSES,
+				message: `You scored ${pileCount} - Better luck next time!`
+			}
+		} 
 	},
 };
