@@ -6,12 +6,10 @@ VERSIONING
 
 BUGS & GLITCHES
 ---------------
-- Streets and alleys with strict lets you drag from 1 spare pile to the other
 - S&A might need maximum card height
 
 PROGRAMMING
 -----------
-- pass in drag start to canDrop... and tidy up usage in streets.js
 - make rotation a function of the distance snapped (for all card stack types?) :)
 
 FEATURES

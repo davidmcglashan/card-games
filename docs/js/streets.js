@@ -92,12 +92,7 @@ const game = {
 	 * You can drag from anything, as long as there's a card there ...
 	 */
 	canStartDrag: ( cardName, pileName ) => {
-		game.dragPile = null
-		
-		let card = dealer.peekTopOfPile( pileName )
-		if ( card ) {
-			// Record the pile we dragged from if it's a spare so we can forbid certain drops later
-			game.dragPile = pileName
+		if ( dealer.peekTopOfPile( pileName ) ) {
 			return true
 		}
 
@@ -108,23 +103,30 @@ const game = {
 	 * Respond to a request for dropping a card on a pile. 
 	 */
 	canDropCardAtXYOnPile: ( card, x, y, pile ) => {
-		// You can drop on a spare as long as it's empty.
+		let fromPile = card.elem.getAttribute('data-pile')
+
+		// Dropping a card onto one of the spares ...
 		if ( pile.name.startsWith( 'spare-' ) ) {
-			// If we doing strict storage we we can only drop onto the spares at that side of the table.
+			// If we doing strict storage we we can only drop onto the spare at the
+			// same side of the table as where the drag started.
 			if ( localStorage['streets.strictStorage'] ) {
 				if ( pile.name === 'spare-streets' ) {
-					if ( game.dragPile === 'pile-2' || game.dragPile === 'pile-4' || game.dragPile === 'pile-6' || game.dragPile === 'pile-8' ) {
+					if ( fromPile === 'pile-2' || fromPile === 'pile-4' || fromPile === 'pile-6' || fromPile === 'pile-8' ) {
+						return table.outcomes.NONE	
+					}
+				} else if ( pile.name === 'spare-alleys' ) {
+					if ( fromPile === 'pile-1' || fromPile === 'pile-3' || fromPile === 'pile-5' || fromPile === 'pile-7' ) {
 						return table.outcomes.NONE	
 					}
 				}
 
-				if ( pile.name === 'spare-alleys' ) {
-					if ( game.dragPile === 'pile-1' || game.dragPile === 'pile-3' || game.dragPile === 'pile-5' || game.dragPile === 'pile-7' ) {
-						return table.outcomes.NONE	
-					}
+				// Forbid dragging from one spare pile to the other
+				if ( fromPile.startsWith( 'spare-' ) ) {
+					return table.outcomes.NONE
 				}
 			}
-
+			
+			// You can drop on a spare as long as it's empty.
 			if ( pile.cards.length === 0 && cardUI.xyIsInBounds( x, y, pile.elem ) ) {
 				return table.outcomes.PILE_IS_INTERACTIVE
 			}
@@ -150,13 +152,13 @@ const game = {
 		if ( pile.name.startsWith( 'pile-' ) ) {
 			// If we came from a spare we can only drop onto the piles at that side of the table.
 			if ( localStorage['streets.strictStorage'] ) {
-				if ( game.dragPile === 'spare-streets' ) {
+				if ( fromPile === 'spare-streets' ) {
 					if ( pile.name === 'pile-2' || pile.name === 'pile-4' || pile.name === 'pile-6' || pile.name === 'pile-8' ) {
 						return table.outcomes.NONE	
 					}
 				}
 
-				if ( game.dragPile === 'spare-alleys' ) {
+				if ( fromPile === 'spare-alleys' ) {
 					if ( pile.name === 'pile-1' || pile.name === 'pile-3' || pile.name === 'pile-5' || pile.name === 'pile-7' ) {
 						return table.outcomes.NONE	
 					}

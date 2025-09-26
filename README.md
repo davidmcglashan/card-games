@@ -5,6 +5,7 @@ A bunch of single player card games for playing in web browers.
 * Added helpful pile labels to some of the games.
 * Added setting in Clock to automatically turn the next card.
 * The Home icon in the navbar is now red when a red suit is chosen.
+* Fixed an issue where Streets and alleys with strict let you drag from one spare pile to the other.
 
 ## 1.4.3
 * Appearance tweaks to the new list of games page.
