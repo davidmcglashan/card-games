@@ -2,8 +2,9 @@
 A bunch of single player card games for playing in web browers.
 
 ## 1.4.5
-* Accordion has end game messages and scores
-* Fixed an issue where Accordion games wouldn't end yet there were no legal moves
+* Accordion has end game messages and scores.
+* Fixed an issue where Accordion games wouldn't end yet there were no legal moves.
+* Tweaks to animations to stop moving cards going under dealt ones!
 
 ## 1.4.4
 * Added helpful pile labels to some of the games.

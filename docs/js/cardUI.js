@@ -94,7 +94,8 @@ const cardUI = {
 		// Stuff some defaults into the params
 		if ( params === undefined ) { params = {} }
 		if ( !params.delay ) { params.delay = 0 }
-		if ( !params.reverse ) { params.reverse = false }
+		if ( params.reverse === undefined ) { params.reverse = false }
+		if ( params.glass === undefined ) { params.glass = true }
 
 		// Now grab a hold of all the cards that moved and install an animation
 		let offset = 1
@@ -103,6 +104,7 @@ const cardUI = {
 			iterable = iterable.reverse()
 		}
 
+		let glass = document.getElementById( 'glass' )
 		for ( const[name,pos] of iterable ) {
 			let elem = pos.card
 
@@ -112,6 +114,9 @@ const cardUI = {
 			if ( left+top !== 0 ) {
 				// Apply a transform to the card that's the difference of where it started
 				// from to where it now is.
+				if ( params.glass ) {
+					glass.appendChild( pos.elem )
+				}
 				pos.elem.style.transform = `translate(${left}px,${top}px)`
 
 				// Now apply an animation to remove the translation again.
@@ -121,6 +126,11 @@ const cardUI = {
 				anim.onfinish = () => {
 					pos.elem.style.transform = 'none'
 					table.animationCounter -= 1
+					
+					let cards = document.getElementById( 'cards' )
+					if ( params.glass ) {
+						cards.appendChild( pos.elem )
+					}
 				}
 				anim.play()
 				offset++

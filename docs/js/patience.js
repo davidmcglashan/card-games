@@ -162,7 +162,7 @@ const game = {
 					cardUI.decorate( card )
 					dealer.placeOnPile( 'drawn', card )
 				}
-				cardUI.snapPileWithAnimation( dealer.piles['drawn'], { delay:50, reverse:true } )
+				cardUI.snapPileWithAnimation( dealer.piles['drawn'], { delay:50, reverse:true, glass:false } )
 				return true
 			}
 		}

@@ -39,8 +39,8 @@ GAMES
   - animation for turning a card - this and clock
 
 - accordion
-  - dealing animation goes under the dealt cards! 
-  - keeping all the cards and dragging whole piles!
+  - keeping all the cards that get covered up on the table so there are little piles building up. 
+    - let user drag whole piles around.
 
 - streets & alleys
   - undo
