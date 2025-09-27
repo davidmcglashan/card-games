@@ -6,6 +6,8 @@ VERSIONING
 
 BUGS & GLITCHES
 ---------------
+- Restart and Settings buttons have funny borders
+- CSS overflow on viweport to stop scrollbars appearing in drags
 
 PROGRAMMING
 -----------
@@ -15,6 +17,7 @@ FEATURES
 --------
 - More games ... https://www.instagram.com/p/DKelpn5MMgn/
 
+- starting animations for all games e.g. dealing from a deck
 - press keys to highlight cards e.g. 'A' shows the aces
 - remember game states in local storage and restore them when you revist the page
 - keep stats for each game in local storage
@@ -27,6 +30,11 @@ HOSTING
 
 GAMES
 -----
+
+- scorpion
+ - entire suits are removed once built solo on a pile
+ - card symbols to the right (where ambiguous?)
+ - search for mid-tower kings if empty towers are detected during game over checks
 
 - demo
   - clicking rotated cards in test1 invokes another rotation

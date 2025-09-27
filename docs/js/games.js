@@ -1,5 +1,5 @@
 const games = {
-	version: "1.4.5",
+	version: "1.5.0",
 
 	allGames: [ 
 		{ 
@@ -56,6 +56,11 @@ const games = {
 					description: 'Cards are dealt from the main deck one at a time instead of three at once'
 				}
 			]
+		},{
+			name: 'Scorpion',
+			sub: 'TK sub',
+			description: 'TK desc',
+			url: 'scorpion.html'		
 		},{ 
 			name: 'Streets &amp; Alleys', 
 			sub: 'Don\'t get lost', 

@@ -1,6 +1,9 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.5
+* New game: Scorpion
+
 ## v1.4.5
 * Accordion has end game messages and scores.
 * Fixed an issue where Accordion games wouldn't end yet there were no legal moves.
