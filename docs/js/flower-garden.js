@@ -149,7 +149,7 @@ const game = {
 	},
 
 	/**
-	 * Called in response to a card drop. Works out where the name card must be drawn from.
+	 * Called in response to a card drop. Keeps the bouquet looking nice
 	 */
 	dropHappened: ( drag ) => {
 		cardUI.snapPileWithAnimation( dealer.piles['bouquet'] )
