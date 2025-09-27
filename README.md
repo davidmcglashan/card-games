@@ -1,31 +1,31 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
-## 1.4.5
+## v1.4.5
 * Accordion has end game messages and scores.
 * Fixed an issue where Accordion games wouldn't end yet there were no legal moves.
 * Tweaks to animations to stop moving cards going under dealt ones!
 
-## 1.4.4
+## v1.4.4
 * Added helpful pile labels to some of the games.
 * Added setting in Clock to automatically turn the next card.
 * The Home icon in the navbar is now red when a red suit is chosen.
 * Fixed an issue where Streets and alleys with strict let you drag from one spare pile to the other.
 * Fine grainy gradient texture added to table.
 
-## 1.4.3
+## v1.4.3
 * Appearance tweaks to the new list of games page.
 * Games have a subtitle and a description.
 * There's a home link in the masthead to go back to the list of games.
 
-## 1.4.2
+## v1.4.2
 * Improved list of games page with a snazzy design.
 
-## 1.4.1
+## v1.4.1
 * Improved handling of animations to prevent stray click and "concurrency" issues.
 * Added github.com link to the About section in the settings tray.
 
-## 1.4
+## v1.4
 * Improved card faces that look like the classic design. Picture cards use the chess king and queen unicode symbols.
 * Changed certain hyperlink buttons from linking to "#" because it caused issues with browser history.
 * Fixed an issue where hidden games didn't show text in the banner.
