@@ -3,7 +3,7 @@ const game = {
 	 * A new game starts with a new shuffled deck.
 	 */
 	start: () => {
-		game.deck = dealer.newCardArray().reverse()//dealer.newShuffledCardArray()
+		game.deck = dealer.newShuffledCardArray()
 	},
 
 	/**
