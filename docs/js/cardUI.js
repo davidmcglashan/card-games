@@ -96,6 +96,7 @@ const cardUI = {
 		if ( !params.delay ) { params.delay = 0 }
 		if ( params.reverse === undefined ) { params.reverse = false }
 		if ( params.glass === undefined ) { params.glass = true }
+		if ( params.duration === undefined ) { params.duration = 250 }
 
 		// Now grab a hold of all the cards that moved and install an animation
 		let offset = 1
@@ -121,7 +122,13 @@ const cardUI = {
 
 				// Now apply an animation to remove the translation again.
 				table.animationCounter += 1
-				let anim = pos.elem.animate([{transform: 'translate(0px,0px)'}],{duration:250, easing: 'ease-in-out', delay: params.delay*offset});
+
+				for ( let anim of pos.elem.getAnimations() ) {
+					anim.cancel()
+					table.animationCounter -= 1
+				}
+
+				let anim = pos.elem.animate([{transform: 'translate(0px,0px)'}],{duration:params.duration, easing: 'ease-in-out', delay: params.delay*offset});
 				anim.pause()
 				anim.onfinish = () => {
 					pos.elem.style.transform = 'none'

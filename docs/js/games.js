@@ -58,8 +58,8 @@ const games = {
 			]
 		},{
 			name: 'Scorpion',
-			sub: 'TK sub',
-			description: 'TK desc',
+			sub: 'Beware the sting in its tail',
+			description: 'Make descending runs of each suit. Get a king-to-ace run and it will be removed. Remove everything to win',
 			url: 'scorpion.html'		
 		},{ 
 			name: 'Streets &amp; Alleys', 

@@ -32,9 +32,7 @@ GAMES
 -----
 
 - scorpion
- - entire suits are removed once built solo on a pile
  - card symbols to the right (where ambiguous?)
- - search for mid-tower kings if empty towers are detected during game over checks
 
 - demo
   - clicking rotated cards in test1 invokes another rotation

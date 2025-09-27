@@ -3,7 +3,7 @@ const game = {
 	 * A new game starts with a new shuffled deck.
 	 */
 	start: () => {
-		game.deck = dealer.newCardArray()//dealer.newShuffledCardArray()
+		game.deck = dealer.newCardArray().reverse()//dealer.newShuffledCardArray()
 	},
 
 	/**
@@ -218,6 +218,64 @@ const game = {
 	},
 
 	/**
+	 * Called in response to a card drop. Works out if the dropped tower can be removed because
+	 * it contains one whole suit.
+	 */
+	dropHappened: ( drag ) => {
+		let pile = dealer.piles[drag.destination.getAttribute('data-pile')]
+		if ( !pile ) {
+			pile = dealer.piles[drag.destination.id]
+		}
+
+		let testSuit = null
+		let test = 12
+		let score = 0
+		let start = 0
+		let index = 0
+
+		for ( let card of pile.cards ) {
+			// What suit are we testing for?
+			if ( testSuit === null ) {
+				testSuit = card.suitOrd
+			}
+
+			// If this is the next card increase the score
+			if ( card.ordValue === test && card.suitOrd === testSuit ) {
+				test -=1 
+				score += 1
+			} 
+			
+			// .. otherwise start testing again from this card
+			else {
+				test = 11
+				score = 1
+				testSuit = card.suitOrd
+				start = index
+			}
+
+			// Can we match 13 decreasing cards in a row? This means a full suit run!
+			if ( score === 13 ) {
+				// Take all the cards from the tower.
+				let movingCards = pile.cards.slice(start,start+13)
+				pile.cards.splice( start, 13 )
+				cardUI.snapPileWithAnimation( pile, { duration:500, delay:5 } )
+
+				let suitPileName = 'suit-' + dealer.deckmeta.suits[testSuit]
+				for ( let movingCard of movingCards ) {
+					dealer.placeOnPile( suitPileName, movingCard )
+				}
+				cardUI.snapPileWithAnimation( dealer.piles[suitPileName], { duration:500, delay:5 } )
+				cardUI.removeAffordances( dealer.piles[suitPileName] )
+
+				// We can abort the method at this point.
+				return true
+			}
+
+			index += 1
+		}
+	},
+
+	/**
 	 * Detect the game over state and return an appropriate constant to represent it.
 	 */
 	hasFinished: () => {
@@ -267,6 +325,20 @@ const game = {
 		}
 
 		// Are there any empty piles? If so, search again for any mid-tower kings.
+		for ( let i=1; i<8; i++ ) {
+			if ( dealer.piles[ 'tower-'+i ].cards.length === 0 ) {
+				for ( let j=1; j<8; j++ ) {
+					if ( i === j ) { 
+						continue 
+					}
+					for ( card of dealer.piles['tower-'+j].cards ) {
+						if ( card.ordValue === 12 && card.isFaceUp ) {
+							return { state: table.gameOverStates.KEEP_PLAYING }
+						}
+					}
+				}
+			}
+		}
 
 		// We didn't find a reason to continue, so we must stop
 		return {
