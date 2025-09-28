@@ -3,7 +3,7 @@ body {
 	background-color: #444;
 	color: #fff;
 	font-family: 'Karla';
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 /* Disable text selection on everything since we'll be doing lots of dragging and dropping. */
