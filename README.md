@@ -4,6 +4,7 @@ A bunch of single player card games for playing in web browers.
 ## v1.5.1
 * Fixed a bug in Scorpion's game end detection where Kings at the top of piles kept the game going.
 * Certain Scorpion card symbols moved to make it clear what suit a covered card is.
+* Appearance tweaks the list of games page and navbar buttons.
 
 ## v1.5
 * New game: Scorpion

@@ -97,11 +97,12 @@ body {
 		margin-top: -0.1rem;
 	}
 
-	#masthead a.selected {
+	/* Styles affecting the list of games appearing in the masthead. */
+	#masthead ul a.selected {
 		color: white;
 		border-bottom: 1px solid #fff;
 	}
-	#masthead a {
+	#masthead ul a {
 		border: 1px solid transparent;
 		text-decoration: none;
 		padding: 0px 2px;
@@ -110,12 +111,17 @@ body {
 		color: #fff;
 		border-bottom: 1px solid #fff;
 	}
+
+	/* Styles affecting the game options (restart/settings) appearing in the masthead. */
 	#masthead div {
 		display: flex;
 		gap: 1rem;
+		position: relative;
+		margin-top: -6px;
 	}
 	#masthead div a {
-		padding: 0px 6px;
+		padding: 5px 6px 0px 6px;
+		border: 1px solid transparent;
 	}
 	#masthead div a:hover {
 		border: 1px solid #fff;
