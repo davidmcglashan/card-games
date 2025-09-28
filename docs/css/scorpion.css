@@ -27,3 +27,14 @@
 	color: rgba(0,0,0,0.35);
 	font-size: 12cqh;
 }
+
+/* Label symbols are easily hidden on certain cards, so move them to the right of the number
+   for cards where you can't see the face symbols/ */
+.cssking .label .symbol,
+.cssqueen .label .symbol,
+.cssjack .label .symbol,
+.cssace .label .symbol {
+	font-size: 7cqh;
+	margin-left: 7.5cqh;
+	margin-top: -7cqh;
+}
