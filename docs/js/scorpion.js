@@ -331,10 +331,12 @@ const game = {
 					if ( i === j ) { 
 						continue 
 					}
+					let first = true
 					for ( card of dealer.piles['tower-'+j].cards ) {
-						if ( card.ordValue === 12 && card.isFaceUp ) {
+						if ( !first && card.ordValue === 12 && card.isFaceUp ) {
 							return { state: table.gameOverStates.KEEP_PLAYING }
 						}
+						first = false
 					}
 				}
 			}
