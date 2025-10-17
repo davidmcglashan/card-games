@@ -329,6 +329,12 @@ const game = {
 		for ( let i=1; i<8; i++ ) {
 			if ( dealer.piles[ 'tower-'+i ].cards.length === 0 ) {
 				for ( let j=1; j<8; j++ ) {
+					// If we're playing 'any card on a space' then the user can probably contrive
+					// another move.
+					if ( localStorage['scorpion.anyCardOnASpace'] ) {
+						return { state: table.gameOverStates.KEEP_PLAYING }
+					}
+
 					if ( i === j ) { 
 						continue 
 					}
