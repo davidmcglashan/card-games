@@ -1,10 +1,14 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.5.2
+* Scorpion now has a setting allowing any card to be dropped ontp a space.
+* Made text on the banner a bit more legible with a heavy blur and text shadow in addition to the opacity.
+
 ## v1.5.1
 * Fixed a bug in Scorpion's game end detection where Kings at the top of piles kept the game going.
 * Certain Scorpion card symbols moved to make it clear what suit a covered card is.
-* Appearance tweaks the list of games page and navbar buttons.
+* Appearance tweaks to the list of games page and navbar buttons.
 
 ## v1.5
 * New game: Scorpion

@@ -1,5 +1,5 @@
 const games = {
-	version: "1.5.1",
+	version: "1.5.2",
 
 	allGames: [ 
 		{ 
@@ -60,7 +60,14 @@ const games = {
 			name: 'Scorpion',
 			sub: 'Beware the sting in its tail',
 			description: 'Make descending runs of each suit. Get a king-to-ace run and it will be removed. Remove everything to win',
-			url: 'scorpion.html'		
+			url: 'scorpion.html',
+			settings: [
+				{
+					key: 'scorpion.anyCardOnASpace',
+					label: 'Any card can be moved to a space',
+					description: 'When not checked only a King can be placed on an empty pile'
+				}
+			]
 		},{ 
 			name: 'Streets &amp; Alleys', 
 			sub: 'Don\'t get lost', 

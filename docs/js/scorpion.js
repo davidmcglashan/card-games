@@ -208,7 +208,8 @@ const game = {
 
 			// ... or by placing a king on an empty pile
 			else if ( cardUI.xyIsInBounds( x, y, pile.elem ) ) {
-				if ( card.ordValue === 12 ) {
+				// Needs the anyCardOnASpace setting or to be a king ...
+				if ( localStorage['scorpion.anyCardOnASpace'] || card.ordValue === 12 ) {
 					return table.outcomes.PILE_IS_INTERACTIVE
 				}
 			}
