@@ -2,7 +2,7 @@
 A bunch of single player card games for playing in web browers.
 
 ## v1.5.2
-* Scorpion now has a setting allowing any card to be dropped ontp a space.
+* Scorpion now has a setting allowing any card to be dropped onto a space.
 * Made text on the banner a bit more legible with a heavy blur and text shadow in addition to the opacity.
 
 ## v1.5.1
