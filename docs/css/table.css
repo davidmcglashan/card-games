@@ -138,6 +138,8 @@ body {
 	background-color: rgba(0,0,0,0.75);
 	padding: 3em 6em;
 	box-shadow: 0px 8px 50px rgba(0,0,0,1);
+	backdrop-filter: blur(2rem);
+	text-shadow: #000 2px 2px 5px;
 }
 	#banner h1 {
 		margin-bottom: 0;
