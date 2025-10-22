@@ -21,11 +21,12 @@
 	color: rgba(0,0,0,0.15);
 	font-size: 50cqh;
 	text-align: center;
-	line-height: 73cqh;
+	line-height: 100cqh;
 }
 .pile .label {
 	color: rgba(0,0,0,0.35);
-	font-size: 12cqh;
+	font-size: 10cqh;
+	padding: 0.1rem;
 }
 
 /* Label symbols are easily hidden on certain cards, so move them to the right of the number

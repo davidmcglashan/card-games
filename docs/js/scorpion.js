@@ -355,4 +355,20 @@ const game = {
 			message: `There are no more possible moves. Why not try again?`
 		}
 	},
+
+	/**
+	 * Called when a setting has changed. It is the game's job to change itself accordingly.
+	 */
+	settingChanged: ( setting, active ) => { 
+		if ( setting === 'scorpion.anyCardOnASpace' ) {
+			let elems = document.getElementsByClassName( 'king' )
+			for ( let e of elems ) {
+				e.style.display = active ? 'none' : 'inline'
+			}
+			elems = document.getElementsByClassName( 'any' )
+			for ( let e of elems ) {
+				e.style.display = active ? 'inline' : 'none'
+			}
+		}
+	},
 };
