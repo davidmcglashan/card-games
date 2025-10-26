@@ -1,7 +1,7 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
-## 1.5.4
+## v1.5.4
 * New x-ray feature which highlights cards by pressing keys e.g. 'A' shows the aces
 
 ## v1.5.3
