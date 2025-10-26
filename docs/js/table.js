@@ -426,4 +426,33 @@ const table = {
 			}
 		}
 	},
+
+	keyDown: ( event ) => {
+		let clss = null
+
+		// Work out which keypress maps to which css class.
+		if ( event.keyCode === 65 || event.keyCode == 49 )  {
+			clss = 'cssace'
+		} else if ( event.keyCode === 74 ) {
+			clss = 'cssjack'
+		} else if ( event.keyCode === 81 ) {
+			clss = 'cssqueen'
+		} else if ( event.keyCode === 75 ) {
+			clss = 'cssking'
+		} else if ( event.keyCode > 49 && event.keyCode < 58 ) {
+			clss = 'css' + (event.keyCode-48)
+		} else if ( event.keyCode === 48 ) {
+			clss = 'css10'
+		}
+
+		// Apply that CSS class to the #cards div.
+		if ( clss ) {
+			let cards = document.getElementById( 'cards' )
+			cards.setAttribute( 'class', 'xray ' + clss )
+		}
+	},
+
+	keyUp: ( event ) => {
+		document.getElementById( 'cards' ).setAttribute( 'class', '' )
+	}
 }

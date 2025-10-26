@@ -1,5 +1,5 @@
 const games = {
-	version: "1.5.3",
+	version: "1.5.4",
 
 	allGames: [ 
 		{ 
@@ -341,5 +341,8 @@ const games = {
 
 		glass.addEventListener( 'mouseleave', table.mouseOut )
 		window.addEventListener("resize", table.windowResized );		
+
+		document.addEventListener( 'keydown', table.keyDown )
+		document.addEventListener( 'keyup', table.keyUp )
 	},
 }

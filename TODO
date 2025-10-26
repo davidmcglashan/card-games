@@ -16,7 +16,7 @@ FEATURES
 - More games ... https://www.instagram.com/p/DKelpn5MMgn/
 
 - starting animations for all games e.g. dealing from a deck
-- press keys to highlight cards e.g. 'A' shows the aces
+- win animation which scatters the cards (after a click)
 - remember game states in local storage and restore them when you revist the page
 - keep stats for each game in local storage
   - best score/number of wins
@@ -51,4 +51,5 @@ GAMES
 	- be nice to hook in an animation ...
 
 - flower garden
+  - bouquet should be refreshed after each failed drag
   - drags don't show affordances
