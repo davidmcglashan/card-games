@@ -6,16 +6,33 @@ VERSIONING
 
 BUGS & GLITCHES
 ---------------
+- flower garden: bouquet should be refreshed after each failed drag
+- freecell: spacing in the middle of the top row to separate the cells and the suits
 
 PROGRAMMING
 -----------
 - make rotation a function of the distance snapped (for all card stack types?) :)
+- dismiss the banner so you can see the final game state - tweak the css for aces high
+- Rewrite the game in terms of the glossary of patience terms page on Wikipedia
 
 FEATURES
 --------
 - More games ... https://www.instagram.com/p/DKelpn5MMgn/
+  - pyramid
+  - golf
+  - yukon
+  - tri-peaks
 
-- starting animations for all games e.g. dealing from a deck
+- clock: arrangement tweaks to the circle e.g. centralise, calc() involved in layout
+- patience: double click a card to send it to a suit
+- patience: animation for turning a card - this and clock
+- accordion: keeping all the cards that get covered up on the table so there are little piles building up. 
+  - let user drag whole piles around.
+- streets & alleys: undo
+    - probably a global feature that hooks into stored game state
+	- be nice to hook in an animation ...
+- flower garden: drags don't show affordances- starting animations for all games e.g. dealing from a deck
+
 - win animation which scatters the cards (after a click)
 - remember game states in local storage and restore them when you revist the page
 - keep stats for each game in local storage
@@ -25,31 +42,3 @@ FEATURES
 HOSTING
 -------
 - favicon and all that jazz
-
-GAMES
------
-
-- scorpion
-
-- demo
-  - clicking rotated cards in test1 invokes another rotation
-
-- clock
-  - arrangement tweaks to the circle e.g. centralise, calc() involved in layout
-
-- patience
-  - double click a card to send it to a suit
-  - animation for turning a card - this and clock
-
-- accordion
-  - keeping all the cards that get covered up on the table so there are little piles building up. 
-    - let user drag whole piles around.
-
-- streets & alleys
-  - undo
-    - probably a global feature that hooks into stored game state
-	- be nice to hook in an animation ...
-
-- flower garden
-  - bouquet should be refreshed after each failed drag
-  - drags don't show affordances

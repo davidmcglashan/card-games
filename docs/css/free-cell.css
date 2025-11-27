@@ -1,0 +1,41 @@
+#table {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+.gap,
+.pile {
+	width: 11cqw;
+	max-height: 21cqh;
+	max-width: calc( 21cqh * 0.692 );
+}
+
+/* Put the big labels on the suit piles. */
+.pile .symbol {
+	color: rgba(0,0,0,0.15);
+	font-size: 50cqh;
+	text-align: center;
+	line-height: 100cqh;
+}
+.pile .label {
+	color: rgba(0,0,0,0.35);
+	font-size: 10cqh;
+	padding: 0.1rem;
+}
+
+/* Label symbols are easily hidden on certain cards, so move them to the right of the number
+   for cards where you can't see the face symbols/ */
+.cssking .label .symbol,
+.cssqueen .label .symbol,
+.cssjack .label .symbol,
+.cssace .label .symbol {
+	font-size: 7cqh;
+	margin-left: 7.5cqh;
+	margin-top: -7cqh;
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Free Cell</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="css/table.css">
+		<link rel="stylesheet" href="css/free-cell.css">
+		<script type="text/javascript" src="js/dealer.js"></script>
+		<script type="text/javascript" src="js/cardUI.js"></script>
+		<script type="text/javascript" src="js/table.js"></script>
+		<script type="text/javascript" src="js/games.js"></script>
+		<script type="text/javascript" src="js/free-cell.js"></script>
+
+	</head>
+	<body>
+		<div id="table">
+			<div class="row">
+				<div id="free-1" class="pile">
+					<div class="label">Space for one card</div>
+				</div>
+				<div id="free-2" class="pile">
+					<div class="label">Space for one card</div>
+				</div>
+				<div id="free-3" class="pile">
+					<div class="label">Space for one card</div>
+				</div>
+				<div id="free-4" class="pile">
+					<div class="label">Space for one card</div>
+				</div>
+				<div id="suit-spades" class="pile">
+					<div class="symbol">&spadesuit;</div>
+				</div>
+				<div id="suit-hearts" class="pile">
+					<div class="symbol">&heartsuit;</div>
+				</div>
+				<div id="suit-clubs" class="pile">
+					<div class="symbol">&clubsuit;</div>
+				</div>
+				<div id="suit-diamonds" class="pile">
+					<div class="symbol">&diamondsuit;</div>
+				</div>
+			</div>
+			<div class="row towers">
+				<div id="tower-1" class="pile">
+					<div class="label">Drag any card here</div>
+				</div>
+				<div id="tower-2" class="pile">
+					<div class="label">Drag any card here</div>
+				</div>
+				<div id="tower-3" class="pile">
+					<div class="label">Drag any card here</div>
+				</div>
+				<div id="tower-4" class="pile">
+					<div class="label">Drag any card here</div>
+				</div>
+				<div id="tower-5" class="pile">
+					<div class="label">Drag any card here</div>
+				</div>
+				<div id="tower-6" class="pile">
+					<div class="label">Drag any card here</div>
+				</div>
+				<div id="tower-7" class="pile">
+					<div class="label">Drag any card here</div>
+				</div>
+				<div id="tower-8" class="pile">
+					<div class="label">Drag any card here</div>
+				</div>
+			</div>
+		</div>
+		<div id="cards"></div>
+		<div id="glass"></div>
+		<div id="masthead"></div>
+		<div id="banner">
+			<h1 id="headline"></h1>
+			<p id="message"></p>
+			<a id="play-button" class="btn" role="button" alt="Play" onclick="table.restart()">Play!</a><a class="moreGames" href="index.html">More Games</a>
+		</div>
+		<div id="lightbox" onclick="games.settings()"></div>
+		<div id="tray"></div>
+		<script>games.readyTable()</script>
+	</body>
+</html>

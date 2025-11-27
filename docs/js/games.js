@@ -1,5 +1,5 @@
 const games = {
-	version: "1.5.4",
+	version: "1.6.0",
 
 	allGames: [ 
 		{ 
@@ -36,6 +36,11 @@ const games = {
 			sub: 'Tidy the beds and plant the bouquet',
 			description: 'Sort the deck into suits, aces first. Deal from the bouquet onto one of the six beds in descending numbers.',
 			url: 'flower-garden.html'
+		},{
+			name: 'Free Cell',
+			sub: 'Almost always possible. Takes a bit of time',
+			description: 'Sort the deck into suits, aces first. Move one card at a time, onto a higher number and a different colour. Use the free cells to hold cards temporarily.',
+			url: 'free-cell.html'
 		},{ 
 			name: 'Patience', 
 			sub: 'The classic Solitaire', 

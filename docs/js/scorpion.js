@@ -7,7 +7,7 @@ const game = {
 	},
 
 	/**
-	 * Sets up the new piles. There is a deck, a pile to deal onto, four suits and seven towers.
+	 * Sets up the new piles. There are seven towers, four destinations, and the sting.
 	 */
 	newPile: ( name ) => {
 		// Towers require cards to be drawn from the deck
