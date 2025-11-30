@@ -8,7 +8,15 @@
 	flex-direction: row;
 	gap: 1rem;
 }
-
+#table > div {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 1rem;
+}
+#free-4 {
+	margin-right: 5rem;
+}
 .gap,
 .pile {
 	width: 11cqw;
