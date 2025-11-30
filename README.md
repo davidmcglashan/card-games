@@ -1,6 +1,11 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.6.1
+* Free Cell, Patience, and Scorpion are now centrally aligned on the table.
+* Failed drags in Flower Garden now snap the bouquet correctly.
+* "Eyes" feature will hide the game over banner so you can examine the cards.
+
 ## v1.6
 * New game: Free Cell
 

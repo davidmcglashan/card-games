@@ -6,14 +6,13 @@ VERSIONING
 
 BUGS & GLITCHES
 ---------------
-- flower garden: bouquet should be refreshed after each failed drag
-- freecell: spacing in the middle of the top row to separate the cells and the suits
 
 PROGRAMMING
 -----------
 - make rotation a function of the distance snapped (for all card stack types?) :)
-- dismiss the banner so you can see the final game state - tweak the css for aces high
 - Rewrite the game in terms of the glossary of patience terms page on Wikipedia
+- touch gestures and whatnot for mobile/tablet
+- click/drag detection not great when you drag but don't move e.g. on flower garden's bouquet
 
 FEATURES
 --------
@@ -22,7 +21,11 @@ FEATURES
   - golf
   - yukon
   - tri-peaks
-
+- excavation
+  - like aces up, fully dealt, with a space to put blocking cards
+- aces up: play again with the same deck (and others)
+  - use a seed in the RNG
+  - pass the seed into the game as a URL param
 - clock: arrangement tweaks to the circle e.g. centralise, calc() involved in layout
 - patience: double click a card to send it to a suit
 - patience: animation for turning a card - this and clock

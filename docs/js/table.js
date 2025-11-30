@@ -455,5 +455,14 @@ const table = {
 
 	keyUp: ( event ) => {
 		document.getElementById( 'cards' ).setAttribute( 'class', '' )
+	},
+
+	lookingGlass: ( enabled ) => {
+		let elem = document.getElementById( 'banner' )
+		if ( enabled ) {
+			elem.setAttribute( 'class', 'lookingGlass' )
+		} else {
+			elem.setAttribute( 'class', '' )
+		}
 	}
 }
