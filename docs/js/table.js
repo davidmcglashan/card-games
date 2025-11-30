@@ -262,7 +262,10 @@ const table = {
 		anim.onfinish = () => {
 			elem.style.transform = 'none'
 			table.animationCounter -= 1
-			game.snapBackHappened( elem.getAttribute('data-pile') )
+			
+			if ( game.snapBackHappened ) {
+				game.snapBackHappened( elem.getAttribute('data-pile') )
+			}
 		}
 		anim.play()
 	},
