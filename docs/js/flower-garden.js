@@ -156,6 +156,13 @@ const game = {
 	},
 
 	/**
+	 * Called in response to a snapback animation, usually from a failed drop. 
+	 */
+	snapBackHappened: ( pileName ) => {
+		cardUI.snapPileWithAnimation( dealer.piles[pileName] )
+	},
+
+	/**
 	 * Detect the game over state and return an appropriate object to represent it.
 	 * Usually this will just contain the 'keep playing' state, but if the game has
 	 * finished it'll be a bit richer.
