@@ -1,10 +1,8 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
-## v1.6.3
-* Accordion, Free Cell, and Streets and Alleys now supporting replaying with the same shuffled deck.
-
 ## v1.6.2
+* Accordion, Free Cell, and Streets and Alleys now supporting replaying with the same shuffled
 * Better card symbol visibility in Aces Up
 
 ## v1.6.1
