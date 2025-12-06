@@ -368,7 +368,7 @@ const table = {
 	/**
 	 * Let's begin!
 	 */
-	restart: () => {
+	dealTable: ( startOver = false ) => {
 		table.gameInProgress = true
 
 		// Tear down the pages a little
@@ -380,7 +380,7 @@ const table = {
 
 		// Tell the game we're about to start.
 		if ( game.start ) {
-			game.start()
+			game.start( startOver )
 		}
 
 		// Tell the game about the piles we find in the DOM.

@@ -21,6 +21,8 @@ FEATURES
   - golf
   - yukon
   - tri-peaks
+- free cell
+  - detect when there are no more moves
 - excavation
   - like aces up, fully dealt, with a space to put blocking cards
 - aces up: play again with the same deck (and others)

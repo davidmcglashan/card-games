@@ -1,8 +1,13 @@
 const games = {
-	version: "1.6.1",
+	version: "1.6.2",
 
 	allGames: [ 
-		{ 
+		{ 	
+			name: 'Accordion', 
+			sub: 'Match until there\'s one card left',
+			description: 'Deal one at a time. Cards on the table can be moved on top of their upward or leftward neighbour if they match suit or number.', 
+			url: 'accordion.html'
+		},{ 
 			name: 'Aces Up', 
 			sub: 'Reduce the deck to only the aces',
 			description: 'If you can see two of a suit discard the lowest one (aces are high) until all that\'s left are the aces.', 
@@ -14,11 +19,6 @@ const games = {
 					description: 'When not checked only aces can be placed on empty piles'
 				}
 			]
-		},{ 	
-			name: 'Accordion', 
-			sub: 'Match until there\'s one card left',
-			description: 'Deal one at a time. Cards on the table can be moved on top of their upward or leftward neighbour if they match suit or number.', 
-			url: 'accordion.html'
 		},{
 			name: 'Clock',
 			sub: 'Tick tock!',
@@ -31,6 +31,12 @@ const games = {
 					description: 'When a card is placed the next one will automatically be turned over'
 				}
 			] 
+		},{
+			name: 'Excavate',
+			sub: 'Dig your way down to all four aces.',
+			description: 'If you can see two of a suit discard the lowest one (aces are high) until all that\'s left are the aces.', 
+			url: 'excavate.html',
+			hidden: true
 		},{
 			name: 'Flower Garden',
 			sub: 'Tidy the beds and plant the bouquet',
@@ -252,7 +258,7 @@ const games = {
 
 		// Reset the UI.
 		games.settings()
-		table.restart()
+		table.dealTable()
 	},
 
 	/**
@@ -336,7 +342,29 @@ const games = {
 			}
 		}
 
-		masthead.insertAdjacentHTML( 'beforeend', '<div><a role="button" onclick="table.restart();">Restart</a><a role="button" onclick="games.settings();">Settings</a> </div>' )
+		// Three buttons in the top right
+		let buttons = document.createElement( 'div' )
+		masthead.appendChild( buttons )
+
+		if ( game.supportsStartAgain ) {
+			let startAgain = document.createElement( 'a' )
+			startAgain.setAttribute( 'role', 'button' )
+			startAgain.setAttribute( 'onclick', 'table.dealTable(true);' )
+			startAgain.innerHTML = 'Start Over'
+			buttons.appendChild( startAgain )
+		}
+
+		let shuffle = document.createElement( 'a' )
+		shuffle.setAttribute( 'role', 'button' )
+		shuffle.setAttribute( 'onclick', 'table.dealTable();' )
+		shuffle.innerHTML = 'Shuffle &amp; redeal'
+		buttons.appendChild( shuffle )
+
+		let settings = document.createElement( 'a' )
+		settings.setAttribute( 'role', 'button' )
+		settings.setAttribute( 'onclick', 'games.settings();' )
+		settings.innerHTML = 'Settings'
+		buttons.appendChild( settings )
 
 		// Have the glass listen to mouse events
 		let glass = document.getElementById( 'glass' )

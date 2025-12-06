@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Test Card</title>
+		<title>Excavate</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="css/table.css">
-		<link rel="stylesheet" href="css/testcard.css">
+		<link rel="stylesheet" href="css/excavate.css">
 		<script type="text/javascript" src="js/dealer.js"></script>
 		<script type="text/javascript" src="js/cardUI.js"></script>
 		<script type="text/javascript" src="js/table.js"></script>
 		<script type="text/javascript" src="js/games.js"></script>
-		<script type="text/javascript" src="js/testcard.js"></script>
+		<script type="text/javascript" src="js/excavate.js"></script>
+
 	</head>
 	<body>
 		<div id="table">
 			<div class="row">
-				<div class="pile" id="test-ace"></div>
-				<div class="pile" id="test-2"></div>
-				<div class="pile" id="test-3"></div>
-				<div class="pile" id="test-4"></div>
-				<div class="pile" id="test-5"></div>
-				<div class="pile" id="test-6"></div>
-			</div>
-			<div class="row">
-				<div class="pile" id="test-7"></div>
-				<div class="pile" id="test-8"></div>
-				<div class="pile" id="test-9"></div>
-				<div class="pile" id="test-10"></div>
-				<div class="pile" id="test-jack"></div>
-				<div class="pile" id="test-queen"></div>
-				<div class="pile" id="test-king"></div>
+				<div id="spare" class="pile">
+					<div class="label">Space for one card</div>
+				</div> 
+
+				<div id="tower-1" class="pile tower">
+					<div class="label">Drag <span class="ace">an ace</span><span class="any">any card</span> here</div>
+				</div>
+				<div id="tower-2" class="pile tower">
+					<div class="label">Drag <span class="ace">an ace</span><span class="any">any card</span> here</div>
+				</div>
+				<div id="tower-3" class="pile tower">
+					<div class="label">Drag <span class="ace">an ace</span><span class="any">any card</span> here</div>
+				</div>
+				<div id="tower-4" class="pile tower">
+					<div class="label">Drag <span class="ace">an ace</span><span class="any">any card</span> here</div>
+				</div>
+				<div id="discard" class="pile">
+					<div class="label">Drag lowest of each suit here</div>
+					<div class="glyph">&times;</div>
+				</div> 
 			</div>
 		</div>
 		<div id="cards"></div>

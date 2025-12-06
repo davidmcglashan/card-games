@@ -85,4 +85,9 @@ const game = {
 	 */
 	settingChanged: ( setting, active ) => { 
 	},
+
+	/**
+	 * True when the game can be started over with the same shuffled deck.
+	 */
+	supportsStartAgain: false,
 };

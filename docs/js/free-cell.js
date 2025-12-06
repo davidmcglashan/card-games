@@ -1,9 +1,29 @@
 const game = {
 	/**
+	 * Free Cell games can be started over with the same shuffled deck.
+	 */
+	supportsStartAgain: true,
+
+	/**
 	 * A new game starts with a new shuffled deck.
 	 */
-	start: () => {
-		game.deck = dealer.newShuffledCardArray()
+	start: ( startOver = false ) => {
+		// If we're not starting over then shuffle a new deck.
+		if ( !startOver ) {
+			game.deck = dealer.newShuffledCardArray()
+			game.restartDeck = structuredClone( game.deck )
+		} 
+		
+		// Otherwise we ARE starting over and the deck should be the one we used last time,
+		// if it exists ...
+		else {
+			if ( game.restartDeck ) {
+				game.deck = structuredClone( game.restartDeck )
+			} else {
+				game.deck = dealer.newShuffledCardArray()
+				game.restartDeck = structuredClone( game.deck )
+			}
+		}
 	},
 
 	/**
