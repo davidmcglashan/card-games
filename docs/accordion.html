@@ -49,7 +49,9 @@
 		<div id="banner">
 			<h1 id="headline"></h1>
 			<p id="message"></p>
-			<a id="play-button" class="btn" role="button" alt="Play" onclick="table.dealTable()">Play!</a><a class="moreGames" href="index.html">More Games</a>
+			<a id="restore-button" class="btn" role="button" alt="Resume in-progress game" onclick="table.restoreTable()">Resume game in progress</a>
+			<a id="play-button" class="btn" role="button" alt="Start a new game" onclick="table.dealTable()">Start a new game</a>
+			<a class="moreGames" href="index.html">More Games</a>
 			<a id="looking-glass" role="button" alt="Looking glass" onmouseenter="table.lookingGlass(true)" onmouseleave="table.lookingGlass(false)">&#128064;</a>
 		</div>
 		<div id="lightbox" onclick="games.settings()"></div>

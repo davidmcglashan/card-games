@@ -82,8 +82,16 @@ const dealer = {
 		pile.name = name
 		pile.cards = []
 		pile.elem = document.getElementById( pile.name )
-		pile.stackingMethod = dealer.stackingMethods.UNTIDY
 		pile.removalMethod = dealer.removalMethods.FROM_TOP
+
+		pile.stackingMethod = dealer.stackingMethods.UNTIDY
+		if ( game.stacking ) {
+			let stacking = game.stacking[pile.name]
+			if ( stacking ) {
+				pile.stackingMethod = stacking
+			}
+		}
+
 		dealer.piles[name] = pile
 		return pile
 	},
@@ -94,7 +102,6 @@ const dealer = {
 	newPile: ( name, cards, faceUp = false ) => {
 		let pile = dealer.newEmptyPile( name )
 		pile.cards = cards
-		pile.stackingMethod = dealer.stackingMethods.DIAGONAL
 
 		for ( let card of cards ) {
 			card.isFaceUp = faceUp

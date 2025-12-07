@@ -1,4 +1,8 @@
 const game = {
+	name: 'cardGame',			// Required for persisting game state
+	supportsStartAgain: false, 	// True when the game can be started over with the same shuffled deck.
+	stacking: {},				// Declare the stacking method of any piles that change the default.
+
 	/**
 	 * A new game starts with a new shuffled deck.
 	 */
@@ -87,7 +91,15 @@ const game = {
 	},
 
 	/**
-	 * True when the game can be started over with the same shuffled deck.
+	 * Return an object to be preserved in addition to the pile states.
 	 */
-	supportsStartAgain: false,
+	recordState: () => {
+		return null
+	},
+
+	/**
+	 * Restore any internal state from a preservation object.
+	 */
+	restoreState: ( state ) => {
+	}
 };

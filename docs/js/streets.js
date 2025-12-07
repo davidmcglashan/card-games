@@ -1,8 +1,17 @@
 const game = {
-	/**
-	 * Games can be started over with the same shuffled deck.
-	 */
-	supportsStartAgain: true,
+	name: 'streets',			// Required for persisting game state
+	supportsStartAgain: true, 	// True when the game can be started over with the same shuffled deck.
+	stacking: {
+		'deck': dealer.stackingMethods.DIAGONAL,
+		'pile-1': dealer.stackingMethods.LEFT,
+		'pile-2': dealer.stackingMethods.RIGHT,
+		'pile-3': dealer.stackingMethods.LEFT,
+		'pile-4': dealer.stackingMethods.RIGHT,
+		'pile-5': dealer.stackingMethods.LEFT,
+		'pile-6': dealer.stackingMethods.RIGHT,
+		'pile-7': dealer.stackingMethods.LEFT,
+		'pile-8': dealer.stackingMethods.RIGHT,
+	},
 
 	/**
 	 * A new game starts with a new shuffled deck.

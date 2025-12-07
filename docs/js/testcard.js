@@ -1,4 +1,7 @@
 const game = {
+	name: 'test',				// Required for persisting game state
+	supportsStartAgain: false, 	// True when the game can be started over with the same shuffled deck.
+
 	/**
 	 * This game maintains a deck to deal from when the suit changes.
 	 */

@@ -1,4 +1,10 @@
 const game = {
+	name: 'clock',				// Required for persisting game state
+	supportsStartAgain: false, 	// True when the game can be started over with the same shuffled deck.
+	stacking: {
+		'drop-king': dealer.stackingMethods.RIGHT
+	},
+
 	/**
 	 * Starts a new game, shuffles a deck.
 	 */
@@ -26,10 +32,7 @@ const game = {
 			}
 			cardUI.snapPile( dealer.piles[name] )
 		} else {
-			let pile = dealer.newEmptyPile( name )
-			if ( name === 'drop-king' ) {
-				pile.stackingMethod = dealer.stackingMethods.RIGHT
-			}
+			dealer.newEmptyPile( name )
 		}
 	},
 
@@ -134,5 +137,19 @@ const game = {
 		}
 
 		return { state: table.gameOverStates.KEEP_PLAYING }
-	}
+	},
+
+	/**
+	 * Return an object to be preserved in addition to the pile states.
+	 */
+	recordState: () => {
+		return { next: game.nextPile }
+	},
+
+	/**
+	 * Return an object to be preserved in addition to the pile states.
+	 */
+	restoreState: ( state ) => {
+		game.nextPile = state.next
+	},
 }

@@ -1,4 +1,7 @@
 const game = {
+	name: 'excavate',			// Required for persisting game state
+	supportsStartAgain: false, 	// True when the game can be started over with the same shuffled deck.
+
 	/**
 	 * A new game starts with a new shuffled deck.
 	 */

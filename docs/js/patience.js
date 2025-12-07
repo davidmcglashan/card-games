@@ -1,4 +1,17 @@
 const game = {
+	name: 'patience',			// Required for persisting game state
+	supportsStartAgain: false, 	// True when the game can be started over with the same shuffled deck.
+	stacking: {
+		'deck': dealer.stackingMethods.DIAGONAL,
+		'tower-1': dealer.stackingMethods.VERTICAL,
+		'tower-2': dealer.stackingMethods.VERTICAL,
+		'tower-3': dealer.stackingMethods.VERTICAL,
+		'tower-4': dealer.stackingMethods.VERTICAL,
+		'tower-5': dealer.stackingMethods.VERTICAL,
+		'tower-6': dealer.stackingMethods.VERTICAL,
+		'tower-7': dealer.stackingMethods.VERTICAL
+	},
+
 	/**
 	 * A new game starts with a new shuffled deck.
 	 */
@@ -19,16 +32,12 @@ const game = {
 				hand.push( game.deck.pop() )
 			}
 			let pile = dealer.newTopFacePile( name, hand )
-			pile.stackingMethod = dealer.stackingMethods.VERTICAL
 			cardUI.snapPile( pile )
 		} 
 		
 		// everything else is an empty pile. The deck will be set up in cardsDealt()
 		else {
 			let pile = dealer.newEmptyPile( name )
-			if ( name === 'deck' ) {
-				pile.stackingMethod = dealer.stackingMethods.DIAGONAL
-			}
 		}
 	},
 

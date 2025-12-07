@@ -1,11 +1,38 @@
 const game = {
+	name: 'flowerGarden',		// Required for persisting game state
+	supportsStartAgain: true, 	// True when the game can be started over with the same shuffled deck.
+	stacking: {
+		'bed-1': dealer.stackingMethods.VERTICAL,
+		'bed-2': dealer.stackingMethods.VERTICAL,
+		'bed-3': dealer.stackingMethods.VERTICAL,
+		'bed-4': dealer.stackingMethods.VERTICAL,
+		'bed-5': dealer.stackingMethods.VERTICAL,
+		'bed-6': dealer.stackingMethods.VERTICAL,
+		'bouquet': dealer.stackingMethods.HORIZONTAL
+	},
+
 	/**
 	 * A new game starts with a new shuffled deck.
 	 */
-	start: () => {
-		game.deck = dealer.newShuffledCardArray()
+	start: ( startOver = false ) => {
+		// If we're not starting over then shuffle a new deck.
+		if ( !startOver ) {
+			game.deck = dealer.newShuffledCardArray()
+			game.restartDeck = structuredClone( game.deck )
+		} 
+		
+		// Otherwise we ARE starting over and the deck should be the one we used last time,
+		// if it exists ...
+		else {
+			if ( game.restartDeck ) {
+				game.deck = structuredClone( game.restartDeck )
+			} else {
+				game.deck = dealer.newShuffledCardArray()
+				game.restartDeck = structuredClone( game.deck )
+			}
+		}
 	},
-
+	
 	/**
 	 * Sets up the new piles. There is a deck, a pile to deal onto, four suits and seven towers.
 	 */
@@ -19,7 +46,6 @@ const game = {
 			}
 
 			let pile = dealer.newFaceUpPile( name, hand )
-			pile.stackingMethod = dealer.stackingMethods.VERTICAL
 			cardUI.snapPile( pile )
 		} 
 		
@@ -32,7 +58,6 @@ const game = {
 			}
 
 			let pile = dealer.newFaceUpPile( name, hand )
-			pile.stackingMethod = dealer.stackingMethods.HORIZONTAL
 			pile.removalMethod = dealer.removalMethods.FREE
 
 			dealer.sort( pile )

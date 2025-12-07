@@ -1,9 +1,37 @@
 const game = {
+	name: 'scorpion',			// Required for persisting game state
+	supportsStartAgain: true, 	// True when the game can be started over with the same shuffled deck.
+	stacking: {
+		'sting': dealer.stackingMethods.RIGHT,
+		'tower-1': dealer.stackingMethods.VERTICAL,
+		'tower-2': dealer.stackingMethods.VERTICAL,
+		'tower-3': dealer.stackingMethods.VERTICAL,
+		'tower-4': dealer.stackingMethods.VERTICAL,
+		'tower-5': dealer.stackingMethods.VERTICAL,
+		'tower-6': dealer.stackingMethods.VERTICAL,
+		'tower-7': dealer.stackingMethods.VERTICAL
+	},
+
 	/**
 	 * A new game starts with a new shuffled deck.
 	 */
-	start: () => {
-		game.deck = dealer.newShuffledCardArray()
+	start: ( startOver = false ) => {
+		// If we're not starting over then shuffle a new deck.
+		if ( !startOver ) {
+			game.deck = dealer.newShuffledCardArray()
+			game.restartDeck = structuredClone( game.deck )
+		} 
+		
+		// Otherwise we ARE starting over and the deck should be the one we used last time,
+		// if it exists ...
+		else {
+			if ( game.restartDeck ) {
+				game.deck = structuredClone( game.restartDeck )
+			} else {
+				game.deck = dealer.newShuffledCardArray()
+				game.restartDeck = structuredClone( game.deck )
+			}
+		}
 	},
 
 	/**
@@ -31,16 +59,12 @@ const game = {
 				pile = dealer.newFaceUpPile( name, hand )
 			}
 
-			pile.stackingMethod = dealer.stackingMethods.VERTICAL
 			cardUI.snapPile( pile )
 		} 
 		
 		// everything else is an empty pile. The deck will be set up in cardsDealt()
 		else {
-			let pile = dealer.newEmptyPile( name )
-			if ( name === 'sting' ) {
-				pile.stackingMethod = dealer.stackingMethods.RIGHT
-			}
+			dealer.newEmptyPile( name )
 		}
 	},
 

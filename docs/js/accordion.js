@@ -1,8 +1,6 @@
 const game = {
-	/**
-	 * Free Cell games can be started over with the same shuffled deck.
-	 */
-	supportsStartAgain: true,
+	name: 'accordion',			// Required for persisting game state
+	supportsStartAgain: true, 	// True when the game can be started over with the same shuffled deck.
 
 	/**
 	 * A new game starts with a new shuffled deck.
@@ -37,16 +35,12 @@ const game = {
 			hand.push( game.deck.pop() )
 
 			let pile = dealer.newTopFacePile( name, hand )
-			pile.stackingMethod = dealer.stackingMethods.UNTIDY
 			cardUI.snapPile( pile )
 		} 
 		
 		// Everything else is an empty pile. The deck will be set up in cardsDealt()
 		else {
-			let pile = dealer.newEmptyPile( name )
-			if ( name === 'deck' ) {
-				pile.stackingMethod = dealer.stackingMethods.DIAGONAL
-			}
+			dealer.newEmptyPile( name )
 		}
 	},
 

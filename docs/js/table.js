@@ -52,6 +52,8 @@ const table = {
 			let result = game.hasFinished()
 			if ( result.state !== table.gameOverStates.KEEP_PLAYING ) {
 				table.finishGame( result )
+			} else {
+				table.recordState()
 			}
 		}
 	},
@@ -176,6 +178,8 @@ const table = {
 				let result = game.hasFinished()
 				if ( result.state !== table.gameOverStates.KEEP_PLAYING ) {
 					table.finishGame( result )
+				} else {
+					table.recordState()
 				}
 				return
 			}
@@ -386,11 +390,14 @@ const table = {
 		// Tell the game about the piles we find in the DOM.
 		let piles = document.getElementsByClassName( 'pile' )
 		for ( let pile of piles ) {
-			game.newPile( pile.getAttribute( 'id' ) )
+			let p = game.newPile( pile.getAttribute( 'id' ) )
 		}
 		if ( game.cardsDealt ) {
 			game.cardsDealt()
 		}
+
+		// Record the state, even though it's brand new.
+		table.recordState()
 	},
 
 	/** 
@@ -406,17 +413,23 @@ const table = {
 		// Display a result-appropriate message ...
 		let banner = document.getElementById( 'headline' )
 		let message = document.getElementById( 'message' )
-		
+		let restart = document.getElementById( 'restore-button')
+
 		if ( gameOver.state === table.gameOverStates.PLAYER_LOSES ) {
 			banner.innerHTML = 'Game over!'
 			message.innerHTML = gameOver.message ? gameOver.message : 'Better luck next time ...'
+			if ( game.supportsStartAgain ) {
+				restart.innerHTML = 'Start Over'
+				restart.setAttribute( 'onclick', 'table.dealTable(true);')
+			}
 		} else {
 			banner.innerHTML = 'Congratulations!'
 			message.innerHTML = gameOver.message ? gameOver.message : 'Why not try and do that again?'
+			restart.classList.add( 'hidden' )
 		}
 
 		elem = document.getElementById( 'play-button' )
-		elem.innerHTML = 'Play again'
+		elem.innerHTML = 'Shuffle and redeal'
 	},
 
 	/**
@@ -431,6 +444,9 @@ const table = {
 		}
 	},
 
+	/**
+	 * Keypresses are used for X-ray which makes cards transparent so you can find e.g. the aces.
+	 */
 	keyDown: ( event ) => {
 		let clss = null
 
@@ -456,16 +472,127 @@ const table = {
 		}
 	},
 
+	/**
+	 * Key-up just turns X-ray off again.
+	 */
 	keyUp: ( event ) => {
 		document.getElementById( 'cards' ).setAttribute( 'class', '' )
 	},
 
+	/**
+	 * "Looking glass" hides the gamne over banner so you can inspect the final game state.
+	 */
 	lookingGlass: ( enabled ) => {
 		let elem = document.getElementById( 'banner' )
 		if ( enabled ) {
 			elem.setAttribute( 'class', 'lookingGlass' )
 		} else {
 			elem.setAttribute( 'class', '' )
+		}
+	},
+
+	/**
+	 * Stashes the current game state in localstorage.
+	 */
+	recordState: () => {
+		let state = {}
+		let piles = {}
+		state['piles'] = piles
+
+		// Pull the piles from the dealer and setup storage for each one.
+		for ( const [name,pile] of Object.entries( dealer.piles ) ) {
+			piles[name] = []
+
+			// Iterate the pile's cards remember the name and faceValue
+			for ( let card of pile.cards ) {
+				piles[name].push( table.packCard( card ) )
+			}
+		}
+
+		// Let the game preserve any bits of internal state it wants to.
+		if ( game.recordState ) {
+			state['game'] = game.recordState()
+		}
+		if ( game.supportsStartAgain && game.restartDeck ) {
+			state['restartDeck'] = []
+			for ( let card of game.restartDeck ) {
+				state['restartDeck'].push( table.packCard( card ) )
+			}
+		}
+
+		localStorage[game.name+'.state'] = JSON.stringify(state)
+	},
+
+	/**
+	 * Returns an object describing the card with just enough information for storage.
+	 */
+	packCard: ( card ) => {
+		return {
+			suitOrd: card.suitOrd,
+			ordValue: card.ordValue,
+			isFaceUp: card.isFaceUp
+		}
+	},
+
+	/**
+	 * Returns an object describing the card in full dervied from one packed for storage.
+	 */
+	unpackCard: ( card ) => {
+		return {
+			suitOrd: card.suitOrd,
+			ordValue: card.ordValue,
+			isFaceUp: card.isFaceUp,
+	
+			suit: dealer.deckmeta.suits[card.suitOrd],
+			symbol: dealer.deckmeta.symbols[card.suitOrd],
+			shortValue: dealer.deckmeta.labels[card.ordValue],
+			facia: dealer.deckmeta.facias[card.ordValue],
+			css: 'css'+dealer.deckmeta.values[card.ordValue],
+	
+			isRed: card.suitOrd % 2 === 1,
+			name: dealer.deckmeta.values[card.ordValue] + '_of_' + dealer.deckmeta.suits[card.suitOrd]
+		}
+	},
+
+	/**
+	 * Restores the table from localstorage.
+	 */
+	restoreTable: () => {
+		// Firstly, prep the UI.
+		document.getElementById( 'cards' ).innerHTML = ''
+		document.getElementById( 'glass' ).innerHTML = ''
+		document.getElementById( 'banner' ).classList.add( 'hidden' )
+		table.gameInProgress = true
+		
+		// Retrieve the stored state and parse it to restore the piles.
+		let state = JSON.parse( localStorage[game.name+'.state'] )
+		for ( const [name,cards] of Object.entries( state.piles ) ) {
+			let pile = dealer.newEmptyPile( name )
+
+			// Convert the card we remembered into a full-blown card model.
+			for ( let card of cards ) {
+				pile.cards.push( table.unpackCard( card ) )
+			}
+
+			// Snapping the pile will build the DOM properly.
+			cardUI.snapPile( pile )
+		}
+
+		// Let the game restore any bits of internal state it wants to.
+		if ( game.restoreState ) {
+			game.restoreState( state['game'] )
+		}
+		if ( game.supportsStartAgain && state['restartDeck'] ) {
+			game.restartDeck = []
+			for ( let card of state['restartDeck'] ) {
+				game.restartDeck.push( table.unpackCard( card ) )
+			}
+		}
+					
+		// Check the game hasn't finished
+		let result = game.hasFinished()
+		if ( result.state !== table.gameOverStates.KEEP_PLAYING ) {
+			table.finishGame( result )
 		}
 	}
 }

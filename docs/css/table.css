@@ -193,8 +193,8 @@ a {
 	}
 
 /* This element appears on the banner. */
-.moreGames {
-	margin-left: 3rem;
+#banner .btn {
+	margin-right: 3rem;
 }
 
 /* Hidden elements are hidden :| */

@@ -1,8 +1,15 @@
 const game = {
-	/**
-	 * Free Cell games can be started over with the same shuffled deck.
-	 */
-	supportsStartAgain: true,
+	name: 'freeCell',			// Required for persisting game state
+	supportsStartAgain: true, 	// Free Cell games can be started over with the same shuffled deck.
+	stacking: {
+		'tower-1': dealer.stackingMethods.VERTICAL,
+		'tower-2': dealer.stackingMethods.VERTICAL,
+		'tower-3': dealer.stackingMethods.VERTICAL,
+		'tower-4': dealer.stackingMethods.VERTICAL,
+		'tower-5': dealer.stackingMethods.VERTICAL,
+		'tower-6': dealer.stackingMethods.VERTICAL,
+		'tower-7': dealer.stackingMethods.VERTICAL
+	},
 
 	/**
 	 * A new game starts with a new shuffled deck.
@@ -40,10 +47,7 @@ const game = {
 				hand.push( game.deck.pop() )
 			}
 			
-			// The first four piles have their first three cards face down.
 			let pile = dealer.newFaceUpPile( name, hand )
-			pile.stackingMethod = dealer.stackingMethods.VERTICAL
-
 			cardUI.snapPile( pile )
 		} 
 		

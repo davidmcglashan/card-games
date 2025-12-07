@@ -1,4 +1,7 @@
 const game = {
+	name: 'demo',				// Required for persisting game state
+	supportsStartAgain: false, 	// True when the game can be started over with the same shuffled deck.
+
 	/**
 	 * Sets up the new piles. One is a deck, the others are all empty.
 	 */

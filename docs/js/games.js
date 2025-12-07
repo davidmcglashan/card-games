@@ -1,5 +1,5 @@
 const games = {
-	version: "1.6.2",
+	version: "1.7.0",
 
 	allGames: [ 
 		{ 	
@@ -339,6 +339,7 @@ const games = {
 			if ( document.URL.indexOf( '/' + gg.url ) !== -1 ) {
 				a.setAttribute( 'class', 'selected' )
 				games.buildSettings( gg )
+
 			}
 		}
 
@@ -377,5 +378,12 @@ const games = {
 
 		document.addEventListener( 'keydown', table.keyDown )
 		document.addEventListener( 'keyup', table.keyUp )
+
+		// If there isn't an in progress game we can hide the restore button
+		state = localStorage[game.name+'.state']
+		if ( !state ) {
+			let restore = document.getElementById( 'restore-button')
+			restore.classList.toggle( 'hidden' )
+		}
 	},
 }

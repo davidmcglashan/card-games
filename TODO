@@ -9,6 +9,8 @@ BUGS & GLITCHES
 
 PROGRAMMING
 -----------
+- game.name in settings calls
+  - move settings into game.js
 - make rotation a function of the distance snapped (for all card stack types?) :)
 - Rewrite the game in terms of the glossary of patience terms page on Wikipedia
 - touch gestures and whatnot for mobile/tablet
@@ -25,7 +27,7 @@ FEATURES
   - detect when there are no more moves
 - excavation
   - like aces up, fully dealt, with a space to put blocking cards
-- aces up: play again with the same deck (and others)
+- aces up
   - use a seed in the RNG
   - pass the seed into the game as a URL param
 - clock: arrangement tweaks to the circle e.g. centralise, calc() involved in layout

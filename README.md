@@ -1,9 +1,12 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.7
+* All games remember their state in localstorage so you can leave and come back.
+
 ## v1.6.2
-* Accordion, Free Cell, and Streets and Alleys now supporting replaying with the same shuffled
-* Better card symbol visibility in Aces Up
+* Accordion, Free Cell, and Streets and Alleys now supporting replaying with the same shuffled.
+* Better card symbol visibility in Aces Up.
 
 ## v1.6.1
 * Free Cell, Patience, and Scorpion are now centrally aligned on the table.
