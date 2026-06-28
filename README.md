@@ -1,6 +1,9 @@
 # card-games
 A bunch of single player card games for playing in web browers.
 
+## v1.7.1
+* That last tower in Free Cell is now vertically stacked, not piled
+
 ## v1.7
 * All games remember their state in localstorage so you can leave and come back.
 

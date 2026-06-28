@@ -8,7 +8,8 @@ const game = {
 		'tower-4': dealer.stackingMethods.VERTICAL,
 		'tower-5': dealer.stackingMethods.VERTICAL,
 		'tower-6': dealer.stackingMethods.VERTICAL,
-		'tower-7': dealer.stackingMethods.VERTICAL
+		'tower-7': dealer.stackingMethods.VERTICAL,
+		'tower-8': dealer.stackingMethods.VERTICAL
 	},
 
 	/**
